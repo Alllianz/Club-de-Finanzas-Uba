@@ -17,9 +17,33 @@ html {
 
 body {
   min-height: 100vh;
+  text-rendering: optimizeLegibility;
+  background:
+    radial-gradient(circle at top, rgba(18, 63, 137, 0.04), transparent 30%),
+    var(--color-cream);
 }
 
 ::selection {
   background: rgba(18, 63, 137, 0.18);
   color: var(--color-ink);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-rise {
+  animation: rise 0.8s ease-out both;
+}
+
+.animate-rise-delayed {
+  animation: rise 0.95s ease-out 0.12s both;
 }
