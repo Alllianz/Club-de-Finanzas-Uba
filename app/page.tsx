@@ -269,27 +269,6 @@ export default function Home() {
               improvisada y mas como una plataforma universitaria con criterio
               visual, continuidad y ambicion editorial.
             </p>
-
-            <div className="mt-8 space-y-4 border-t border-white/10 pt-6">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.22em] text-[var(--color-gold)]">
-                  Paleta
-                </p>
-                <p className="mt-2 text-lg leading-7">
-                  Azul profundo, blanco hueso y acentos oro para ordenar
-                  jerarquia y marca.
-                </p>
-              </div>
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.22em] text-[var(--color-gold)]">
-                  Tono
-                </p>
-                <p className="mt-2 text-lg leading-7">
-                  Institucional, joven, claro y menos parecido a un medio
-                  partidario o un blog generico.
-                </p>
-              </div>
-            </div>
           </aside>
         </div>
       </header>
