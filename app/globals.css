@@ -1,37 +1,44 @@
 @import "tailwindcss";
 
 :root {
-  --color-cream: #f7f4ec;
-  --color-ink: #14233f;
-  --color-muted: #556278;
-  --color-line: #ddd5c4;
-  --color-blue: #123f89;
-  --color-blue-strong: #0d2e65;
-  --color-gold: #f3b24a;
-  --color-gold-dark: #b46c14;
+  --color-bg: #000000;
+  --color-bg-soft: #0c1129;
+  --color-bg-card: rgba(8, 12, 28, 0.74);
+  --color-text: #f4f7ff;
+  --color-line: rgba(255, 255, 255, 0.1);
+  --color-accent: #2a3796;
 }
 
 html {
   scroll-behavior: smooth;
+  background: #000000;
 }
 
 body {
   min-height: 100vh;
   text-rendering: optimizeLegibility;
-  background:
-    radial-gradient(circle at top, rgba(18, 63, 137, 0.04), transparent 30%),
-    var(--color-cream);
+  background: linear-gradient(90deg, #000000 0%, #050816 28%, #0c1334 62%, #1b2469 82%, #2a3796 100%);
+  color: var(--color-text);
+  background-attachment: fixed;
 }
 
 ::selection {
-  background: rgba(18, 63, 137, 0.18);
-  color: var(--color-ink);
+  background: rgba(141, 181, 255, 0.28);
+  color: var(--color-text);
 }
 
-@keyframes rise {
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+@keyframes fade-up {
   from {
     opacity: 0;
-    transform: translateY(28px);
+    transform: translateY(24px);
   }
 
   to {
@@ -40,10 +47,10 @@ body {
   }
 }
 
-.animate-rise {
-  animation: rise 0.8s ease-out both;
+.animate-fade-up {
+  animation: fade-up 0.7s ease-out both;
 }
 
-.animate-rise-delayed {
-  animation: rise 0.95s ease-out 0.12s both;
+.animate-fade-up-delayed {
+  animation: fade-up 0.85s ease-out 0.12s both;
 }

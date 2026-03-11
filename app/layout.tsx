@@ -1,23 +1,23 @@
 import type { Metadata } from "next";
-import { Bodoni_Moda, Manrope } from "next/font/google";
+import { Space_Grotesk, Sora } from "next/font/google";
 import "./globals.css";
 
-const displayFont = Bodoni_Moda({
+const displayFont = Sora({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "600", "700", "800"],
 });
 
-const bodyFont = Manrope({
+const bodyFont = Space_Grotesk({
   variable: "--font-body",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "500", "700"],
 });
 
 export const metadata: Metadata = {
   title: "Club de Finanzas UBA",
   description:
-    "Plataforma editorial y academica de finanzas impulsada por estudiantes y graduados vinculados a la UBA.",
+    "Sitio editorial del Club de Finanzas UBA con home tipo feed, secciones por area y pagina institucional.",
 };
 
 export default function RootLayout({
@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={`${displayFont.variable} ${bodyFont.variable}`}>
-      <body className="bg-[var(--color-cream)] text-[var(--color-ink)] antialiased [font-family:var(--font-body),sans-serif]">
+      <body className="bg-[var(--color-bg)] text-[var(--color-text)] antialiased [font-family:var(--font-body),sans-serif]">
         {children}
       </body>
     </html>
