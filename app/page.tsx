@@ -493,12 +493,6 @@ export default function Home() {
                   Una presentacion mas institucional para futuras alianzas.
                 </h2>
               </div>
-              <p className="max-w-3xl text-lg leading-8 text-[rgba(255,255,255,0.8)]">
-                El deck de sponsors que compartiste ya marcaba esa necesidad. La
-                web ahora acompana esa logica: presenta una identidad mas seria,
-                ordena mejor el valor del club y deja espacio para partners,
-                speakers y apoyos institucionales.
-              </p>
             </div>
 
             <div className="mt-12 grid gap-5 md:grid-cols-3">
