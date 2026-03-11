@@ -213,11 +213,13 @@ export default function Home() {
               Finanzas para la comunidad de la UBA
             </p>
             <h1 className="mt-5 max-w-5xl font-[family:var(--font-display)] text-5xl leading-[0.9] sm:text-6xl md:text-[88px]">
-              Una marca academica con lenguaje editorial, criterio tecnico y vocacion de comunidad.
+              Una marca academica con lenguaje editorial, criterio tecnico y
+              vocacion de comunidad.
             </h1>
             <p className="mt-6 max-w-3xl text-lg leading-8 text-[var(--color-muted)] md:text-xl">
-              El Club de Finanzas UBA se presenta como una plataforma donde estudiantes y graduados convierten
-              conocimiento financiero en publicaciones, conversaciones y proyectos con identidad propia.
+              El Club de Finanzas UBA se presenta como una plataforma donde
+              estudiantes y graduados convierten conocimiento financiero en
+              publicaciones, conversaciones y proyectos con identidad propia.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -242,7 +244,9 @@ export default function Home() {
                 ["2026", "Etapa de consolidacion"],
               ].map(([valor, etiqueta]) => (
                 <div key={etiqueta} className="bg-white/90 p-5">
-                  <p className="font-[family:var(--font-display)] text-4xl text-[var(--color-blue)]">{valor}</p>
+                  <p className="font-[family:var(--font-display)] text-4xl text-[var(--color-blue)]">
+                    {valor}
+                  </p>
                   <p className="mt-2 text-xs font-bold uppercase tracking-[0.18em] text-[var(--color-muted)]">
                     {etiqueta}
                   </p>
@@ -257,21 +261,33 @@ export default function Home() {
               Como nos definimos
             </p>
             <h2 className="mt-5 font-[family:var(--font-display)] text-4xl leading-tight">
-              Publicamos para formar, conectar y elevar el nivel de la conversacion.
+              Publicamos para formar, conectar y elevar el nivel de la
+              conversacion.
             </h2>
             <p className="mt-5 text-base leading-7 text-[rgba(255,255,255,0.78)]">
-              La marca necesita verse menos como una pagina estudiantil improvisada y mas como una plataforma
-              universitaria con criterio visual, continuidad y ambicion editorial.
+              La marca necesita verse menos como una pagina estudiantil
+              improvisada y mas como una plataforma universitaria con criterio
+              visual, continuidad y ambicion editorial.
             </p>
 
             <div className="mt-8 space-y-4 border-t border-white/10 pt-6">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.22em] text-[var(--color-gold)]">Paleta</p>
-                <p className="mt-2 text-lg leading-7">Azul profundo, blanco hueso y acentos oro para ordenar jerarquia y marca.</p>
+                <p className="text-xs font-bold uppercase tracking-[0.22em] text-[var(--color-gold)]">
+                  Paleta
+                </p>
+                <p className="mt-2 text-lg leading-7">
+                  Azul profundo, blanco hueso y acentos oro para ordenar
+                  jerarquia y marca.
+                </p>
               </div>
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.22em] text-[var(--color-gold)]">Tono</p>
-                <p className="mt-2 text-lg leading-7">Institucional, joven, claro y menos parecido a un medio partidario o un blog generico.</p>
+                <p className="text-xs font-bold uppercase tracking-[0.22em] text-[var(--color-gold)]">
+                  Tono
+                </p>
+                <p className="mt-2 text-lg leading-7">
+                  Institucional, joven, claro y menos parecido a un medio
+                  partidario o un blog generico.
+                </p>
               </div>
             </div>
           </aside>
@@ -279,27 +295,34 @@ export default function Home() {
       </header>
 
       <main>
-        <section className="mx-auto w-[min(1220px,92vw)] py-16 md:py-24" id="manifiesto">
+        <section
+          className="mx-auto w-[min(1220px,92vw)] py-16 md:py-24"
+          id="manifiesto"
+        >
           <div className="grid gap-10 md:grid-cols-[0.9fr_1.1fr]">
             <div>
               <p className="text-sm font-bold uppercase tracking-[0.28em] text-[var(--color-blue)]">
                 Quienes somos y por que hacemos esto
               </p>
               <h2 className="mt-4 max-w-xl font-[family:var(--font-display)] text-5xl leading-none md:text-6xl">
-                Una iniciativa para darle forma publica al conocimiento financiero.
+                Una iniciativa para darle forma publica al conocimiento
+                financiero.
               </h2>
             </div>
 
             <div className="space-y-6">
               <p className="max-w-3xl text-lg leading-8 text-[var(--color-muted)]">
-                La base conceptual que tomo para esta version es consistente con lo que compartiste: un club que
-                nace desde la UBA, que quiere explicar, publicar y demostrar valor academico sin caer en una
+                La base conceptual que tomo para esta version es consistente con
+                lo que compartiste: un club que nace desde la UBA, que quiere
+                explicar, publicar y demostrar valor academico sin caer en una
                 estetica estudiantil basica ni en un tono sobreactuado.
               </p>
               <p className="max-w-3xl text-lg leading-8 text-[var(--color-muted)]">
-                No pude rescatar literalmente el texto del Canva sobre mision y quieneses somos porque el PDF no
-                era legible por OCR en este entorno. Entonces resolvi lo importante: construir una narrativa
-                institucional coherente con la marca y con la informacion que si compartiste.
+                No pude rescatar literalmente el texto del Canva sobre mision y
+                quieneses somos porque el PDF no era legible por OCR en este
+                entorno. Entonces resolvi lo importante: construir una narrativa
+                institucional coherente con la marca y con la informacion que si
+                compartiste.
               </p>
             </div>
           </div>
@@ -322,20 +345,28 @@ export default function Home() {
 
           <div className="mt-10 grid gap-5 md:grid-cols-3">
             {principios.map((item) => (
-              <article key={item.titulo} className="bg-[linear-gradient(180deg,#fffdf8_0%,#f7f1e6_100%)] p-6">
+              <article
+                key={item.titulo}
+                className="bg-[linear-gradient(180deg,#fffdf8_0%,#f7f1e6_100%)] p-6"
+              >
                 <p className="text-sm font-bold uppercase tracking-[0.22em] text-[var(--color-gold-dark)]">
                   {item.numero}
                 </p>
                 <h3 className="mt-3 font-[family:var(--font-display)] text-4xl text-[var(--color-ink)]">
                   {item.titulo}
                 </h3>
-                <p className="mt-3 text-base leading-7 text-[var(--color-muted)]">{item.descripcion}</p>
+                <p className="mt-3 text-base leading-7 text-[var(--color-muted)]">
+                  {item.descripcion}
+                </p>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="border-y border-[var(--color-line)] bg-[linear-gradient(180deg,#fbfaf6_0%,#f2ecdf_100%)]" id="areas">
+        <section
+          className="border-y border-[var(--color-line)] bg-[linear-gradient(180deg,#fbfaf6_0%,#f2ecdf_100%)]"
+          id="areas"
+        >
           <div className="mx-auto w-[min(1220px,92vw)] py-16 md:py-24">
             <div className="grid gap-8 md:grid-cols-[0.8fr_1.2fr]">
               <div>
@@ -346,10 +377,6 @@ export default function Home() {
                   Cuatro areas para producir contenido y construir continuidad.
                 </h2>
               </div>
-              <p className="max-w-3xl text-lg leading-8 text-[var(--color-muted)]">
-                La web necesitaba explicar mejor que el club no es solo una cuenta de redes. Ahora se presenta
-                como una estructura con frentes concretos, funciones distintas y una propuesta mas madura.
-              </p>
             </div>
 
             <div className="mt-12 grid gap-px overflow-hidden border border-[var(--color-line)] bg-[var(--color-line)] md:grid-cols-2">
@@ -361,7 +388,9 @@ export default function Home() {
                   <h3 className="mt-3 font-[family:var(--font-display)] text-5xl leading-none text-[var(--color-blue)]">
                     {area.nombre}
                   </h3>
-                  <p className="mt-4 max-w-lg text-lg leading-8 text-[var(--color-muted)]">{area.descripcion}</p>
+                  <p className="mt-4 max-w-lg text-lg leading-8 text-[var(--color-muted)]">
+                    {area.descripcion}
+                  </p>
                 </article>
               ))}
             </div>
@@ -377,7 +406,9 @@ export default function Home() {
                       <span className="mt-1 font-[family:var(--font-display)] text-3xl text-[var(--color-gold)]">
                         0{index + 1}
                       </span>
-                      <span className="text-base leading-7 text-[rgba(255,255,255,0.82)]">{paso}</span>
+                      <span className="text-base leading-7 text-[rgba(255,255,255,0.82)]">
+                        {paso}
+                      </span>
                     </li>
                   ))}
                 </ol>
@@ -385,7 +416,10 @@ export default function Home() {
 
               <div className="grid gap-5">
                 {audiencias.map((audiencia) => (
-                  <article key={audiencia} className="border-l-4 border-[var(--color-gold)] bg-white p-6 shadow-[0_18px_40px_rgba(10,28,64,0.05)]">
+                  <article
+                    key={audiencia}
+                    className="border-l-4 border-[var(--color-gold)] bg-white p-6 shadow-[0_18px_40px_rgba(10,28,64,0.05)]"
+                  >
                     <p className="text-xs font-bold uppercase tracking-[0.22em] text-[var(--color-blue)]">
                       Para quien es
                     </p>
@@ -399,7 +433,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="mx-auto w-[min(1220px,92vw)] py-16 md:py-24" id="publicaciones">
+        <section
+          className="mx-auto w-[min(1220px,92vw)] py-16 md:py-24"
+          id="publicaciones"
+        >
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="text-sm font-bold uppercase tracking-[0.28em] text-[var(--color-blue)]">
@@ -432,7 +469,9 @@ export default function Home() {
                   <h3 className="mt-4 max-w-3xl font-[family:var(--font-display)] text-4xl leading-tight md:text-5xl">
                     {item.titulo}
                   </h3>
-                  <p className="mt-4 max-w-2xl text-lg leading-8 text-[var(--color-muted)]">{item.descripcion}</p>
+                  <p className="mt-4 max-w-2xl text-lg leading-8 text-[var(--color-muted)]">
+                    {item.descripcion}
+                  </p>
                   <a
                     href={item.href}
                     target="_blank"
@@ -452,7 +491,8 @@ export default function Home() {
                     0{index + 1}
                   </p>
                   <p className="mt-4 text-base leading-7 text-[rgba(255,255,255,0.8)]">
-                    Contenido pensado para circular en redes sin perder densidad conceptual ni identidad visual.
+                    Contenido pensado para circular en redes sin perder densidad
+                    conceptual ni identidad visual.
                   </p>
                 </div>
               </article>
@@ -460,7 +500,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="border-y border-[var(--color-line)] bg-[var(--color-blue)] text-white" id="alianzas">
+        <section
+          className="border-y border-[var(--color-line)] bg-[var(--color-blue)] text-white"
+          id="alianzas"
+        >
           <div className="mx-auto w-[min(1220px,92vw)] py-16 md:py-24">
             <div className="grid gap-8 md:grid-cols-[0.9fr_1.1fr]">
               <div>
@@ -472,15 +515,19 @@ export default function Home() {
                 </h2>
               </div>
               <p className="max-w-3xl text-lg leading-8 text-[rgba(255,255,255,0.8)]">
-                El deck de sponsors que compartiste ya marcaba esa necesidad. La web ahora acompana esa logica:
-                presenta una identidad mas seria, ordena mejor el valor del club y deja espacio para partners,
+                El deck de sponsors que compartiste ya marcaba esa necesidad. La
+                web ahora acompana esa logica: presenta una identidad mas seria,
+                ordena mejor el valor del club y deja espacio para partners,
                 speakers y apoyos institucionales.
               </p>
             </div>
 
             <div className="mt-12 grid gap-5 md:grid-cols-3">
               {aliados.map((item) => (
-                <article key={item.titulo} className="border border-white/12 bg-[rgba(7,19,43,0.55)] p-6">
+                <article
+                  key={item.titulo}
+                  className="border border-white/12 bg-[rgba(7,19,43,0.55)] p-6"
+                >
                   <p className="text-xs font-bold uppercase tracking-[0.24em] text-[var(--color-gold)]">
                     {item.titulo}
                   </p>
@@ -493,7 +540,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="mx-auto w-[min(1220px,92vw)] py-16 md:py-24" id="comunidad">
+        <section
+          className="mx-auto w-[min(1220px,92vw)] py-16 md:py-24"
+          id="comunidad"
+        >
           <div className="grid gap-8 md:grid-cols-[0.86fr_1.14fr]">
             <div>
               <p className="text-sm font-bold uppercase tracking-[0.28em] text-[var(--color-blue)]">
@@ -503,8 +553,9 @@ export default function Home() {
                 Una presencia digital mas solida, consistente y facil de seguir.
               </h2>
               <p className="mt-5 max-w-xl text-lg leading-8 text-[var(--color-muted)]">
-                La comunidad es parte central del proyecto. Por eso la web deja de esconder los accesos y los
-                convierte en un bloque protagonista, claro y alineado con la marca.
+                La comunidad es parte central del proyecto. Por eso la web deja
+                de esconder los accesos y los convierte en un bloque
+                protagonista, claro y alineado con la marca.
               </p>
             </div>
 
@@ -537,7 +588,8 @@ export default function Home() {
                   hola@clubdefinanzasuba.com
                 </span>
                 <span className="text-base leading-7 text-[var(--color-muted)]">
-                  Consultas, alianzas, workshops, charlas y propuestas de colaboracion.
+                  Consultas, alianzas, workshops, charlas y propuestas de
+                  colaboracion.
                 </span>
               </a>
             </div>
@@ -545,11 +597,16 @@ export default function Home() {
 
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             {faqs.map((item) => (
-              <article key={item.pregunta} className="border-t-4 border-[var(--color-blue)] bg-white p-6 shadow-[0_18px_40px_rgba(10,28,64,0.05)]">
+              <article
+                key={item.pregunta}
+                className="border-t-4 border-[var(--color-blue)] bg-white p-6 shadow-[0_18px_40px_rgba(10,28,64,0.05)]"
+              >
                 <p className="text-xs font-bold uppercase tracking-[0.22em] text-[var(--color-gold-dark)]">
                   {item.pregunta}
                 </p>
-                <p className="mt-4 text-lg leading-8 text-[var(--color-muted)]">{item.respuesta}</p>
+                <p className="mt-4 text-lg leading-8 text-[var(--color-muted)]">
+                  {item.respuesta}
+                </p>
               </article>
             ))}
           </div>
@@ -558,7 +615,9 @@ export default function Home() {
 
       <footer className="border-t border-[var(--color-line)] bg-[#eee7d8]">
         <div className="mx-auto flex w-[min(1220px,92vw)] flex-col gap-4 py-8 text-sm text-[var(--color-muted)] md:flex-row md:items-center md:justify-between">
-          <p>Club de Finanzas UBA. Identidad editorial e institucional reforzada.</p>
+          <p>
+            Club de Finanzas UBA. Identidad editorial e institucional reforzada.
+          </p>
           <a
             href="https://roxiumlabs.com"
             target="_blank"
