@@ -1,5 +1,25 @@
 @import "tailwindcss";
 
+:root {
+  --color-cream: #f7f4ec;
+  --color-ink: #14233f;
+  --color-muted: #556278;
+  --color-line: #ddd5c4;
+  --color-blue: #123f89;
+  --color-blue-strong: #0d2e65;
+  --color-gold: #f3b24a;
+  --color-gold-dark: #b46c14;
+}
+
 html {
   scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(18, 63, 137, 0.18);
+  color: var(--color-ink);
 }

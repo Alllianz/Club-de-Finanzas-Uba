@@ -1,23 +1,23 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
+import { Bodoni_Moda, Manrope } from "next/font/google";
 import "./globals.css";
 
-const titleFont = Cormorant_Garamond({
-  variable: "--font-title",
+const displayFont = Bodoni_Moda({
+  variable: "--font-display",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
 
-const bodyFont = Plus_Jakarta_Sans({
+const bodyFont = Manrope({
   variable: "--font-body",
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
-  title: "Club de Finanzas",
+  title: "Club de Finanzas UBA",
   description:
-    "Comunidad autoconvocada de educacion financiera impulsada por estudiantes y graduados de universidades nacionales.",
+    "Plataforma editorial y academica de finanzas impulsada por estudiantes y graduados vinculados a la UBA.",
 };
 
 export default function RootLayout({
@@ -26,8 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${titleFont.variable} ${bodyFont.variable}`}>
-      <body className="bg-[#f6f3ea] text-[#202533] antialiased [font-family:var(--font-body),sans-serif]">
+    <html lang="es" className={`${displayFont.variable} ${bodyFont.variable}`}>
+      <body className="bg-[var(--color-cream)] text-[var(--color-ink)] antialiased [font-family:var(--font-body),sans-serif]">
         {children}
       </body>
     </html>
