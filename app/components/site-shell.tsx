@@ -286,6 +286,11 @@ export function SiteFooter() {
               Roxium
             </a>
           </p>
+          <p className="mt-6 text-[10px] tracking-[0.22em] text-white/20">
+            <Link href="/auth/login" className="transition hover:text-white/45">
+              autogestion
+            </Link>
+          </p>
         </div>
       </div>
     </footer>

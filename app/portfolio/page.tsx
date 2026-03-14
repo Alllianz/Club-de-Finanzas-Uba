@@ -5,9 +5,12 @@ import {
   SiteFooter,
   SiteHeader,
 } from "../components/site-shell";
-import { portfolioFeed, portfolioIntro } from "../site-data";
+import { getPortfolioFeed } from "../lib/public-content";
+import { portfolioIntro } from "../site-data";
 
-export default function PortfolioPage() {
+export default async function PortfolioPage() {
+  const portfolioFeed = await getPortfolioFeed();
+
   return (
     <div className="min-h-screen text-white">
       <SiteHeader currentPath="/portfolio" />

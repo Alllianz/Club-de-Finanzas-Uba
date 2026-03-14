@@ -6,9 +6,11 @@ import {
   SiteFooter,
   SiteHeader,
 } from "./components/site-shell";
-import { homeFeed, homeFeatured } from "./site-data";
+import { getHomeContent } from "./lib/public-content";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const { featured, feed } = await getHomeContent();
+
   return (
     <div className="min-h-screen text-white">
       <SiteHeader currentPath="/" />
@@ -19,7 +21,7 @@ export default function HomePage() {
       />
 
       <main className="mx-auto w-[min(1240px,92vw)] space-y-14 py-12 md:space-y-18 md:py-16">
-        <FeaturedStory story={homeFeatured} />
+        <FeaturedStory story={featured} />
 
         <section className="space-y-8">
           <SectionLabel
@@ -27,7 +29,7 @@ export default function HomePage() {
             title="Publicaciones anteriores"
             description="Un feed de tarjetas con ritmo visual parecido a un medio o una biblioteca de informes. Cada pieza mantiene categoria, fecha y salida directa al contenido."
           />
-          <FeedGrid items={homeFeed} />
+          <FeedGrid items={feed} />
         </section>
       </main>
 

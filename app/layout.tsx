@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Sora } from "next/font/google";
+import { Space_Grotesk, Sora, Geist } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./providers";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const displayFont = Sora({
   variable: "--font-display",
@@ -26,9 +30,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${displayFont.variable} ${bodyFont.variable}`}>
+    <html lang="es" className={cn(displayFont.variable, bodyFont.variable, "font-sans", geist.variable)}>
       <body className="bg-[var(--color-bg)] text-[var(--color-text)] antialiased [font-family:var(--font-body),sans-serif]">
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

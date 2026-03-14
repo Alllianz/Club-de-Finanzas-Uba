@@ -5,9 +5,12 @@ import {
   SiteFooter,
   SiteHeader,
 } from "../components/site-shell";
-import { researchFeed, researchIntro } from "../site-data";
+import { getResearchFeed } from "../lib/public-content";
+import { researchIntro } from "../site-data";
 
-export default function ResearchPage() {
+export default async function ResearchPage() {
+  const researchFeed = await getResearchFeed();
+
   return (
     <div className="min-h-screen text-white">
       <SiteHeader currentPath="/research" />
