@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "./config";
+﻿import { API_BASE_URL } from "./config";
 import type { FeedEntry } from "../site-data";
 import {
   homeFeed,
@@ -6,7 +6,7 @@ import {
   portfolioFeed,
   researchFeed,
 } from "../site-data";
-import type { Article } from "./types";
+import type { Article, ArticleSection } from "./types";
 
 type PublicArticlesResponse = {
   items: Article[];
@@ -51,16 +51,23 @@ async function fetchPublicArticles(params: Record<string, string | number | bool
   return (await response.json()) as PublicArticlesResponse;
 }
 
-export async function getHomeContent() {
+async function getSectionContent(params: {
+  section: ArticleSection;
+  fallbackFeatured: FeedEntry;
+  fallbackFeed: FeedEntry[];
+  limit?: number;
+}) {
+  const { section, fallbackFeatured, fallbackFeed, limit = 24 } = params;
+
   try {
     const [featuredResponse, feedResponse] = await Promise.all([
-      fetchPublicArticles({ section: "HOME", featured: true, limit: 1 }),
-      fetchPublicArticles({ section: "HOME", limit: 12 }),
+      fetchPublicArticles({ section, featured: true, limit: 1 }),
+      fetchPublicArticles({ section, limit }),
     ]);
 
     const featured = featuredResponse.items[0]
       ? toFeedEntry(featuredResponse.items[0])
-      : homeFeatured;
+      : fallbackFeatured;
 
     const feedItems = feedResponse.items
       .filter((item) => !item.isFeatured)
@@ -68,32 +75,38 @@ export async function getHomeContent() {
 
     return {
       featured,
-      feed: feedItems.length > 0 ? feedItems : homeFeed,
+      feed: feedItems.length > 0 ? feedItems : fallbackFeed,
     };
   } catch {
     return {
-      featured: homeFeatured,
-      feed: homeFeed,
+      featured: fallbackFeatured,
+      feed: fallbackFeed,
     };
   }
 }
 
-export async function getPortfolioFeed() {
-  try {
-    const response = await fetchPublicArticles({ section: "PORTFOLIO", limit: 24 });
-    const items = response.items.map(toFeedEntry);
-    return items.length > 0 ? items : portfolioFeed;
-  } catch {
-    return portfolioFeed;
-  }
+export async function getHomeContent() {
+  return getSectionContent({
+    section: "HOME",
+    fallbackFeatured: homeFeatured,
+    fallbackFeed: homeFeed,
+    limit: 12,
+  });
 }
 
-export async function getResearchFeed() {
-  try {
-    const response = await fetchPublicArticles({ section: "RESEARCH", limit: 24 });
-    const items = response.items.map(toFeedEntry);
-    return items.length > 0 ? items : researchFeed;
-  } catch {
-    return researchFeed;
-  }
+export async function getPortfolioContent() {
+  return getSectionContent({
+    section: "PORTFOLIO",
+    fallbackFeatured: portfolioFeed[0] ?? homeFeatured,
+    fallbackFeed: portfolioFeed,
+  });
 }
+
+export async function getResearchContent() {
+  return getSectionContent({
+    section: "RESEARCH",
+    fallbackFeatured: researchFeed[0] ?? homeFeatured,
+    fallbackFeed: researchFeed,
+  });
+}
+

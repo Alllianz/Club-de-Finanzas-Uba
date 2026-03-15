@@ -30,7 +30,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={cn(displayFont.variable, bodyFont.variable, "font-sans", geist.variable)}>
+    <html
+      lang="es"
+      className={cn("dark", displayFont.variable, bodyFont.variable, "font-sans", geist.variable)}
+    >
       <body className="bg-[var(--color-bg)] text-[var(--color-text)] antialiased [font-family:var(--font-body),sans-serif]">
         <Providers>{children}</Providers>
       </body>

@@ -1,4 +1,4 @@
-﻿export type Role = "ADMIN" | "EDITOR";
+export type Role = "ADMIN" | "EDITOR";
 
 export type AuthUser = {
   id: string;
@@ -31,3 +31,14 @@ export type Article = {
   createdAt: string;
   updatedAt: string;
 };
+export type ArticleAuthor = {
+  id: string;
+  email: string;
+  fullName: string;
+  role: Role;
+};
+
+export type AdminArticle = Article & {
+  author?: ArticleAuthor;
+};
+

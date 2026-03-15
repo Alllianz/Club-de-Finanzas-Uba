@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import { useAuth } from "../context/AuthContext";
 import type { Role } from "../lib/types";
@@ -20,6 +20,7 @@ const navItems = [
 
 export function BackofficeShell({ title, subtitle, children }: BackofficeShellProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const { user, loading, logout } = useAuth();
 
   if (loading) {
@@ -76,7 +77,10 @@ export function BackofficeShell({ title, subtitle, children }: BackofficeShellPr
           </Link>
 
           <button
-            onClick={() => void logout()}
+            onClick={async () => {
+              await logout();
+              router.push("/");
+            }}
             className="rounded-full border border-red-300/40 px-4 py-2 text-sm text-red-200 transition hover:border-red-200 hover:text-red-100"
           >
             Cerrar sesion
@@ -88,3 +92,5 @@ export function BackofficeShell({ title, subtitle, children }: BackofficeShellPr
     </main>
   );
 }
+
+

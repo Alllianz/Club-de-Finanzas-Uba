@@ -1,12 +1,17 @@
-﻿"use client";
+"use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../context/AuthContext";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function LoginPage() {
-  const { requestOtp, setEmail } = useAuth();
+  const { requestOtp, setEmail, user, loading: authLoading } = useAuth();
   const router = useRouter();
   const [email, setEmailLocal] = useState("");
   const [loading, setLoading] = useState(false);
@@ -30,51 +35,61 @@ export default function LoginPage() {
     }
   };
 
+
+  useEffect(() => {
+    if (authLoading) return;
+    if (!user) return;
+    router.replace(user.role === "ADMIN" ? "/admin" : "/admin/articles");
+  }, [authLoading, user, router]);
   return (
-    <main className="mx-auto min-h-screen w-[min(640px,92vw)] py-16 text-white">
-      <div className="rounded-[30px] border border-white/12 bg-white/[0.04] p-6 md:p-8">
-        <p className="text-xs uppercase tracking-[0.3em] text-white/45">Autogestion</p>
-        <h1 className="mt-3 text-4xl font-semibold">Ingreso al backoffice</h1>
-        <p className="mt-3 text-sm leading-7 text-white/70">
-          Paso 1 de 2. Ingresá tu email preaprobado para recibir un codigo OTP.
-        </p>
+    <main className="mx-auto min-h-screen w-[min(680px,92vw)] py-16 text-white">
+      <Card className="border-white/15 bg-black/30 text-white">
+        <CardHeader>
+          <p className="text-xs uppercase tracking-[0.3em] text-white/45">Autogestion</p>
+          <CardTitle className="text-4xl">Ingreso al backoffice</CardTitle>
+          <CardDescription className="text-white/70">
+            Paso 1 de 2. Ingresa tu email preaprobado para recibir un codigo OTP.
+          </CardDescription>
+        </CardHeader>
 
-        <form className="mt-8 space-y-4" onSubmit={onSubmit}>
-          <label className="block text-xs uppercase tracking-[0.2em] text-white/55" htmlFor="email">
-            Email de acceso
-          </label>
-          <input
-            id="email"
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmailLocal(e.target.value)}
-            className="w-full rounded-2xl border border-white/20 bg-transparent px-4 py-3 text-white outline-none transition focus:border-white/45"
-            placeholder="tu@email.com"
-          />
+        <CardContent>
+          <form className="space-y-4" onSubmit={onSubmit}>
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-xs uppercase tracking-[0.2em] text-white/60">
+                Email de acceso
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmailLocal(e.target.value)}
+                placeholder="tu@email.com"
+                className="bg-black/35 text-white placeholder:text-white/35"
+              />
+            </div>
 
-          {error ? (
-            <p className="rounded-xl border border-red-400/45 bg-red-500/10 px-3 py-2 text-sm text-red-200">{error}</p>
-          ) : null}
+            {error ? (
+              <Alert variant="destructive" className="border-red-400/55 bg-red-500/12 text-red-100">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            ) : null}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="rounded-full bg-white px-6 py-2.5 text-sm font-semibold text-slate-900 disabled:opacity-50"
-          >
-            {loading ? "Enviando codigo..." : "Enviar codigo OTP"}
-          </button>
-        </form>
+            <Button type="submit" disabled={loading} className="rounded-full bg-white text-slate-900 hover:bg-white/90">
+              {loading ? "Enviando codigo..." : "Enviar codigo OTP"}
+            </Button>
+          </form>
 
-        <div className="mt-8 rounded-2xl border border-white/10 bg-black/25 p-4">
-          <p className="text-sm font-semibold">Notas de uso</p>
-          <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-white/70">
-            <li>Solo ingresan usuarios que estén activos en el panel de usuarios.</li>
-            <li>Si no llega el mail, revisar Spam/Promociones y logs del backend.</li>
-            <li>Una vez validado el OTP, se crea la sesion por cookie segura.</li>
-          </ul>
-        </div>
-      </div>
+          <div className="mt-7 rounded-2xl border border-white/12 bg-black/25 p-4">
+            <p className="text-sm font-semibold">Notas de uso</p>
+            <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-white/70">
+              <li>Solo ingresan usuarios activos en el panel de usuarios.</li>
+              <li>Si no llega el mail, revisar Spam/Promociones y logs del backend.</li>
+              <li>Una vez validado el OTP, se crea sesion por cookie.</li>
+            </ul>
+          </div>
+        </CardContent>
+      </Card>
 
       <p className="mt-6 text-center text-xs text-white/45">
         Volver al sitio publico: <Link href="/" className="underline underline-offset-2">clubdefinanzas</Link>

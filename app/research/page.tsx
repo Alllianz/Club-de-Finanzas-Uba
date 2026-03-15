@@ -1,15 +1,16 @@
-import {
+﻿import {
+  FeaturedStory,
   FeedGrid,
   PageHero,
   SectionLabel,
   SiteFooter,
   SiteHeader,
 } from "../components/site-shell";
-import { getResearchFeed } from "../lib/public-content";
+import { getResearchContent } from "../lib/public-content";
 import { researchIntro } from "../site-data";
 
 export default async function ResearchPage() {
-  const researchFeed = await getResearchFeed();
+  const { featured, feed } = await getResearchContent();
 
   return (
     <div className="min-h-screen text-white">
@@ -20,14 +21,16 @@ export default async function ResearchPage() {
         description={researchIntro}
       />
 
-      <main className="mx-auto w-[min(1240px,92vw)] py-12 md:py-16">
+      <main className="mx-auto w-[min(1240px,92vw)] space-y-14 py-12 md:space-y-18 md:py-16">
+        <FeaturedStory story={featured} />
+
         <section className="space-y-8">
           <SectionLabel
             eyebrow="Feed del area"
             title="Research en formato biblioteca"
             description="Tomando la inspiracion del ejemplo que compartiste, este feed prioriza tarjetas limpias, categoricas y facilmente escaneables."
           />
-          <FeedGrid items={researchFeed} />
+          <FeedGrid items={feed} />
         </section>
       </main>
 
@@ -35,3 +38,4 @@ export default async function ResearchPage() {
     </div>
   );
 }
+
