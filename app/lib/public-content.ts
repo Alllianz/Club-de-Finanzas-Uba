@@ -1,16 +1,7 @@
-﻿import { API_BASE_URL } from "./config";
-import type { FeedEntry } from "../site-data";
-import {
-  homeFeed,
-  homeFeatured,
-  portfolioFeed,
-  researchFeed,
-} from "../site-data";
-import type { Article, ArticleSection } from "./types";
-
-type PublicArticlesResponse = {
-  items: Article[];
-};
+﻿import type { FeedEntry } from "../site-data";
+import { homeFeed, homeFeatured, portfolioFeed, researchFeed } from "../site-data";
+import { publicArticlesService } from "../services/public-articles-service";
+import type { Article } from "./types";
 
 const formatDate = (value: string | null): string => {
   if (!value) return "Sin fecha";
@@ -33,26 +24,8 @@ const toFeedEntry = (item: Article): FeedEntry => ({
   cta: item.ctaLabel,
 });
 
-const query = (params: Record<string, string | number | boolean | undefined>) => {
-  const search = new URLSearchParams();
-  Object.entries(params).forEach(([key, value]) => {
-    if (value === undefined) return;
-    search.set(key, String(value));
-  });
-  return search.toString();
-};
-
-async function fetchPublicArticles(params: Record<string, string | number | boolean | undefined>) {
-  const url = `${API_BASE_URL}/public/articles?${query(params)}`;
-  const response = await fetch(url, { cache: "no-store" });
-  if (!response.ok) {
-    throw new Error(`Public API error: ${response.status}`);
-  }
-  return (await response.json()) as PublicArticlesResponse;
-}
-
 async function getSectionContent(params: {
-  section: ArticleSection;
+  section: "HOME" | "PORTFOLIO" | "RESEARCH";
   fallbackFeatured: FeedEntry;
   fallbackFeed: FeedEntry[];
   limit?: number;
@@ -61,8 +34,8 @@ async function getSectionContent(params: {
 
   try {
     const [featuredResponse, feedResponse] = await Promise.all([
-      fetchPublicArticles({ section, featured: true, limit: 1 }),
-      fetchPublicArticles({ section, limit }),
+      publicArticlesService.list({ section, featured: true, limit: 1 }),
+      publicArticlesService.list({ section, limit }),
     ]);
 
     const featured = featuredResponse.items[0]
@@ -109,4 +82,3 @@ export async function getResearchContent() {
     fallbackFeed: researchFeed,
   });
 }
-

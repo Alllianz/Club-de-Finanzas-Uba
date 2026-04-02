@@ -13,11 +13,11 @@ export default async function ResearchPage() {
   const { featured, feed } = await getResearchContent();
 
   return (
-    <div className="min-h-screen text-white">
+    <div className="min-h-screen text-[var(--color-ink)]">
       <SiteHeader currentPath="/research" />
       <PageHero
         eyebrow="Research"
-        title="Informes, marcos conceptuales y analisis con tono academico."
+        title="Informes, marcos conceptuales y análisis con tono académico."
         description={researchIntro}
       />
 
@@ -26,9 +26,9 @@ export default async function ResearchPage() {
 
         <section className="space-y-8">
           <SectionLabel
-            eyebrow="Feed del area"
+            eyebrow="Feed del área"
             title="Research en formato biblioteca"
-            description="Tomando la inspiracion del ejemplo que compartiste, este feed prioriza tarjetas limpias, categoricas y facilmente escaneables."
+            description="Tomando la inspiración del ejemplo que compartiste, este feed prioriza tarjetas limpias, categóricas y fácilmente escaneables."
           />
           <FeedGrid items={feed} />
         </section>
@@ -38,4 +38,3 @@ export default async function ResearchPage() {
     </div>
   );
 }
-

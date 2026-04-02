@@ -13,11 +13,11 @@ export default async function PortfolioPage() {
   const { featured, feed } = await getPortfolioContent();
 
   return (
-    <div className="min-h-screen text-white">
+    <div className="min-h-screen text-[var(--color-ink)]">
       <SiteHeader currentPath="/portfolio" />
       <PageHero
         eyebrow="Portfolio"
-        title="Seguimiento de carteras, criterios de asignacion y lectura tactica."
+        title="Seguimiento de carteras, criterios de asignación y lectura táctica."
         description={portfolioIntro}
       />
 
@@ -26,7 +26,7 @@ export default async function PortfolioPage() {
 
         <section className="space-y-8">
           <SectionLabel
-            eyebrow="Feed del area"
+            eyebrow="Feed del área"
             title="Publicaciones de Portfolio"
             description="Este apartado tiene identidad propia dentro del sitio, pero conserva el mismo lenguaje visual que la home para que el ecosistema se sienta consistente."
           />
@@ -38,4 +38,3 @@ export default async function PortfolioPage() {
     </div>
   );
 }
-

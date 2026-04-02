@@ -42,12 +42,12 @@ export default function LoginPage() {
     router.replace(user.role === "ADMIN" ? "/admin" : "/admin/articles");
   }, [authLoading, user, router]);
   return (
-    <main className="mx-auto min-h-screen w-[min(680px,92vw)] py-16 text-white">
-      <Card className="border-white/15 bg-black/30 text-white">
+    <main className="mx-auto min-h-screen w-[min(680px,92vw)] py-16 text-[var(--color-ink)]">
+      <Card className="border-[var(--color-line)] bg-white text-[var(--color-ink)]">
         <CardHeader>
-          <p className="text-xs uppercase tracking-[0.3em] text-white/45">Autogestion</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-[var(--color-muted)]">Autogestion</p>
           <CardTitle className="text-4xl">Ingreso al backoffice</CardTitle>
-          <CardDescription className="text-white/70">
+          <CardDescription className="text-[var(--color-muted)]">
             Paso 1 de 2. Ingresa tu email preaprobado para recibir un codigo OTP.
           </CardDescription>
         </CardHeader>
@@ -55,7 +55,7 @@ export default function LoginPage() {
         <CardContent>
           <form className="space-y-4" onSubmit={onSubmit}>
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-xs uppercase tracking-[0.2em] text-white/60">
+              <Label htmlFor="email" className="text-xs uppercase tracking-[0.2em] text-[var(--color-muted)]">
                 Email de acceso
               </Label>
               <Input
@@ -65,7 +65,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmailLocal(e.target.value)}
                 placeholder="tu@email.com"
-                className="bg-black/35 text-white placeholder:text-white/35"
+                className="bg-[var(--color-bg-soft)] text-[var(--color-ink)] placeholder:text-[var(--color-muted)]"
               />
             </div>
 
@@ -75,14 +75,14 @@ export default function LoginPage() {
               </Alert>
             ) : null}
 
-            <Button type="submit" disabled={loading} className="rounded-full bg-white text-slate-900 hover:bg-white/90">
+            <Button type="submit" disabled={loading} className="rounded-full bg-[var(--color-blue)] text-[#ffffff] hover:bg-[var(--color-blue-strong)]">
               {loading ? "Enviando codigo..." : "Enviar codigo OTP"}
             </Button>
           </form>
 
-          <div className="mt-7 rounded-2xl border border-white/12 bg-black/25 p-4">
+          <div className="mt-7 rounded-2xl border border-[var(--color-line)] bg-[var(--color-bg-soft)] p-4">
             <p className="text-sm font-semibold">Notas de uso</p>
-            <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-white/70">
+            <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-[var(--color-muted)]">
               <li>Solo ingresan usuarios activos en el panel de usuarios.</li>
               <li>Si no llega el mail, revisar Spam/Promociones y logs del backend.</li>
               <li>Una vez validado el OTP, se crea sesion por cookie.</li>
@@ -91,7 +91,7 @@ export default function LoginPage() {
         </CardContent>
       </Card>
 
-      <p className="mt-6 text-center text-xs text-white/45">
+      <p className="mt-6 text-center text-xs text-[var(--color-muted)]">
         Volver al sitio publico: <Link href="/" className="underline underline-offset-2">clubdefinanzas</Link>
       </p>
     </main>

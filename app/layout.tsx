@@ -21,7 +21,7 @@ const bodyFont = Space_Grotesk({
 export const metadata: Metadata = {
   title: "Club de Finanzas UBA",
   description:
-    "Sitio editorial del Club de Finanzas UBA con home tipo feed, secciones por area y pagina institucional.",
+    "Sitio editorial del Club de Finanzas UBA con home tipo feed, secciones por área y página institucional.",
 };
 
 export default function RootLayout({

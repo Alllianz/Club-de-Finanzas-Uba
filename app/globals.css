@@ -5,12 +5,16 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --color-bg: #000000;
-  --color-bg-soft: #0c1129;
-  --color-bg-card: rgba(8, 12, 28, 0.74);
-  --color-text: #f4f7ff;
-  --color-line: rgba(255, 255, 255, 0.1);
-  --color-accent: #2a3796;
+  --color-bg: #f7f4ec;
+  --color-bg-soft: #f2ede1;
+  --color-bg-card: #ffffff;
+  --color-text: #14233f;
+  --color-ink: #14233f;
+  --color-muted: #556278;
+  --color-line: #ddd5c4;
+  --color-blue: #123f89;
+  --color-blue-strong: #0d2e65;
+  --color-accent: #123f89;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -47,19 +51,19 @@
 
 html {
   scroll-behavior: smooth;
-  background: #000000;
+  background: var(--color-bg);
 }
 
 body {
   min-height: 100vh;
   text-rendering: optimizeLegibility;
+  background: linear-gradient(180deg, #f9f6ef 0%, #f6f2e8 100%);
   color: var(--color-text);
-  background-attachment: fixed;
 }
 
 ::selection {
-  background: rgba(141, 181, 255, 0.28);
-  color: var(--color-text);
+  background: rgba(18, 63, 137, 0.2);
+  color: var(--color-ink);
 }
 
 * {
@@ -171,9 +175,33 @@ a {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    background: var(--color-bg);
+    color: var(--color-text);
   }
   html {
     @apply font-sans;
   }
+}
+
+/* Force dark text on light theme in any remaining admin/public modules */
+[class~="text-white"] {
+  color: var(--color-ink) !important;
+}
+
+[class*="text-white/"] {
+  color: var(--color-muted) !important;
+}
+
+[class*="placeholder:text-white"]::placeholder {
+  color: rgba(85, 98, 120, 0.65) !important;
+}
+
+[class*="bg-black/"],
+[class*="bg-[#090d1f]"],
+[class*="bg-slate-950"] {
+  background-color: var(--color-bg-soft) !important;
+}
+
+[class*="border-white/"] {
+  border-color: var(--color-line) !important;
 }

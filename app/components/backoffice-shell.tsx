@@ -25,27 +25,27 @@ export function BackofficeShell({ title, subtitle, children }: BackofficeShellPr
 
   if (loading) {
     return (
-      <main className="mx-auto min-h-screen w-[min(1100px,92vw)] py-14 text-white">
-        <p className="text-sm uppercase tracking-[0.2em] text-white/45">Backoffice</p>
+      <main className="mx-auto min-h-screen w-[min(1100px,92vw)] py-14 text-[var(--color-ink)]">
+        <p className="text-sm uppercase tracking-[0.2em] text-[var(--color-muted)]">Backoffice</p>
         <h1 className="mt-3 text-4xl font-semibold">Validando sesion...</h1>
       </main>
     );
   }
 
   return (
-    <main className="mx-auto min-h-screen w-[min(1100px,92vw)] py-10 text-white">
-      <header className="rounded-[28px] border border-white/12 bg-white/[0.04] p-5 md:p-6">
+    <main className="mx-auto min-h-screen w-[min(1100px,92vw)] py-10 text-[var(--color-ink)]">
+      <header className="rounded-[28px] border border-[var(--color-line)] bg-white p-5 md:p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p className="text-xs uppercase tracking-[0.26em] text-white/45">Backoffice · Club de Finanzas</p>
+            <p className="text-xs uppercase tracking-[0.26em] text-[var(--color-muted)]">Backoffice · Club de Finanzas</p>
             <h1 className="mt-3 text-3xl font-semibold md:text-4xl">{title}</h1>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-white/68">{subtitle}</p>
+            <p className="mt-2 max-w-2xl text-sm leading-7 text-[var(--color-muted)]">{subtitle}</p>
           </div>
 
-          <div className="rounded-2xl border border-white/15 bg-black/25 px-4 py-3 text-sm">
-            <p className="text-white/55">Sesion activa</p>
-            <p className="font-semibold text-white">{user?.fullName || user?.email || "Usuario"}</p>
-            <p className="text-white/65">{user?.role || "-"}</p>
+          <div className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-bg-soft)] px-4 py-3 text-sm">
+            <p className="text-[var(--color-muted)]">Sesion activa</p>
+            <p className="font-semibold text-[var(--color-ink)]">{user?.fullName || user?.email || "Usuario"}</p>
+            <p className="text-[var(--color-muted)]">{user?.role || "-"}</p>
           </div>
         </div>
 
@@ -60,8 +60,8 @@ export function BackofficeShell({ title, subtitle, children }: BackofficeShellPr
                   href={item.href}
                   className={`rounded-full px-4 py-2 text-sm transition ${
                     active
-                      ? "bg-white text-slate-900"
-                      : "border border-white/15 text-white/80 hover:border-white/30 hover:text-white"
+                      ? "border border-[var(--color-blue)] bg-[var(--color-blue)] text-[#ffffff]"
+                      : "border border-[var(--color-line)] text-[var(--color-muted)] hover:border-[var(--color-blue)] hover:text-[var(--color-blue)]"
                   }`}
                 >
                   {item.label}
@@ -71,7 +71,7 @@ export function BackofficeShell({ title, subtitle, children }: BackofficeShellPr
 
           <Link
             href="/"
-            className="rounded-full border border-white/15 px-4 py-2 text-sm text-white/70 transition hover:border-white/30 hover:text-white"
+            className="rounded-full border border-[var(--color-line)] px-4 py-2 text-sm text-[var(--color-muted)] transition hover:border-[var(--color-blue)] hover:text-[var(--color-blue)]"
           >
             Ver sitio publico
           </Link>
@@ -92,5 +92,3 @@ export function BackofficeShell({ title, subtitle, children }: BackofficeShellPr
     </main>
   );
 }
-
-

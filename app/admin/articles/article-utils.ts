@@ -1,10 +1,7 @@
+import { getDomainFromUrl } from "../../lib/url";
+
 export function getDomain(value: string) {
-  try {
-    const url = new URL(value);
-    return url.hostname.replace(/^www\./, "");
-  } catch {
-    return "link invalido";
-  }
+  return getDomainFromUrl(value, "link invalido");
 }
 
 export function isImageUrl(value: string) {

@@ -29,30 +29,22 @@ type PeopleGridProps = {
 
 export function SiteHeader({ currentPath }: NavProps) {
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[rgba(0,0,0,0.62)] backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-[var(--color-line)] bg-[linear-gradient(180deg,rgba(248,246,239,0.95),rgba(244,239,229,0.9))] backdrop-blur-xl">
       <div className="mx-auto flex w-[min(1240px,92vw)] flex-wrap items-center justify-between gap-4 py-4">
-        <Link href="/" className="flex items-center gap-4">
-          <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl border border-white/12 bg-white/6 p-2">
+        <Link href="/" className="flex items-center">
+          <div className="flex h-20 w-[380px] items-center justify-start overflow-hidden">
             <Image
-              src="/logo.png"
+              src="/clubdefinanzasubalogohorizontal.png"
               alt="Club de Finanzas UBA"
-              width={56}
-              height={56}
-              className="h-full w-full object-contain"
+              width={500}
+              height={114}
+              className="h-full w-full object-contain object-left"
               priority
             />
           </div>
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-white/45">
-              Club de Finanzas
-            </p>
-            <p className="text-lg font-semibold tracking-[0.08em] text-white">
-              UBA
-            </p>
-          </div>
         </Link>
 
-        <nav className="flex flex-wrap items-center gap-2 text-sm text-white/72">
+        <nav className="flex flex-wrap items-center gap-2 text-sm text-[var(--color-muted)]">
           {navigation.map((item) => {
             const active = currentPath === item.href;
 
@@ -62,8 +54,8 @@ export function SiteHeader({ currentPath }: NavProps) {
                 href={item.href}
                 className={`rounded-full px-4 py-2 transition ${
                   active
-                    ? "bg-white text-slate-950"
-                    : "border border-white/10 bg-white/4 hover:border-white/24 hover:bg-white/8"
+                    ? "border border-[var(--color-blue)] bg-[var(--color-blue)] text-[#ffffff]"
+                    : "border border-[var(--color-line)] bg-white/80 hover:border-[var(--color-blue)] hover:text-[var(--color-blue)]"
                 }`}
               >
                 {item.label}
@@ -78,27 +70,27 @@ export function SiteHeader({ currentPath }: NavProps) {
 
 export function PageHero({ eyebrow, title, description, aside }: HeroProps) {
   return (
-    <section className="relative overflow-hidden border-b border-white/10">
+    <section className="relative overflow-hidden border-b border-[var(--color-line)] bg-[radial-gradient(circle_at_top_left,rgba(30,78,162,0.14),transparent_35%),linear-gradient(180deg,#f8f6ef_0%,#f2ede1_100%)]">
       <div className="mx-auto grid w-[min(1240px,92vw)] gap-8 py-14 md:grid-cols-[minmax(0,1.2fr)_340px] md:py-20">
         <div className="relative animate-fade-up">
-          <p className="text-xs font-semibold uppercase tracking-[0.34em] text-white/50">
+          <p className="text-xs font-semibold uppercase tracking-[0.34em] text-[var(--color-blue)]">
             {eyebrow}
           </p>
-          <h1 className="mt-5 max-w-4xl font-[family:var(--font-display)] text-5xl leading-[0.9] text-white sm:text-6xl md:text-7xl">
+          <h1 className="mt-5 max-w-4xl font-[family:var(--font-display)] text-5xl leading-[0.9] text-[var(--color-ink)] sm:text-6xl md:text-7xl">
             {title}
           </h1>
-          <p className="mt-6 max-w-3xl text-lg leading-8 text-white/72 md:text-xl">
+          <p className="mt-6 max-w-3xl text-lg leading-8 text-[var(--color-muted)] md:text-xl">
             {description}
           </p>
         </div>
 
-        <div className="relative animate-fade-up-delayed rounded-[32px] border border-white/10 bg-[var(--color-bg-card)] p-6 text-white/80 shadow-[0_24px_80px_rgba(0,0,0,0.35)]">
+        <div className="relative animate-fade-up-delayed rounded-[32px] border border-[var(--color-line)] bg-white p-6 text-[var(--color-muted)] shadow-[0_20px_60px_rgba(18,35,63,0.12)]">
           {aside ?? (
             <>
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/45">
+              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--color-blue)]">
                 Club de Finanzas UBA
               </p>
-              <p className="mt-4 text-2xl leading-tight text-white">
+              <p className="mt-4 text-2xl leading-tight text-[var(--color-ink)]">
                 Una web pensada como medio: noticia principal arriba y feed real debajo.
               </p>
             </>
@@ -111,25 +103,25 @@ export function PageHero({ eyebrow, title, description, aside }: HeroProps) {
 
 export function FeaturedStory({ story }: FeaturedStoryProps) {
   return (
-    <article className="relative overflow-hidden rounded-[36px] border border-white/10 bg-[linear-gradient(135deg,rgba(6,9,20,0.92),rgba(14,20,48,0.82))] p-8 shadow-[0_30px_100px_rgba(0,0,0,0.42)] md:p-10">
-      <div className="absolute inset-y-0 right-0 hidden w-1/3 bg-[linear-gradient(90deg,rgba(0,0,0,0),rgba(42,55,150,0.24))] md:block" />
-      <p className="text-xs font-semibold uppercase tracking-[0.32em] text-[rgba(160,185,255,0.92)]">
+    <article className="relative overflow-hidden rounded-[36px] border border-[var(--color-line)] bg-[linear-gradient(135deg,#ffffff,#f5f8ff)] p-8 shadow-[0_20px_70px_rgba(18,35,63,0.12)] md:p-10">
+      <div className="absolute inset-y-0 right-0 hidden w-1/3 bg-[linear-gradient(90deg,rgba(18,63,137,0),rgba(18,63,137,0.12))] md:block" />
+      <p className="text-xs font-semibold uppercase tracking-[0.32em] text-[var(--color-blue)]">
         {story.category}
       </p>
-      <p className="mt-4 text-sm uppercase tracking-[0.18em] text-white/45">
+      <p className="mt-4 text-sm uppercase tracking-[0.18em] text-[var(--color-muted)]">
         {story.date}
       </p>
-      <h2 className="mt-4 max-w-4xl font-[family:var(--font-display)] text-4xl leading-tight text-white md:text-6xl">
+      <h2 className="mt-4 max-w-4xl font-[family:var(--font-display)] text-4xl leading-tight text-[var(--color-ink)] md:text-6xl">
         {story.title}
       </h2>
-      <p className="mt-6 max-w-3xl text-lg leading-8 text-white/72">
+      <p className="mt-6 max-w-3xl text-lg leading-8 text-[var(--color-muted)]">
         {story.excerpt}
       </p>
       <a
         href={story.href}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-8 inline-flex rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-[#dfe7ff]"
+        className="mt-8 inline-flex rounded-full bg-[var(--color-blue)] px-6 py-3 text-sm font-semibold text-[#ffffff] transition hover:bg-[var(--color-blue-strong)]"
       >
         {story.cta}
       </a>
@@ -143,27 +135,27 @@ export function FeedGrid({ items }: FeedGridProps) {
       {items.map((item) => (
         <article
           key={`${item.category}-${item.title}`}
-          className="group flex min-h-[320px] flex-col rounded-[28px] border border-white/10 bg-white/[0.05] p-6 transition hover:-translate-y-1 hover:border-white/18 hover:bg-white/[0.07]"
+          className="group flex min-h-[320px] flex-col rounded-[28px] border border-[var(--color-line)] bg-white p-6 transition hover:-translate-y-1 hover:border-[var(--color-blue)]"
         >
           <div className="flex items-start justify-between gap-4">
-            <span className="rounded-full border border-white/10 bg-white/8 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[rgba(160,185,255,0.92)]">
+            <span className="rounded-full border border-[rgba(18,63,137,0.2)] bg-[rgba(18,63,137,0.08)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-blue)]">
               {item.category}
             </span>
-            <span className="text-xs uppercase tracking-[0.18em] text-white/40">
+            <span className="text-xs uppercase tracking-[0.18em] text-[var(--color-muted)]">
               {item.date}
             </span>
           </div>
-          <h3 className="mt-6 text-3xl leading-tight font-semibold text-white">
+          <h3 className="mt-6 text-3xl leading-tight font-semibold text-[var(--color-ink)]">
             {item.title}
           </h3>
-          <p className="mt-4 flex-1 text-base leading-7 text-white/68">
+          <p className="mt-4 flex-1 text-base leading-7 text-[var(--color-muted)]">
             {item.excerpt}
           </p>
           <a
             href={item.href}
             target="_blank"
             rel="noopener noreferrer"
-                className="mt-6 inline-flex w-fit rounded-full border border-white/14 px-4 py-2 text-sm font-medium text-white transition group-hover:border-[rgba(160,185,255,0.92)] group-hover:text-[#dfe7ff]"
+            className="mt-6 inline-flex w-fit rounded-full border border-[var(--color-line)] px-4 py-2 text-sm font-medium text-[var(--color-blue)] transition group-hover:border-[var(--color-blue)] group-hover:bg-[rgba(18,63,137,0.06)]"
           >
             {item.cta}
           </a>
@@ -184,13 +176,13 @@ export function SectionLabel({
 }) {
   return (
     <div className="max-w-4xl">
-      <p className="text-xs font-semibold uppercase tracking-[0.34em] text-white/45">
+      <p className="text-xs font-semibold uppercase tracking-[0.34em] text-[var(--color-blue)]">
         {eyebrow}
       </p>
-      <h2 className="mt-4 font-[family:var(--font-display)] text-4xl leading-tight text-white md:text-5xl">
+      <h2 className="mt-4 font-[family:var(--font-display)] text-4xl leading-tight text-[var(--color-ink)] md:text-5xl">
         {title}
       </h2>
-      <p className="mt-5 text-lg leading-8 text-white/68">{description}</p>
+      <p className="mt-5 text-lg leading-8 text-[var(--color-muted)]">{description}</p>
     </div>
   );
 }
@@ -201,20 +193,20 @@ export function PeopleGrid({ people }: PeopleGridProps) {
       {people.map((person) => (
         <article
           key={person.name}
-          className="rounded-[28px] border border-white/10 bg-white/[0.05] p-5"
+          className="rounded-[28px] border border-[var(--color-line)] bg-white p-5"
         >
           <div className="flex items-center gap-4">
-            <div className="grid h-20 w-20 place-items-center rounded-[24px] bg-[linear-gradient(135deg,#2a3796,#111827)] text-2xl font-semibold text-white">
+            <div className="grid h-20 w-20 place-items-center rounded-[24px] bg-[linear-gradient(135deg,#1d4f9f,#12336a)] text-2xl font-semibold text-[#ffffff]">
               {person.initials}
             </div>
             <div>
-              <h3 className="text-2xl font-semibold text-white">{person.name}</h3>
-              <p className="text-sm uppercase tracking-[0.18em] text-[rgba(160,185,255,0.92)]">
+              <h3 className="text-2xl font-semibold text-[var(--color-ink)]">{person.name}</h3>
+              <p className="text-sm uppercase tracking-[0.18em] text-[var(--color-blue)]">
                 {person.role}
               </p>
             </div>
           </div>
-          <p className="mt-5 text-base leading-7 text-white/68">{person.bio}</p>
+          <p className="mt-5 text-base leading-7 text-[var(--color-muted)]">{person.bio}</p>
         </article>
       ))}
     </div>
@@ -223,32 +215,31 @@ export function PeopleGrid({ people }: PeopleGridProps) {
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-white/10 bg-black/40">
+    <footer className="border-t border-[var(--color-line)] bg-[linear-gradient(180deg,#f7f4ec,#efe8d8)]">
       <div className="mx-auto grid w-[min(1240px,92vw)] gap-8 py-10 md:grid-cols-[1.2fr_0.8fr_0.9fr]">
         <div>
           <div className="flex items-center gap-4">
-            <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl border border-white/12 bg-white/6 p-2">
+            <div className="flex h-16 w-[300px] items-center justify-start overflow-hidden">
               <Image
-                src="/logo.png"
+                src="/clubdefinanzasubalogohorizontal.png"
                 alt="Club de Finanzas UBA"
-                width={56}
-                height={56}
-                className="h-full w-full object-contain"
+                width={500}
+                height={114}
+                className="h-full w-full object-contain object-left"
               />
             </div>
-            <p className="text-lg font-semibold text-white">Club de Finanzas UBA</p>
           </div>
-          <p className="mt-3 max-w-xl text-sm leading-7 text-white/60">
-            Plataforma editorial y academica con foco en portfolio, research, noticias y comunidad.
+          <p className="mt-3 max-w-xl text-sm leading-7 text-[var(--color-muted)]">
+            Plataforma editorial y académica con foco en Portfolio, Research, noticias y comunidad.
           </p>
-          <p className="mt-6 text-xs uppercase tracking-[0.22em] text-white/35">
-            Ubicacion
+          <p className="mt-6 text-xs uppercase tracking-[0.22em] text-[var(--color-blue)]">
+            Ubicación
           </p>
-          <p className="mt-2 text-sm text-white/70">Ciudad Autonoma de Buenos Aires, Argentina</p>
+          <p className="mt-2 text-sm text-[var(--color-muted)]">Ciudad Autónoma de Buenos Aires, Argentina.</p>
         </div>
 
         <div>
-          <p className="text-xs uppercase tracking-[0.22em] text-white/35">
+          <p className="text-xs uppercase tracking-[0.22em] text-[var(--color-blue)]">
             Contacto
           </p>
           <div className="mt-4 space-y-3">
@@ -258,9 +249,9 @@ export function SiteFooter() {
                 href={item.href}
                 target={item.href.startsWith("http") ? "_blank" : undefined}
                 rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="block text-sm text-white/72 transition hover:text-white"
+                className="block text-sm text-[var(--color-muted)] transition hover:text-[var(--color-blue)]"
               >
-                <span className="font-semibold text-white">{item.label}</span>
+                <span className="font-semibold text-[var(--color-ink)]">{item.label}</span>
                 {" · "}
                 {item.value}
               </a>
@@ -269,26 +260,26 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <p className="text-xs uppercase tracking-[0.22em] text-white/35">
-            Informacion
+          <p className="text-xs uppercase tracking-[0.22em] text-[var(--color-blue)]">
+            Información
           </p>
-          <p className="mt-4 text-sm leading-7 text-white/58">
-            Descargo de responsabilidad: el contenido publicado tiene fines educativos e informativos. No constituye recomendacion de inversion ni asesoramiento financiero personalizado.
+          <p className="mt-4 text-sm leading-7 text-[var(--color-muted)]">
+            Descargo de responsabilidad: el contenido publicado tiene fines educativos e informativos. No constituye recomendación de inversión ni asesoramiento financiero personalizado.
           </p>
-          <p className="mt-6 text-sm text-white/72">
+          <p className="mt-6 text-sm text-[var(--color-muted)]">
             Sitio desarrollado por{" "}
             <a
               href="https://roxiumlabs.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-semibold text-white transition hover:text-[#9cc0ff]"
+              className="font-semibold text-[var(--color-ink)] transition hover:text-[var(--color-blue)]"
             >
               Roxium
             </a>
           </p>
-          <p className="mt-6 text-[10px] tracking-[0.22em] text-white/20">
-            <Link href="/admin" className="transition hover:text-white/45">
-              autogestion
+          <p className="mt-6 text-[10px] tracking-[0.22em] text-[var(--color-muted)]/70">
+            <Link href="/admin" className="transition hover:text-[var(--color-blue)]">
+              autogestión
             </Link>
           </p>
         </div>

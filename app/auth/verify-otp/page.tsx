@@ -38,18 +38,18 @@ export default function VerifyOtpPage() {
 
   if (!safeEmail) {
     return (
-      <main className="mx-auto min-h-screen w-[min(680px,92vw)] py-16 text-white">
-        <Card className="border-white/15 bg-black/30 text-white">
+      <main className="mx-auto min-h-screen w-[min(680px,92vw)] py-16 text-[var(--color-ink)]">
+        <Card className="border-[var(--color-line)] bg-white text-[var(--color-ink)]">
           <CardHeader>
             <CardTitle>Validacion OTP</CardTitle>
-            <CardDescription className="text-white/70">
+            <CardDescription className="text-[var(--color-muted)]">
               Primero solicita el codigo desde /auth/login.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Link
               href="/auth/login"
-              className="inline-flex h-8 items-center justify-center rounded-lg border border-white/20 px-3 text-sm text-white transition hover:bg-white/10"
+              className="inline-flex h-8 items-center justify-center rounded-lg border border-[var(--color-line)] px-3 text-sm text-[var(--color-ink)] transition hover:bg-[var(--color-bg-soft)]"
             >
               Ir a login
             </Link>
@@ -60,20 +60,20 @@ export default function VerifyOtpPage() {
   }
 
   return (
-    <main className="mx-auto min-h-screen w-[min(680px,92vw)] py-16 text-white">
-      <Card className="border-white/15 bg-black/30 text-white">
+    <main className="mx-auto min-h-screen w-[min(680px,92vw)] py-16 text-[var(--color-ink)]">
+      <Card className="border-[var(--color-line)] bg-white text-[var(--color-ink)]">
         <CardHeader>
-          <p className="text-xs uppercase tracking-[0.3em] text-white/45">Autogestion</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-[var(--color-muted)]">Autogestion</p>
           <CardTitle className="text-4xl">Validar codigo OTP</CardTitle>
-          <CardDescription className="text-white/70">
-            Paso 2 de 2. Ingresa el codigo enviado a <span className="font-semibold text-white">{safeEmail}</span>.
+          <CardDescription className="text-[var(--color-muted)]">
+            Paso 2 de 2. Ingresa el codigo enviado a <span className="font-semibold text-[var(--color-ink)]">{safeEmail}</span>.
           </CardDescription>
         </CardHeader>
 
         <CardContent>
           <form className="space-y-4" onSubmit={onSubmit}>
             <div className="space-y-2">
-              <Label htmlFor="otp" className="text-xs uppercase tracking-[0.2em] text-white/60">
+              <Label htmlFor="otp" className="text-xs uppercase tracking-[0.2em] text-[var(--color-muted)]">
                 Codigo de 6 digitos
               </Label>
               <Input
@@ -84,7 +84,7 @@ export default function VerifyOtpPage() {
                 value={otp}
                 onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
                 placeholder="123456"
-                className="bg-black/35 text-center text-2xl tracking-[0.35em] text-white placeholder:text-white/35"
+                className="bg-[var(--color-bg-soft)] text-center text-2xl tracking-[0.35em] text-[var(--color-ink)] placeholder:text-[var(--color-muted)]"
               />
             </div>
 
@@ -97,7 +97,7 @@ export default function VerifyOtpPage() {
             <Button
               type="submit"
               disabled={loading || otp.length !== 6}
-              className="rounded-full bg-white text-slate-900 hover:bg-white/90"
+              className="rounded-full bg-[var(--color-blue)] text-[#ffffff] hover:bg-[var(--color-blue-strong)]"
             >
               {loading ? "Validando..." : "Ingresar al backoffice"}
             </Button>
@@ -105,7 +105,7 @@ export default function VerifyOtpPage() {
         </CardContent>
       </Card>
 
-      <p className="mt-6 text-center text-xs text-white/45">No llego el mail? Revisa Spam/Promociones.</p>
+      <p className="mt-6 text-center text-xs text-[var(--color-muted)]">No llego el mail? Revisa Spam/Promociones.</p>
     </main>
   );
 }

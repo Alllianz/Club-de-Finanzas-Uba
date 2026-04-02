@@ -12,12 +12,12 @@ export default async function HomePage() {
   const { featured, feed } = await getHomeContent();
 
   return (
-    <div className="min-h-screen text-white">
+    <div className="min-h-screen text-[var(--color-ink)]">
       <SiteHeader currentPath="/" />
       <PageHero
         eyebrow="Home"
         title="Una portada en formato feed para que el club se vea activo, actual y editorial."
-        description="La home deja de ser institucional y pasa a funcionar como medio: una noticia o invitacion destacada bien arriba, y abajo un flujo claro de publicaciones anteriores."
+        description="La home deja de ser institucional y pasa a funcionar como medio: una noticia o invitación destacada bien arriba y, abajo, un flujo claro de publicaciones anteriores."
       />
 
       <main className="mx-auto w-[min(1240px,92vw)] space-y-14 py-12 md:space-y-18 md:py-16">
@@ -27,7 +27,7 @@ export default async function HomePage() {
           <SectionLabel
             eyebrow="Archivo reciente"
             title="Publicaciones anteriores"
-            description="Un feed de tarjetas con ritmo visual parecido a un medio o una biblioteca de informes. Cada pieza mantiene categoria, fecha y salida directa al contenido."
+            description="Un feed de tarjetas con ritmo visual parecido a un medio o una biblioteca de informes. Cada pieza mantiene categoría, fecha y salida directa al contenido."
           />
           <FeedGrid items={feed} />
         </section>
