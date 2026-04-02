@@ -42,3 +42,28 @@ export type AdminArticle = Article & {
   author?: ArticleAuthor;
 };
 
+export type MarketDirection = "up" | "down" | "flat";
+export type MarketStatus = "positive" | "negative" | "neutral";
+
+export type GlobalMarketItem = {
+  symbol: string;
+  label: string;
+  value: number | null;
+  changePercent: number | null;
+  direction: MarketDirection;
+  status: MarketStatus;
+  updatedAt: string | null;
+  source: "Alpha Vantage";
+};
+
+export type GlobalMarketSection = {
+  key: "indices" | "rates" | "energy";
+  title: string;
+  items: GlobalMarketItem[];
+};
+
+export type GlobalMarketResponse = {
+  updatedAt: string;
+  sections: GlobalMarketSection[];
+  stale?: boolean;
+};

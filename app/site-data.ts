@@ -19,6 +19,8 @@ export const navigation = [
   { href: "/portfolio", label: "Portfolio" },
   { href: "/research", label: "Research" },
   { href: "/quienes-somos", label: "Quiénes somos" },
+  { href: "/ratios-cedears", label: "Ratios de cedears" },
+  { href: "/calculadora-bonos", label: "Calculadora de bonos" },
 ];
 
 export const contactLinks = [
