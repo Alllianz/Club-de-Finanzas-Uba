@@ -7,7 +7,7 @@ type PublicArticlesResponse = {
 
 export const publicArticlesService = {
   async list(params: {
-    section: "HOME" | "PORTFOLIO" | "RESEARCH";
+    section: "HOME" | "PORTFOLIO" | "RESEARCH" | "NEWS";
     featured?: boolean;
     limit?: number;
   }): Promise<PublicArticlesResponse> {

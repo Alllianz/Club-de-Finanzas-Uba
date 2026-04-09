@@ -30,9 +30,9 @@ type PeopleGridProps = {
 export function SiteHeader({ currentPath }: NavProps) {
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--color-line)] bg-[linear-gradient(180deg,rgba(248,246,239,0.95),rgba(244,239,229,0.9))] backdrop-blur-xl">
-      <div className="mx-auto flex w-[min(1240px,92vw)] flex-wrap items-center justify-between gap-4 py-4">
+      <div className="mx-auto flex w-[min(1240px,92vw)] items-center justify-between gap-3 py-3">
         <Link href="/" className="flex items-center">
-          <div className="flex h-20 w-[380px] items-center justify-start overflow-hidden">
+          <div className="flex h-16 w-[240px] items-center justify-start overflow-hidden sm:w-[280px] lg:w-[320px]">
             <Image
               src="/clubdefinanzasubalogohorizontal.png"
               alt="Club de Finanzas UBA"
@@ -44,24 +44,26 @@ export function SiteHeader({ currentPath }: NavProps) {
           </div>
         </Link>
 
-        <nav className="flex flex-wrap items-center gap-2 text-sm text-[var(--color-muted)]">
-          {navigation.map((item) => {
-            const active = currentPath === item.href;
+        <nav className="ml-auto max-w-[calc(100%-250px)] overflow-x-auto sm:max-w-[calc(100%-300px)] lg:max-w-[calc(100%-340px)]">
+          <div className="flex w-max items-center gap-1.5 whitespace-nowrap text-xs text-[var(--color-muted)] sm:text-sm">
+            {navigation.map((item) => {
+              const active = currentPath === item.href;
 
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`rounded-full px-4 py-2 transition ${
-                  active
-                    ? "border border-[var(--color-blue)] bg-[var(--color-blue)] text-[#ffffff]"
-                    : "border border-[var(--color-line)] bg-white/80 hover:border-[var(--color-blue)] hover:text-[var(--color-blue)]"
-                }`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`rounded-full px-3 py-1.5 transition sm:px-4 sm:py-2 ${
+                    active
+                      ? "border border-[var(--color-blue)] bg-[var(--color-blue)] text-[#ffffff]"
+                      : "border border-[var(--color-line)] bg-white/80 hover:border-[var(--color-blue)] hover:text-[var(--color-blue)]"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </div>
         </nav>
       </div>
     </header>

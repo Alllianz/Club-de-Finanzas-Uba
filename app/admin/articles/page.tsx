@@ -32,12 +32,13 @@ import { ArticleCard } from "./components/article-card";
 type ListResponse = { items: AdminArticle[] };
 
 const PAGE_SIZE = 6;
-const SECTION_ORDER: ArticleSection[] = ["HOME", "PORTFOLIO", "RESEARCH"];
+const SECTION_ORDER: ArticleSection[] = ["HOME", "PORTFOLIO", "RESEARCH", "NEWS"];
 
 const SECTION_META: Record<ArticleSection, { label: string; eyebrow: string }> = {
   HOME: { label: "Inicio", eyebrow: "Portada principal" },
   PORTFOLIO: { label: "Portfolio", eyebrow: "Publicaciones del area" },
   RESEARCH: { label: "Research", eyebrow: "Biblioteca de analisis" },
+  NEWS: { label: "Noticias", eyebrow: "Novedades institucionales y agenda" },
 };
 
 function normalizeFeaturedBySection(source: AdminArticle[]) {
@@ -120,6 +121,7 @@ export default function AdminArticlesPage() {
       homeCount: items.filter((item) => item.section === "HOME").length,
       portfolioCount: items.filter((item) => item.section === "PORTFOLIO").length,
       researchCount: items.filter((item) => item.section === "RESEARCH").length,
+      newsCount: items.filter((item) => item.section === "NEWS").length,
     };
   }, [items]);
 
@@ -340,6 +342,7 @@ export default function AdminArticlesPage() {
               <Badge variant="outline" className="border-white/25 text-white">Inicio: {stats.homeCount}</Badge>
               <Badge variant="outline" className="border-white/25 text-white">Portfolio: {stats.portfolioCount}</Badge>
               <Badge variant="outline" className="border-white/25 text-white">Research: {stats.researchCount}</Badge>
+              <Badge variant="outline" className="border-white/25 text-white">Noticias: {stats.newsCount}</Badge>
             </div>
           </CardContent>
         </Card>
@@ -570,7 +573,6 @@ export default function AdminArticlesPage() {
     </BackofficeShell>
   );
 }
-
 
 
 

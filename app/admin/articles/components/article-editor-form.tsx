@@ -38,6 +38,7 @@ export function ArticleEditorForm({ form, setForm, onSubmit, onCancel, submitLab
             <SelectItem value="HOME">Inicio</SelectItem>
             <SelectItem value="PORTFOLIO">Portfolio</SelectItem>
             <SelectItem value="RESEARCH">Research</SelectItem>
+            <SelectItem value="NEWS">Noticias</SelectItem>
           </SelectContent>
         </Select>
 

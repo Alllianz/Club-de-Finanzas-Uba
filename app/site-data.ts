@@ -18,6 +18,8 @@ export const navigation = [
   { href: "/", label: "Home" },
   { href: "/portfolio", label: "Portfolio" },
   { href: "/research", label: "Research" },
+  { href: "/noticias", label: "Noticias" },
+  { href: "/monitor-global", label: "Monitor Global" },
   { href: "/quienes-somos", label: "Quiénes somos" },
   { href: "/ratios-cedears", label: "Ratios de cedears" },
   { href: "/calculadora-bonos", label: "Calculadora de bonos" },
@@ -185,6 +187,48 @@ export const researchFeed: FeedEntry[] = [
       "Análisis corto con foco en interpretación, no en repetir indicadores sin contexto.",
     href: "https://www.linkedin.com/company/club-de-finanzas-uba/",
     cta: "Ir al contenido",
+  },
+];
+
+export const newsIntro =
+  "Noticias reúne novedades institucionales, agenda del club y cobertura de actividades para mantener a la comunidad informada con un formato claro y actualizado.";
+
+export const newsFeed: FeedEntry[] = [
+  {
+    category: "Club",
+    date: "Marzo 2026",
+    title: "Agenda del club: actividades confirmadas para abril",
+    excerpt:
+      "Resumen de fechas, charlas y encuentros planificados para el proximo mes con links de seguimiento.",
+    href: "https://www.linkedin.com/company/club-de-finanzas-uba/",
+    cta: "Ver agenda",
+  },
+  {
+    category: "Eventos",
+    date: "Marzo 2026",
+    title: "Cobertura: encuentro de analisis macro con invitados del sector",
+    excerpt:
+      "Sintesis de los temas tratados, conclusiones clave y material complementario para la comunidad.",
+    href: "https://www.linkedin.com/company/club-de-finanzas-uba/",
+    cta: "Leer cobertura",
+  },
+  {
+    category: "Comunidad",
+    date: "Febrero 2026",
+    title: "Convocatoria abierta para sumar voluntarios al equipo editorial",
+    excerpt:
+      "Buscamos perfiles para redaccion, diseno y coordinacion de contenido institucional.",
+    href: "https://www.linkedin.com/company/club-de-finanzas-uba/",
+    cta: "Postularme",
+  },
+  {
+    category: "Institucional",
+    date: "Febrero 2026",
+    title: "Nuevo calendario de reuniones y comisiones de trabajo",
+    excerpt:
+      "Publicamos el calendario operativo para ordenar seguimiento de proyectos y responsabilidades.",
+    href: "https://www.linkedin.com/company/club-de-finanzas-uba/",
+    cta: "Ver calendario",
   },
 ];
 

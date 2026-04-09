@@ -9,6 +9,7 @@ export const SECTION_LABEL: Record<ArticleSection, string> = {
   HOME: "Inicio",
   PORTFOLIO: "Portfolio",
   RESEARCH: "Research",
+  NEWS: "Noticias",
 };
 
 export type ArticleFormValues = {

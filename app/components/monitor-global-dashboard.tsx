@@ -1,51 +1,50 @@
 "use client";
 
-import { ArrowDownRight, ArrowUpRight, Dot, RefreshCw } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import { useMemo } from "react";
 import { useGlobalMarket } from "../hooks/useGlobalMarket";
 import type { GlobalMarketItem, GlobalMarketSection } from "../lib/types";
+import {
+  formatMarketChangePercent,
+  formatMarketValue,
+  getMarketItemIcon,
+  marketStatusDotClass,
+  marketStatusTextClass,
+} from "../lib/market-presenter";
+import { MonitorGlobalSkeleton } from "./monitor-global-skeleton";
 
-function formatValue(value: number | null) {
-  if (value === null) return "--";
-  return new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(value);
-}
-
-function formatChangePercent(value: number | null) {
-  if (value === null) return "--";
-  const prefix = value > 0 ? "+" : "";
-  return `${prefix}${value.toFixed(2)}%`;
-}
-
-function valueClassName(item: GlobalMarketItem) {
-  if (item.status === "positive") return "text-emerald-600";
-  if (item.status === "negative") return "text-red-600";
-  return "text-zinc-500";
-}
-
-function DirectionIcon({ item }: { item: GlobalMarketItem }) {
-  if (item.direction === "up") return <ArrowUpRight className="h-4 w-4 text-emerald-600" />;
-  if (item.direction === "down") return <ArrowDownRight className="h-4 w-4 text-red-600" />;
-  return <Dot className="h-4 w-4 text-zinc-500" />;
+function DotStatus({ item }: { item: GlobalMarketItem }) {
+  return <span className={`inline-block h-2.5 w-2.5 rounded-full ${marketStatusDotClass(item)}`} />;
 }
 
 function SectionTable({ section }: { section: GlobalMarketSection }) {
   return (
-    <section className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
-      <h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.12em] text-zinc-500">{section.title}</h2>
-      <div className="space-y-2">
-        {section.items.map((item) => (
+    <section className="overflow-hidden border-t border-[var(--color-line)] first:border-t-0">
+      <h2 className="px-6 py-3 text-sm font-semibold uppercase tracking-[0.32em] text-[var(--color-blue)]">
+        {section.title}
+      </h2>
+      <div>
+        {section.items.map((item, index) => (
           <div
             key={`${section.key}-${item.symbol}`}
-            className="grid grid-cols-[1fr_auto_auto] items-center gap-3 rounded-lg border border-zinc-100 px-3 py-2"
+            className={`grid grid-cols-[minmax(0,1fr)_40px_auto] items-center gap-2 border-t border-[var(--color-line)] px-5 py-4 ${
+              index % 2 === 0 ? "bg-[rgba(18,63,137,0.03)]" : "bg-white"
+            }`}
           >
-            <div className="min-w-0">
-              <p className="truncate text-sm font-medium text-zinc-900">{item.label}</p>
-              <p className="text-xs text-zinc-500">{item.symbol}</p>
+            <div className="flex min-w-0 items-center gap-4">
+              <span className="text-3xl leading-none">{getMarketItemIcon(section.key, item.symbol)}</span>
+              <div className="min-w-0">
+                <p className="truncate text-[1.05rem] font-medium text-[var(--color-muted)]">{item.label}</p>
+                <p className="truncate text-[2rem] leading-none font-semibold text-[var(--color-ink)]">
+                  {formatMarketValue(item.value, section.key, item.symbol)}
+                </p>
+              </div>
             </div>
-            <p className="text-sm font-semibold text-zinc-900">{formatValue(item.value)}</p>
-            <div className={`flex items-center text-sm font-medium ${valueClassName(item)}`}>
-              <DirectionIcon item={item} />
-              <span>{formatChangePercent(item.changePercent)}</span>
+            <div className="flex justify-center">
+              <DotStatus item={item} />
+            </div>
+            <div className={`text-right text-[1.5rem] font-semibold ${marketStatusTextClass(item)}`}>
+              <span className="text-2xl">{formatMarketChangePercent(item.changePercent)}</span>
             </div>
           </div>
         ))}
@@ -55,7 +54,7 @@ function SectionTable({ section }: { section: GlobalMarketSection }) {
 }
 
 export function MonitorGlobalDashboard() {
-  const { data, loading, error, refresh } = useGlobalMarket();
+  const { data, loading, refreshing, error, refresh } = useGlobalMarket();
 
   const updatedAtLabel = useMemo(() => {
     if (!data?.updatedAt) return "Sin actualización";
@@ -68,38 +67,49 @@ export function MonitorGlobalDashboard() {
   }, [data?.updatedAt]);
 
   return (
-    <main className="mx-auto w-full max-w-5xl space-y-6 p-6">
-      <header className="flex flex-wrap items-center justify-between gap-3">
+    <section className="space-y-6">
+      <header className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold text-zinc-900">Monitor Global</h1>
-          <p className="text-sm text-zinc-600">
+          <h2 className="font-[family:var(--font-display)] text-4xl text-[var(--color-ink)] md:text-5xl">
+            Monitor Global
+          </h2>
+          <p className="mt-1 text-lg text-[var(--color-muted)] md:text-xl">
             Principales indicadores del mercado mundial en tiempo real.
           </p>
         </div>
-        <div className="flex items-center gap-2 text-xs text-zinc-500">
+        <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--color-muted)]">
           <button
             type="button"
             onClick={() => void refresh()}
-            className="inline-flex items-center gap-1 rounded-md border border-zinc-200 px-2 py-1 text-zinc-600 hover:bg-zinc-100"
+            disabled={refreshing}
+            className="inline-flex items-center gap-1 rounded-full border border-[var(--color-line)] bg-white px-3 py-1.5 text-[var(--color-blue)] transition hover:bg-[rgba(18,63,137,0.06)]"
           >
             <RefreshCw className="h-3.5 w-3.5" />
-            Actualizar
+            {refreshing ? "Actualizando..." : "Actualizar"}
           </button>
           <span>Actualizado: {updatedAtLabel}</span>
-          {data?.stale ? <span className="rounded bg-amber-100 px-2 py-0.5 text-amber-700">stale</span> : null}
+          {data?.stale ? (
+            <span className="rounded-full border border-amber-300 bg-amber-50 px-2 py-0.5 text-amber-700">
+              stale
+            </span>
+          ) : null}
         </div>
       </header>
 
-      {loading ? <p className="text-sm text-zinc-500">Cargando monitor...</p> : null}
-      {error ? <p className="rounded-md bg-red-50 p-3 text-sm text-red-700">{error}</p> : null}
+      <section className="overflow-hidden rounded-[30px] border border-[var(--color-line)] bg-white shadow-[0_20px_70px_rgba(18,35,63,0.12)]">
+        {loading ? <MonitorGlobalSkeleton /> : null}
+        {error ? (
+          <p className="m-4 rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error}</p>
+        ) : null}
 
-      {!loading && !error && data ? (
-        <div className="grid gap-4 md:grid-cols-3">
-          {data.sections.map((section) => (
-            <SectionTable key={section.key} section={section} />
-          ))}
-        </div>
-      ) : null}
-    </main>
+        {!loading && !error && data ? (
+          <>
+            {data.sections.map((section) => (
+              <SectionTable key={section.key} section={section} />
+            ))}
+          </>
+        ) : null}
+      </section>
+    </section>
   );
 }

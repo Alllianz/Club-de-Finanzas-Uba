@@ -12,7 +12,7 @@ export type AuthResponse = {
   user: AuthUser;
 };
 
-export type ArticleSection = "HOME" | "PORTFOLIO" | "RESEARCH";
+export type ArticleSection = "HOME" | "PORTFOLIO" | "RESEARCH" | "NEWS";
 export type ArticleStatus = "DRAFT" | "PUBLISHED";
 
 export type Article = {

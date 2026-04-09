@@ -1,5 +1,5 @@
 ﻿import type { FeedEntry } from "../site-data";
-import { homeFeed, homeFeatured, portfolioFeed, researchFeed } from "../site-data";
+import { homeFeed, homeFeatured, newsFeed, newsIntro, portfolioFeed, researchFeed } from "../site-data";
 import { publicArticlesService } from "../services/public-articles-service";
 import type { Article } from "./types";
 
@@ -25,7 +25,7 @@ const toFeedEntry = (item: Article): FeedEntry => ({
 });
 
 async function getSectionContent(params: {
-  section: "HOME" | "PORTFOLIO" | "RESEARCH";
+  section: "HOME" | "PORTFOLIO" | "RESEARCH" | "NEWS";
   fallbackFeatured: FeedEntry;
   fallbackFeed: FeedEntry[];
   limit?: number;
@@ -82,3 +82,13 @@ export async function getResearchContent() {
     fallbackFeed: researchFeed,
   });
 }
+
+export async function getNewsContent() {
+  return getSectionContent({
+    section: "NEWS",
+    fallbackFeatured: newsFeed[0] ?? homeFeatured,
+    fallbackFeed: newsFeed,
+  });
+}
+
+export { newsIntro };
