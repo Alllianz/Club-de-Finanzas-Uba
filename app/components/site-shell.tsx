@@ -27,10 +27,21 @@ type PeopleGridProps = {
   people: Person[];
 };
 
+function isNavItemActive(currentPath: string, href: string): boolean {
+  if (href === "/") return currentPath === "/";
+  return currentPath === href || currentPath.startsWith(`${href}/`);
+}
+
+function getNavItemClass(active: boolean): string {
+  return active
+    ? "border border-[var(--color-blue)] bg-[var(--color-blue)] text-[#ffffff] shadow-[0_10px_24px_rgba(18,63,137,0.22)]"
+    : "border border-[var(--color-line)] bg-white/85 text-[var(--color-muted)] hover:border-[var(--color-blue)] hover:text-[var(--color-blue)]";
+}
+
 export function SiteHeader({ currentPath }: NavProps) {
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--color-line)] bg-[linear-gradient(180deg,rgba(248,246,239,0.95),rgba(244,239,229,0.9))] backdrop-blur-xl">
-      <div className="mx-auto flex w-[min(1240px,92vw)] items-center justify-between gap-3 py-3">
+    <header className="sticky top-0 z-50 border-b border-[var(--color-line)] bg-[linear-gradient(180deg,rgba(248,246,239,0.98),rgba(244,239,229,0.92))] backdrop-blur-xl">
+      <div className="mx-auto flex w-[min(1240px,92vw)] items-center justify-between gap-4 py-3">
         <Link href="/" className="flex items-center">
           <div className="flex h-16 w-[220px] items-center justify-start overflow-hidden sm:w-[280px] lg:w-[320px]">
             <Image
@@ -46,7 +57,7 @@ export function SiteHeader({ currentPath }: NavProps) {
 
         <div className="ml-auto md:hidden">
           <details className="group relative">
-            <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full border border-[var(--color-line)] bg-white/90 text-[var(--color-blue)] transition hover:border-[var(--color-blue)]">
+            <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full border border-[var(--color-line)] bg-white text-[var(--color-blue)] shadow-[0_10px_24px_rgba(18,35,63,0.12)] transition hover:border-[var(--color-blue)]">
               <span className="sr-only">Abrir menu</span>
               <span className="flex flex-col gap-1.5">
                 <span className="h-0.5 w-5 rounded-full bg-current" />
@@ -54,20 +65,16 @@ export function SiteHeader({ currentPath }: NavProps) {
                 <span className="h-0.5 w-5 rounded-full bg-current" />
               </span>
             </summary>
-            <nav className="absolute right-0 top-[calc(100%+10px)] w-[260px] rounded-2xl border border-[var(--color-line)] bg-[#f8f6ef] p-2 shadow-[0_20px_60px_rgba(18,35,63,0.2)]">
-              <div className="flex flex-col gap-1">
+            <nav className="absolute right-0 top-[calc(100%+10px)] w-[280px] rounded-2xl border border-[var(--color-line)] bg-[#f8f6ef] p-2 shadow-[0_20px_60px_rgba(18,35,63,0.2)]">
+              <div className="flex flex-col gap-1.5">
                 {navigation.map((item) => {
-                  const active = currentPath === item.href;
+                  const active = isNavItemActive(currentPath, item.href);
 
                   return (
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`rounded-xl px-3 py-2 text-sm transition ${
-                        active
-                          ? "border border-[var(--color-blue)] bg-[var(--color-blue)] text-[#ffffff]"
-                          : "border border-transparent bg-white/80 text-[var(--color-muted)] hover:border-[var(--color-blue)] hover:text-[var(--color-blue)]"
-                      }`}
+                      className={`rounded-xl px-3 py-2.5 text-sm font-medium transition ${getNavItemClass(active)}`}
                     >
                       {item.label}
                     </Link>
@@ -79,19 +86,15 @@ export function SiteHeader({ currentPath }: NavProps) {
         </div>
 
         <nav className="ml-auto hidden max-w-[calc(100%-250px)] overflow-x-auto sm:max-w-[calc(100%-300px)] md:block lg:max-w-[calc(100%-340px)]">
-          <div className="flex w-max items-center gap-1.5 whitespace-nowrap text-xs text-[var(--color-muted)] sm:text-sm">
+          <div className="flex w-max items-center gap-2 whitespace-nowrap text-xs text-[var(--color-muted)] sm:text-sm">
             {navigation.map((item) => {
-              const active = currentPath === item.href;
+              const active = isNavItemActive(currentPath, item.href);
 
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`rounded-full px-3 py-1.5 transition sm:px-4 sm:py-2 ${
-                    active
-                      ? "border border-[var(--color-blue)] bg-[var(--color-blue)] text-[#ffffff]"
-                      : "border border-[var(--color-line)] bg-white/80 hover:border-[var(--color-blue)] hover:text-[var(--color-blue)]"
-                  }`}
+                  className={`rounded-full px-3 py-1.5 font-medium transition sm:px-4 sm:py-2 ${getNavItemClass(active)}`}
                 >
                   {item.label}
                 </Link>
