@@ -67,3 +67,17 @@ export type GlobalMarketResponse = {
   sections: GlobalMarketSection[];
   stale?: boolean;
 };
+
+export type CedearItem = {
+  companyName: string;
+  bymaCode: string;
+  listedMarket: string;
+  ratio: string;
+};
+
+export type CedearsResponse = {
+  updatedAt: string;
+  total: number;
+  markets: string[];
+  items: CedearItem[];
+};

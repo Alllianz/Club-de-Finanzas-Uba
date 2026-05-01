@@ -1,4 +1,5 @@
 import { PageHero, SectionLabel, SiteFooter, SiteHeader } from "../components/site-shell";
+import { CedearsTable } from "./cedears-table";
 
 export default function RatiosCedearsPage() {
   return (
@@ -12,10 +13,11 @@ export default function RatiosCedearsPage() {
 
       <main className="mx-auto w-[min(1240px,92vw)] space-y-10 py-12 md:py-16">
         <SectionLabel
-          eyebrow="Módulo en construcción"
-          title="Próximamente métricas y comparador"
-          description="La sección ya está integrada en navegación. Podemos seguir con el cálculo de ratios, filtros y visualizaciones en el próximo paso."
+          eyebrow="Base BYMA"
+          title="Tabla de ratios de Cedears"
+          description="Dataset consolidado desde archivo BYMA en backend, con búsqueda por compañía/ticker y filtro por mercado para consulta rápida."
         />
+        <CedearsTable />
       </main>
 
       <SiteFooter />
