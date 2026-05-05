@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import type { ReactNode } from "react";
 import type { FeedEntry, Person } from "../site-data";
 import { contactLinks, navigation } from "../site-data";
@@ -28,80 +31,122 @@ type PeopleGridProps = {
 };
 
 function isNavItemActive(currentPath: string, href: string): boolean {
+  if (!href.startsWith("/")) return false;
   if (href === "/") return currentPath === "/";
   return currentPath === href || currentPath.startsWith(`${href}/`);
 }
 
-function getNavItemClass(active: boolean): string {
-  return active
-    ? "border border-[var(--color-blue)] bg-[var(--color-blue)] text-[#ffffff] shadow-[0_10px_24px_rgba(18,63,137,0.22)]"
-    : "border border-[var(--color-line)] bg-white/85 text-[var(--color-muted)] hover:border-[var(--color-blue)] hover:text-[var(--color-blue)]";
-}
-
 export function SiteHeader({ currentPath }: NavProps) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--color-line)] bg-[linear-gradient(180deg,rgba(248,246,239,0.98),rgba(244,239,229,0.92))] backdrop-blur-xl">
-      <div className="mx-auto flex w-[min(1240px,92vw)] items-center justify-between gap-4 py-3">
-        <Link href="/" className="flex items-center">
-          <div className="flex h-16 w-[220px] items-center justify-start overflow-hidden sm:w-[280px] lg:w-[320px]">
-            <Image
-              src="/clubdefinanzasubalogohorizontal.png"
-              alt="Club de Finanzas UBA"
-              width={500}
-              height={114}
-              className="h-full w-full object-contain object-left"
-              priority
-            />
-          </div>
-        </Link>
+    <header className="sticky top-0 z-50 border-b border-[var(--nav-border)] bg-[var(--nav-bg)]">
+      <div className="mx-auto w-[min(1280px,96vw)] py-3">
+        <div className="hidden flex-col items-center gap-3 md:flex">
+          <Link href="/" className="flex items-center text-[var(--nav-text)]">
+            <div className="flex h-36 w-[700px] items-center justify-center overflow-hidden">
+              <Image
+                src="/clubdefinanzasubalogohorizontal.png"
+                alt="Club de Finanzas UBA"
+                width={500}
+                height={114}
+                className="h-full w-full object-contain"
+                priority
+              />
+            </div>
+          </Link>
 
-        <div className="ml-auto md:hidden">
-          <details className="group relative">
-            <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full border border-[var(--color-line)] bg-white text-[var(--color-blue)] shadow-[0_10px_24px_rgba(18,35,63,0.12)] transition hover:border-[var(--color-blue)]">
-              <span className="sr-only">Abrir menu</span>
-              <span className="flex flex-col gap-1.5">
-                <span className="h-0.5 w-5 rounded-full bg-current" />
-                <span className="h-0.5 w-5 rounded-full bg-current" />
-                <span className="h-0.5 w-5 rounded-full bg-current" />
-              </span>
-            </summary>
-            <nav className="absolute right-0 top-[calc(100%+10px)] w-[280px] rounded-2xl border border-[var(--color-line)] bg-[#f8f6ef] p-2 shadow-[0_20px_60px_rgba(18,35,63,0.2)]">
-              <div className="flex flex-col gap-1.5">
-                {navigation.map((item) => {
-                  const active = isNavItemActive(currentPath, item.href);
+          <nav className="w-full border border-[var(--nav-border)] bg-[var(--nav-bg)]">
+            <ul className="flex w-full items-stretch">
+              {navigation.map((item) => {
+                const active = isNavItemActive(currentPath, item.href);
+                const classes = active
+                  ? "active bg-[var(--nav-active)] text-[var(--nav-active-text)]"
+                  : "bg-[var(--nav-bg)] text-[var(--nav-text)] hover:bg-[#f3f3f3]";
 
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`rounded-xl px-3 py-2.5 text-sm font-medium transition ${getNavItemClass(active)}`}
-                    >
-                      {item.label}
-                    </Link>
-                  );
-                })}
-              </div>
-            </nav>
-          </details>
+                const content = (
+                  <span
+                    className={`flex h-full min-h-[50px] w-full items-center justify-center px-2 text-center text-[clamp(14px,1.25vw,27px)] font-medium ${classes}`}
+                    style={{ fontFamily: "var(--nav-sub-font)" }}
+                  >
+                    {item.label}
+                  </span>
+                );
+
+                return (
+                  <li
+                    key={item.label}
+                    className="flex-1 border-r border-[var(--nav-border)] last:border-r-0"
+                  >
+                    {item.href.startsWith("http") ? (
+                      <a href={item.href} target="_blank" rel="noopener noreferrer">
+                        {content}
+                      </a>
+                    ) : (
+                      <Link href={item.href}>{content}</Link>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
         </div>
 
-        <nav className="ml-auto hidden max-w-[calc(100%-250px)] overflow-x-auto sm:max-w-[calc(100%-300px)] md:block lg:max-w-[calc(100%-340px)]">
-          <div className="flex w-max items-center gap-2 whitespace-nowrap text-xs text-[var(--color-muted)] sm:text-sm">
-            {navigation.map((item) => {
-              const active = isNavItemActive(currentPath, item.href);
-
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`rounded-full px-3 py-1.5 font-medium transition sm:px-4 sm:py-2 ${getNavItemClass(active)}`}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
+        <div className="md:hidden">
+          <div className="flex items-center justify-between">
+            <Link href="/" className="flex items-center text-[var(--nav-text)]">
+              <div className="flex h-16 w-[250px] items-center justify-start overflow-hidden">
+                <Image
+                  src="/clubdefinanzasubalogohorizontal.png"
+                  alt="Club de Finanzas UBA"
+                  width={500}
+                  height={114}
+                  className="h-full w-full object-contain object-left"
+                  priority
+                />
+              </div>
+            </Link>
+            <button
+              type="button"
+              className="flex h-11 w-11 items-center justify-center border border-[var(--nav-border)] bg-[var(--nav-bg)] text-[var(--nav-text)]"
+              aria-expanded={open}
+              aria-label="Abrir menú"
+              onClick={() => setOpen((prev) => !prev)}
+            >
+              <span className="flex flex-col gap-1">
+                <span className="h-[2px] w-5 bg-current" />
+                <span className="h-[2px] w-5 bg-current" />
+                <span className="h-[2px] w-5 bg-current" />
+              </span>
+            </button>
           </div>
-        </nav>
+
+          <nav className={`mt-3 border border-[var(--nav-border)] ${open ? "open block" : "hidden"}`}>
+            <ul className="flex flex-col">
+              {navigation.map((item) => {
+                const active = isNavItemActive(currentPath, item.href);
+                const classes = active
+                  ? "active bg-[var(--nav-active)] text-[var(--nav-active-text)]"
+                  : "bg-[var(--nav-bg)] text-[var(--nav-text)]";
+                const commonClass = `flex min-h-[52px] items-center border-b border-[var(--nav-border)] px-4 text-[18px] last:border-b-0 ${classes}`;
+
+                return (
+                  <li key={item.label}>
+                    {item.href.startsWith("http") ? (
+                      <a href={item.href} target="_blank" rel="noopener noreferrer" className={commonClass}>
+                        {item.label}
+                      </a>
+                    ) : (
+                      <Link href={item.href} className={commonClass} onClick={() => setOpen(false)}>
+                        {item.label}
+                      </Link>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+        </div>
       </div>
     </header>
   );

@@ -15,6 +15,13 @@
   --color-blue: #123f89;
   --color-blue-strong: #0d2e65;
   --color-accent: #123f89;
+  --nav-bg: #ffffff;
+  --nav-text: #111111;
+  --nav-border: #333333;
+  --nav-active: var(--color-blue);
+  --nav-active-text: #ffffff;
+  --nav-display-font: "Playfair Display", "Times New Roman", Georgia, serif;
+  --nav-sub-font: "DM Sans", "Inter", "Helvetica Neue", Arial, sans-serif;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);

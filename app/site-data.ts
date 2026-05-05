@@ -14,15 +14,19 @@ export type Person = {
   initials: string;
 };
 
-export const navigation = [
-  { href: "/", label: "Home" },
-  { href: "/portfolio", label: "Portfolio" },
+export type NavigationItem = {
+  href: string;
+  label: string;
+};
+
+export const navigation: NavigationItem[] = [
+  { href: "/", label: "Inicio" },
+  { href: "/noticias", label: "Newsletter" },
   { href: "/research", label: "Research" },
-  { href: "/noticias", label: "Noticias" },
-  { href: "/monitor-global", label: "Monitor Global" },
-  { href: "/quienes-somos", label: "Quiénes somos" },
-  { href: "/ratios-cedears", label: "Ratios de cedears" },
-  { href: "/calculadora-bonos", label: "Calculadora de bonos" },
+  { href: "/portfolio", label: "Portfolio" },
+  { href: "/monitor-global", label: "Datos Fin." },
+  { href: "/quienes-somos", label: "Sobre Nos" },
+  { href: "https://www.linkedin.com/company/club-de-finanzas-uba/", label: "Unite" },
 ];
 
 export const contactLinks = [

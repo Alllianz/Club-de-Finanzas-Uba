@@ -1,77 +1,117 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { marketService } from "../services/market-service";
-import type { GlobalMarketResponse } from "../lib/types";
-
-const MARKET_STORAGE_KEY = "clubdefinanzas:monitor-global:last-data";
-let inMemorySnapshot: GlobalMarketResponse | null = null;
+import type { CountryRiskPoint, GlobalMarketResponse } from "../lib/types";
 
 type UseGlobalMarketResult = {
   data: GlobalMarketResponse | null;
+  countryRisk: {
+    series: CountryRiskPoint[];
+    latest: CountryRiskPoint | null;
+    previous: CountryRiskPoint | null;
+    updatedAt: string | null;
+    stale: boolean;
+    error: string;
+  };
   loading: boolean;
   refreshing: boolean;
-  error: string;
+  globalError: string;
   refresh: () => Promise<void>;
 };
 
-function readStoredSnapshot(): GlobalMarketResponse | null {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = window.localStorage.getItem(MARKET_STORAGE_KEY);
-    if (!raw) return null;
-    return JSON.parse(raw) as GlobalMarketResponse;
-  } catch {
-    return null;
-  }
-}
-
-function persistSnapshot(snapshot: GlobalMarketResponse): void {
-  if (typeof window === "undefined") return;
-  try {
-    window.localStorage.setItem(MARKET_STORAGE_KEY, JSON.stringify(snapshot));
-  } catch {
-    // ignore storage errors
-  }
-}
-
 export function useGlobalMarket(): UseGlobalMarketResult {
-  const [data, setData] = useState<GlobalMarketResponse | null>(
-    () => inMemorySnapshot ?? readStoredSnapshot(),
-  );
-  const [loading, setLoading] = useState(() => !(inMemorySnapshot ?? readStoredSnapshot()));
+  const [data, setData] = useState<GlobalMarketResponse | null>(null);
+  const [countryRisk, setCountryRisk] = useState<{
+    series: CountryRiskPoint[];
+    latest: CountryRiskPoint | null;
+    previous: CountryRiskPoint | null;
+    updatedAt: string | null;
+    stale: boolean;
+    error: string;
+  }>({
+    series: [],
+    latest: null,
+    previous: null,
+    updatedAt: null,
+    stale: false,
+    error: "",
+  });
+  const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [error, setError] = useState("");
+  const [globalError, setGlobalError] = useState("");
+  const hasDataRef = useRef(false);
+
+  useEffect(() => {
+    hasDataRef.current = Boolean(data);
+  }, [data]);
 
   const refresh = useCallback(async () => {
-    const hasExistingData = Boolean(data);
+    const hasExistingData = hasDataRef.current;
     if (hasExistingData) {
       setRefreshing(true);
     } else {
       setLoading(true);
     }
-    setError("");
+    setGlobalError("");
+    setCountryRisk((current) => ({ ...current, error: "" }));
 
-    try {
-      const response = await marketService.getGlobal();
-      inMemorySnapshot = response;
-      persistSnapshot(response);
-      setData(response);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "No se pudo cargar Monitor Global");
-    } finally {
-      setLoading(false);
-      setRefreshing(false);
+    const [globalResult, countryRiskSeriesResult, countryRiskLatestResult] = await Promise.allSettled([
+      marketService.getGlobal(),
+      marketService.getCountryRisk(),
+      marketService.getCountryRiskLatest(),
+    ]);
+
+    if (globalResult.status === "fulfilled") {
+      const globalResponse = globalResult.value;
+      setData(globalResponse);
+    } else {
+      setGlobalError(
+        globalResult.reason instanceof Error ? globalResult.reason.message : "No se pudo cargar Monitor Global",
+      );
     }
-  }, [data]);
+
+    const series = countryRiskSeriesResult.status === "fulfilled" ? countryRiskSeriesResult.value : null;
+    const latest = countryRiskLatestResult.status === "fulfilled" ? countryRiskLatestResult.value : null;
+
+    if (series || latest) {
+      const seriesItems = series?.items ?? [];
+      const latestItem = latest?.item ?? (seriesItems.length ? seriesItems[seriesItems.length - 1] : null);
+      const previousItem =
+        seriesItems.length > 1
+          ? seriesItems[seriesItems.length - 2]
+          : seriesItems.length === 1 && latestItem && seriesItems[0].date !== latestItem.date
+            ? seriesItems[0]
+            : null;
+
+      setCountryRisk({
+        series: seriesItems,
+        latest: latestItem,
+        previous: previousItem,
+        updatedAt: latest?.updatedAt ?? series?.updatedAt ?? null,
+        stale: Boolean(series?.stale || latest?.stale),
+        error: "",
+      });
+    } else {
+      const message =
+        countryRiskSeriesResult.status === "rejected" && countryRiskSeriesResult.reason instanceof Error
+          ? countryRiskSeriesResult.reason.message
+          : countryRiskLatestResult.status === "rejected" && countryRiskLatestResult.reason instanceof Error
+            ? countryRiskLatestResult.reason.message
+            : "No se pudo cargar riesgo país";
+      setCountryRisk((current) => ({
+        ...current,
+        error: message,
+      }));
+    }
+
+    setLoading(false);
+    setRefreshing(false);
+  }, []);
 
   useEffect(() => {
-    if (data) {
-      setLoading(false);
-      return;
-    }
     void refresh();
-  }, [data, refresh]);
+  }, [refresh]);
 
-  return { data, loading, refreshing, error, refresh };
+  return { data, countryRisk, loading, refreshing, globalError, refresh };
 }

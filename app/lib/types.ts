@@ -81,3 +81,56 @@ export type CedearsResponse = {
   markets: string[];
   items: CedearItem[];
 };
+
+export type CountryRiskPoint = {
+  date: string;
+  value: number;
+};
+
+export type CountryRiskResponse = {
+  updatedAt: string;
+  source: "ArgentinaDatos";
+  total: number;
+  items: CountryRiskPoint[];
+  stale?: boolean;
+};
+
+export type CountryRiskLatestResponse = {
+  updatedAt: string;
+  source: "ArgentinaDatos";
+  item: CountryRiskPoint;
+  stale?: boolean;
+};
+
+export type LetrasPoint = {
+  ticker: string;
+  fechaEmision: string | null;
+  fechaVencimiento: string;
+  dtmDays: number;
+  temPercent: number | null;
+  tnaPercent: number | null;
+  teaPercent: number | null;
+  vpv: number;
+  price: number;
+};
+
+export type LetrasCurveResponse = {
+  updatedAt: string;
+  tradingDate: string;
+  source: "ArgentinaDatos";
+  stale: boolean;
+  total: number;
+  points: LetrasPoint[];
+  curve: {
+    coefficients: {
+      a: number;
+      b: number;
+      c: number;
+      points: number;
+    } | null;
+    sample: {
+      dtmDays: number;
+      teaPercent: number;
+    }[];
+  };
+};

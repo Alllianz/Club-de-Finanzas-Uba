@@ -1,4 +1,5 @@
 import { PageHero, SectionLabel, SiteFooter, SiteHeader } from "../components/site-shell";
+import { LetrasCurveDashboard } from "../components/letras-curve-dashboard";
 
 export default function CalculadoraBonosPage() {
   return (
@@ -12,10 +13,11 @@ export default function CalculadoraBonosPage() {
 
       <main className="mx-auto w-[min(1240px,92vw)] space-y-10 py-12 md:py-16">
         <SectionLabel
-          eyebrow="Módulo en construcción"
-          title="Próximamente calculadora completa"
-          description="La ruta y navegación ya están activas. En la siguiente iteración podemos implementar inputs, fórmulas y resultados en tiempo real."
+          eyebrow="LECAP / BONCAP"
+          title="Curva de letras capitalizables"
+          description="Actualización al cierre con letras activas, métricas de tasa y curva TEA vs DTM mediante regresión cuadrática de 14 puntos."
         />
+        <LetrasCurveDashboard />
       </main>
 
       <SiteFooter />
