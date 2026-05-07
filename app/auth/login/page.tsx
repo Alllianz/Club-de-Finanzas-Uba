@@ -39,7 +39,7 @@ export default function LoginPage() {
   useEffect(() => {
     if (authLoading) return;
     if (!user) return;
-    router.replace(user.role === "ADMIN" ? "/admin" : "/admin/articles");
+    router.replace(user.role === "ADMIN" ? "/admin" : "/admin/posts");
   }, [authLoading, user, router]);
   return (
     <main className="mx-auto min-h-screen w-[min(680px,92vw)] py-16 text-[var(--color-ink)]">

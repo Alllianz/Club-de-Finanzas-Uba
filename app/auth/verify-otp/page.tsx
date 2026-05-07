@@ -28,7 +28,7 @@ export default function VerifyOtpPage() {
 
     try {
       const user = await verifyOtp(safeEmail, otp);
-      router.push(user.role === "ADMIN" ? "/admin" : "/admin/articles");
+      router.push(user.role === "ADMIN" ? "/admin" : "/admin/posts");
     } catch (err) {
       setError(err instanceof Error ? err.message : "No se pudo verificar OTP");
     } finally {

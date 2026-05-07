@@ -6,11 +6,14 @@ import {
   SiteHeader,
 } from "../components/site-shell";
 import { leadership, objectives, storyBlocks } from "../site-data";
+import { getTeamMembersContent } from "../lib/public-content";
 
-export default function QuienesSomosPage() {
+export default async function QuienesSomosPage() {
+  const { leaders, membersBySection } = await getTeamMembersContent(leadership);
+
   return (
     <div className="min-h-screen text-[var(--color-ink)]">
-      <SiteHeader currentPath="/quienes-somos" />
+      <SiteHeader currentPath="/sobre-nosotros" />
       <PageHero
         eyebrow="Quiénes somos"
         title="Trayectoria, objetivos y caras del club en una página institucional separada."
@@ -55,11 +58,56 @@ export default function QuienesSomosPage() {
 
         <section className="space-y-8">
           <SectionLabel
-            eyebrow="Equipo"
-            title="Líderes y founders"
-            description="Dejé el bloque listo para crecer con fotos reales más adelante. Hoy ya funciona con retratos tipográficos para no depender de assets externos."
+            eyebrow="Líderes"
+            title="Equipo de liderazgo"
+            description="Fotos, nombre, rol y enlace de referencia a LinkedIn o web personal."
           />
-          <PeopleGrid people={leadership} />
+          <PeopleGrid people={leaders} />
+        </section>
+
+        <section className="space-y-8">
+          <SectionLabel
+            eyebrow="Miembros de equipo"
+            title="Portfolio · Research · RRII"
+            description="Cada área muestra integrantes con descripción breve opcional para explicar perfil y responsabilidades."
+          />
+          <div className="grid gap-6 md:grid-cols-3">
+            {[
+              { key: "PORTFOLIO", label: "Portfolio" },
+              { key: "RESEARCH", label: "Research" },
+              { key: "RRII", label: "RRII" },
+            ].map((section) => (
+              <section
+                key={section.key}
+                className="space-y-4 rounded-[24px] border border-[var(--color-line)] bg-white p-5"
+              >
+                <h3 className="text-2xl font-semibold text-[var(--color-ink)]">{section.label}</h3>
+                {membersBySection[section.key as "PORTFOLIO" | "RESEARCH" | "RRII"]?.length ? (
+                  <div className="space-y-3">
+                    {membersBySection[section.key as "PORTFOLIO" | "RESEARCH" | "RRII"].map((person) => (
+                      <article key={`${section.key}-${person.name}`} className="rounded-xl border border-[var(--color-line)] bg-[var(--color-bg-soft)] p-3">
+                        <p className="text-base font-semibold text-[var(--color-ink)]">{person.name}</p>
+                        <p className="text-sm text-[var(--color-blue)]">{person.role}</p>
+                        {person.bio ? <p className="mt-1 text-sm text-[var(--color-muted)]">{person.bio}</p> : null}
+                        {person.profileUrl ? (
+                          <a
+                            href={person.profileUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mt-2 inline-flex text-xs text-[var(--color-muted)] underline underline-offset-4 hover:text-[var(--color-blue)]"
+                          >
+                            LinkedIn / Web
+                          </a>
+                        ) : null}
+                      </article>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-[var(--color-muted)]">Sin miembros cargados todavía.</p>
+                )}
+              </section>
+            ))}
+          </div>
         </section>
       </main>
 

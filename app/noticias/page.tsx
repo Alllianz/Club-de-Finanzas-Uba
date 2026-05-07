@@ -13,7 +13,7 @@ export default async function NoticiasPage() {
 
   return (
     <div className="min-h-screen text-[var(--color-ink)]">
-      <SiteHeader currentPath="/noticias" />
+      <SiteHeader currentPath="/newsletter" />
       <PageHero
         eyebrow="Noticias"
         title="Novedades del club, agenda y cobertura de actividades."

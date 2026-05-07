@@ -5,6 +5,7 @@ export type FeedEntry = {
   excerpt: string;
   href: string;
   cta: string;
+  imageUrl?: string;
 };
 
 export type Person = {
@@ -12,6 +13,9 @@ export type Person = {
   role: string;
   bio: string;
   initials: string;
+  imageUrl?: string | null;
+  profileUrl?: string | null;
+  section?: "LEADERSHIP" | "PORTFOLIO" | "RESEARCH" | "RRII";
 };
 
 export type NavigationItem = {
@@ -21,12 +25,12 @@ export type NavigationItem = {
 
 export const navigation: NavigationItem[] = [
   { href: "/", label: "Inicio" },
-  { href: "/noticias", label: "Newsletter" },
+  { href: "/newsletter", label: "Newsletter" },
   { href: "/research", label: "Research" },
   { href: "/portfolio", label: "Portfolio" },
   { href: "/monitor-global", label: "Datos Fin." },
-  { href: "/quienes-somos", label: "Sobre Nos" },
-  { href: "https://www.linkedin.com/company/club-de-finanzas-uba/", label: "Unite" },
+  { href: "/sobre-nosotros", label: "Sobre Nos" },
+  { href: "/unite", label: "Unite" },
 ];
 
 export const contactLinks = [

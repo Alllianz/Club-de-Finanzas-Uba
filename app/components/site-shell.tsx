@@ -186,6 +186,7 @@ export function PageHero({ eyebrow, title, description, aside }: HeroProps) {
 }
 
 export function FeaturedStory({ story }: FeaturedStoryProps) {
+  const isExternal = story.href.startsWith("http");
   return (
     <article className="relative overflow-hidden rounded-[36px] border border-[var(--color-line)] bg-[linear-gradient(135deg,#ffffff,#f5f8ff)] p-8 shadow-[0_20px_70px_rgba(18,35,63,0.12)] md:p-10">
       <div className="absolute inset-y-0 right-0 hidden w-1/3 bg-[linear-gradient(90deg,rgba(18,63,137,0),rgba(18,63,137,0.12))] md:block" />
@@ -198,17 +199,31 @@ export function FeaturedStory({ story }: FeaturedStoryProps) {
       <h2 className="mt-4 max-w-4xl font-[family:var(--font-display)] text-4xl leading-tight text-[var(--color-ink)] md:text-6xl">
         {story.title}
       </h2>
+      {story.imageUrl ? (
+        <div className="mt-6 overflow-hidden rounded-3xl border border-[var(--color-line)] bg-white">
+          <img src={story.imageUrl} alt={story.title} className="h-[320px] w-full object-cover md:h-[420px]" />
+        </div>
+      ) : null}
       <p className="mt-6 max-w-3xl text-lg leading-8 text-[var(--color-muted)]">
         {story.excerpt}
       </p>
-      <a
-        href={story.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-8 inline-flex rounded-full bg-[var(--color-blue)] px-6 py-3 text-sm font-semibold text-[#ffffff] transition hover:bg-[var(--color-blue-strong)]"
-      >
-        {story.cta}
-      </a>
+      {isExternal ? (
+        <a
+          href={story.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-8 inline-flex rounded-full bg-[var(--color-blue)] px-6 py-3 text-sm font-semibold text-[#ffffff] transition hover:bg-[var(--color-blue-strong)]"
+        >
+          {story.cta}
+        </a>
+      ) : (
+        <Link
+          href={story.href}
+          className="mt-8 inline-flex rounded-full bg-[var(--color-blue)] px-6 py-3 text-sm font-semibold text-[#ffffff] transition hover:bg-[var(--color-blue-strong)]"
+        >
+          {story.cta}
+        </Link>
+      )}
     </article>
   );
 }
@@ -221,6 +236,11 @@ export function FeedGrid({ items }: FeedGridProps) {
           key={`${item.category}-${item.title}`}
           className="group flex min-h-[320px] flex-col rounded-[28px] border border-[var(--color-line)] bg-white p-6 transition hover:-translate-y-1 hover:border-[var(--color-blue)]"
         >
+          {item.imageUrl ? (
+            <div className="-mx-6 -mt-6 mb-5 overflow-hidden rounded-t-[28px] border-b border-[var(--color-line)]">
+              <img src={item.imageUrl} alt={item.title} className="h-44 w-full object-cover" />
+            </div>
+          ) : null}
           <div className="flex items-start justify-between gap-4">
             <span className="rounded-full border border-[rgba(18,63,137,0.2)] bg-[rgba(18,63,137,0.08)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-blue)]">
               {item.category}
@@ -235,14 +255,23 @@ export function FeedGrid({ items }: FeedGridProps) {
           <p className="mt-4 flex-1 text-base leading-7 text-[var(--color-muted)]">
             {item.excerpt}
           </p>
-          <a
-            href={item.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 inline-flex w-fit rounded-full border border-[var(--color-line)] px-4 py-2 text-sm font-medium text-[var(--color-blue)] transition group-hover:border-[var(--color-blue)] group-hover:bg-[rgba(18,63,137,0.06)]"
-          >
-            {item.cta}
-          </a>
+          {item.href.startsWith("http") ? (
+            <a
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex w-fit rounded-full border border-[var(--color-line)] px-4 py-2 text-sm font-medium text-[var(--color-blue)] transition group-hover:border-[var(--color-blue)] group-hover:bg-[rgba(18,63,137,0.06)]"
+            >
+              {item.cta}
+            </a>
+          ) : (
+            <Link
+              href={item.href}
+              className="mt-6 inline-flex w-fit rounded-full border border-[var(--color-line)] px-4 py-2 text-sm font-medium text-[var(--color-blue)] transition group-hover:border-[var(--color-blue)] group-hover:bg-[rgba(18,63,137,0.06)]"
+            >
+              {item.cta}
+            </Link>
+          )}
         </article>
       ))}
     </div>
@@ -275,22 +304,39 @@ export function PeopleGrid({ people }: PeopleGridProps) {
   return (
     <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
       {people.map((person) => (
-        <article
-          key={person.name}
-          className="rounded-[28px] border border-[var(--color-line)] bg-white p-5"
-        >
-          <div className="flex items-center gap-4">
-            <div className="grid h-20 w-20 place-items-center rounded-[24px] bg-[linear-gradient(135deg,#1d4f9f,#12336a)] text-2xl font-semibold text-[#ffffff]">
-              {person.initials}
+        <article key={person.name} className="rounded-[28px] border border-[var(--color-line)] bg-white p-5">
+          <div className="flex items-start gap-4">
+            <div className="relative h-20 w-20 overflow-hidden rounded-full border border-[var(--color-line)] bg-[var(--color-bg-soft)]">
+              {person.imageUrl ? (
+                <Image
+                  src={person.imageUrl}
+                  alt={person.name}
+                  fill
+                  className="object-cover"
+                  sizes="80px"
+                />
+              ) : (
+                <div className="grid h-full w-full place-items-center text-2xl font-semibold text-[var(--color-blue)]">
+                  {person.initials}
+                </div>
+              )}
             </div>
-            <div>
+            <div className="min-w-0">
               <h3 className="text-2xl font-semibold text-[var(--color-ink)]">{person.name}</h3>
-              <p className="text-sm uppercase tracking-[0.18em] text-[var(--color-blue)]">
-                {person.role}
-              </p>
+              <p className="text-sm uppercase tracking-[0.18em] text-[var(--color-blue)]">{person.role}</p>
+              {person.profileUrl ? (
+                <a
+                  href={person.profileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-flex text-sm text-[var(--color-muted)] underline underline-offset-4 hover:text-[var(--color-blue)]"
+                >
+                  LinkedIn / Web
+                </a>
+              ) : null}
             </div>
           </div>
-          <p className="mt-5 text-base leading-7 text-[var(--color-muted)]">{person.bio}</p>
+          {person.bio ? <p className="mt-5 text-base leading-7 text-[var(--color-muted)]">{person.bio}</p> : null}
         </article>
       ))}
     </div>
