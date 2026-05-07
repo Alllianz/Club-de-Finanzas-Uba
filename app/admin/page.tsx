@@ -45,6 +45,20 @@ export default function AdminPage() {
             <p className="mt-5 text-sm text-amber-200/85">Solo ADMIN puede acceder a este modulo.</p>
           )}
         </article>
+
+        <article className="rounded-3xl border border-white/12 bg-white/[0.04] p-5">
+          <p className="text-xs uppercase tracking-[0.22em] text-white/45">Equipo</p>
+          <h2 className="mt-3 text-2xl font-semibold">Integrantes y links</h2>
+          <p className="mt-2 text-sm leading-7 text-white/68">
+            Cargar líderes, miembros, redes, sponsors y recursos desde UI.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-2">
+            <Link href="/admin/team" className="inline-flex rounded-full border border-white/18 px-4 py-2 text-sm transition hover:border-white/35">Integrantes</Link>
+            <Link href="/admin/links" className="inline-flex rounded-full border border-white/18 px-4 py-2 text-sm transition hover:border-white/35">Links</Link>
+            <Link href="/admin/sponsors" className="inline-flex rounded-full border border-white/18 px-4 py-2 text-sm transition hover:border-white/35">Sponsors</Link>
+            <Link href="/admin/resources" className="inline-flex rounded-full border border-white/18 px-4 py-2 text-sm transition hover:border-white/35">Recursos</Link>
+          </div>
+        </article>
       </div>
 
       <article className="mt-6 rounded-3xl border border-white/10 bg-black/20 p-5">
