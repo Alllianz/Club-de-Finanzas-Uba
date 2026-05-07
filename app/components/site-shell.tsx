@@ -30,6 +30,43 @@ type PeopleGridProps = {
   people: Person[];
 };
 
+type PostImageProps = {
+  src: string;
+  alt: string;
+  variant: "featured" | "card";
+};
+
+function PostImage({ src, alt, variant }: PostImageProps) {
+  const [isPortrait, setIsPortrait] = useState(false);
+
+  const wrapperClass =
+    variant === "featured"
+      ? "mt-6 overflow-hidden rounded-3xl border border-[var(--color-line)] bg-[#0b1122]"
+      : "-mx-6 -mt-6 mb-5 overflow-hidden rounded-t-[28px] border-b border-[var(--color-line)] bg-[#0b1122]";
+
+  const frameClass = variant === "featured" ? "h-[320px] md:h-[460px]" : "h-44";
+
+  return (
+    <div className={wrapperClass}>
+      <div className={`w-full ${frameClass} ${isPortrait ? "flex items-center justify-center p-2" : ""}`}>
+        <img
+          src={src}
+          alt={alt}
+          onLoad={(event) => {
+            const image = event.currentTarget;
+            setIsPortrait(image.naturalHeight > image.naturalWidth);
+          }}
+          className={
+            isPortrait
+              ? "h-full w-auto max-w-full object-contain"
+              : "h-full w-full object-cover"
+          }
+        />
+      </div>
+    </div>
+  );
+}
+
 function isNavItemActive(currentPath: string, href: string): boolean {
   if (!href.startsWith("/")) return false;
   if (href === "/") return currentPath === "/";
@@ -172,11 +209,25 @@ export function PageHero({ eyebrow, title, description, aside }: HeroProps) {
           {aside ?? (
             <>
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--color-blue)]">
-                Club de Finanzas UBA
+                Explorá el Club
               </p>
               <p className="mt-4 text-2xl leading-tight text-[var(--color-ink)]">
-                Una web pensada como medio: noticia principal arriba y feed real debajo.
+                Conocé quiénes somos y sumate a la comunidad.
               </p>
+              <div className="mt-6 grid gap-3">
+                <Link
+                  href="/sobre-nosotros"
+                  className="inline-flex items-center justify-center rounded-2xl border border-[var(--color-line)] bg-[var(--color-bg-soft)] px-4 py-3 text-sm font-semibold text-[var(--color-ink)] transition hover:border-[var(--color-blue)] hover:text-[var(--color-blue)]"
+                >
+                  Ver Sobre Nosotros
+                </Link>
+                <Link
+                  href="/unite"
+                  className="inline-flex items-center justify-center rounded-2xl bg-[var(--color-blue)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[var(--color-blue-strong)]"
+                >
+                  Ir a Unite
+                </Link>
+              </div>
             </>
           )}
         </div>
@@ -199,11 +250,7 @@ export function FeaturedStory({ story }: FeaturedStoryProps) {
       <h2 className="mt-4 max-w-4xl font-[family:var(--font-display)] text-4xl leading-tight text-[var(--color-ink)] md:text-6xl">
         {story.title}
       </h2>
-      {story.imageUrl ? (
-        <div className="mt-6 overflow-hidden rounded-3xl border border-[var(--color-line)] bg-white">
-          <img src={story.imageUrl} alt={story.title} className="h-[320px] w-full object-cover md:h-[420px]" />
-        </div>
-      ) : null}
+      {story.imageUrl ? <PostImage src={story.imageUrl} alt={story.title} variant="featured" /> : null}
       <p className="mt-6 max-w-3xl text-lg leading-8 text-[var(--color-muted)]">
         {story.excerpt}
       </p>
@@ -236,11 +283,7 @@ export function FeedGrid({ items }: FeedGridProps) {
           key={`${item.category}-${item.title}`}
           className="group flex min-h-[320px] flex-col rounded-[28px] border border-[var(--color-line)] bg-white p-6 transition hover:-translate-y-1 hover:border-[var(--color-blue)]"
         >
-          {item.imageUrl ? (
-            <div className="-mx-6 -mt-6 mb-5 overflow-hidden rounded-t-[28px] border-b border-[var(--color-line)]">
-              <img src={item.imageUrl} alt={item.title} className="h-44 w-full object-cover" />
-            </div>
-          ) : null}
+          {item.imageUrl ? <PostImage src={item.imageUrl} alt={item.title} variant="card" /> : null}
           <div className="flex items-start justify-between gap-4">
             <span className="rounded-full border border-[rgba(18,63,137,0.2)] bg-[rgba(18,63,137,0.08)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-blue)]">
               {item.category}
