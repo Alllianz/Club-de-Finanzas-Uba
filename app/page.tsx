@@ -9,15 +9,16 @@ import {
 import { getHomeContent } from "./lib/public-content";
 
 export default async function HomePage() {
-  const { featured, feed, novedades, resources, sponsors } = await getHomeContent();
+  const { featured, feed, novedades, resources, sponsors } =
+    await getHomeContent();
 
   return (
     <div className="min-h-screen text-[var(--color-ink)]">
       <SiteHeader currentPath="/" />
       <PageHero
         eyebrow="Home"
-        title="Una portada en formato feed para que el club se vea activo, actual y editorial."
-        description="La home deja de ser institucional y pasa a funcionar como medio: una noticia o invitación destacada bien arriba y, abajo, un flujo claro de publicaciones anteriores."
+        title="Club de Finanzas UBA"
+        description="Finanzas por y para estudiantes"
       />
 
       <main className="mx-auto w-[min(1240px,92vw)] space-y-14 py-12 md:space-y-18 md:py-16">
@@ -34,25 +35,41 @@ export default async function HomePage() {
 
         <section className="grid gap-5 md:grid-cols-2">
           <article className="rounded-[28px] border border-[var(--color-line)] bg-white p-6">
-            <h3 className="text-3xl font-[family:var(--font-display)]">Recursos</h3>
+            <h3 className="text-3xl font-[family:var(--font-display)]">
+              Recursos
+            </h3>
             <ul className="mt-4 space-y-3">
               {resources.map((resource) => (
                 <li key={resource.id}>
-                  <a href={resource.url} target="_blank" rel="noopener noreferrer" className="text-[var(--color-blue)] underline">
+                  <a
+                    href={resource.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--color-blue)] underline"
+                  >
                     {resource.title}
                   </a>
-                  <p className="text-sm text-[var(--color-muted)]">{resource.type}</p>
+                  <p className="text-sm text-[var(--color-muted)]">
+                    {resource.type}
+                  </p>
                 </li>
               ))}
             </ul>
           </article>
           <article className="rounded-[28px] border border-[var(--color-line)] bg-white p-6">
-            <h3 className="text-3xl font-[family:var(--font-display)]">Gracias por apoyarnos</h3>
+            <h3 className="text-3xl font-[family:var(--font-display)]">
+              Gracias por apoyarnos
+            </h3>
             <ul className="mt-4 space-y-3">
               {sponsors.map((sponsor) => (
                 <li key={sponsor.id}>
                   {sponsor.linkUrl ? (
-                    <a href={sponsor.linkUrl} target="_blank" rel="noopener noreferrer" className="text-[var(--color-blue)] underline">
+                    <a
+                      href={sponsor.linkUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[var(--color-blue)] underline"
+                    >
                       {sponsor.name}
                     </a>
                   ) : (
