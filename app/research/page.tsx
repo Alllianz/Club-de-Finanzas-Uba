@@ -1,4 +1,4 @@
-﻿import {
+import {
   FeaturedStory,
   FeedGrid,
   PageHero,
@@ -13,22 +13,30 @@ export default async function ResearchPage() {
   const { featured, feed } = await getResearchContent();
 
   return (
-    <div className="min-h-screen text-[var(--color-ink)]">
+    <div className="min-h-screen bg-[#ffffff] font-sans text-[#334155]">
       <SiteHeader currentPath="/research" />
+      
       <PageHero
-        eyebrow="Research"
-        title="Informes, marcos conceptuales y análisis con tono académico."
+        eyebrow="Área de Research"
+        title="Investigación Macroeconómica, Renta Fija y Valuación"
         description={researchIntro}
       />
 
-      <main className="mx-auto w-[min(1240px,92vw)] space-y-14 py-12 md:space-y-18 md:py-16">
-        <FeaturedStory story={featured} />
-
-        <section className="space-y-8">
+      <main className="mx-auto w-[min(1280px,92vw)] space-y-16 py-12 md:space-y-20 md:py-16">
+        <section className="space-y-4">
           <SectionLabel
-            eyebrow="Feed del área"
-            title="Research en formato biblioteca"
-            description="Tomando la inspiración del ejemplo que compartiste, este feed prioriza tarjetas limpias, categóricas y fácilmente escaneables."
+            eyebrow="Informe Destacado"
+            title="Publicación de Research de la Semana"
+            description="Marco teórico y análisis profundo de coyuntura y valuación de compañías."
+          />
+          <FeaturedStory story={featured} />
+        </section>
+
+        <section className="space-y-6">
+          <SectionLabel
+            eyebrow="Biblioteca de Informes"
+            title="Publicaciones del Equipo de Research"
+            description="Marcos teóricos rigurosos, seguimiento macroeconómico de Argentina y valuación sectorial internacional."
           />
           <FeedGrid items={feed} />
         </section>

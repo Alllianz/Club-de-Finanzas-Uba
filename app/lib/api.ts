@@ -13,15 +13,11 @@ const getBaseUrl = (): string => {
     return explicitBaseUrl.replace(/\/api$/, "");
   }
 
-  if (typeof window !== "undefined" && window.location?.hostname === "localhost") {
-    return "http://localhost:8000";
-  }
-
   if (typeof window !== "undefined" && window.location?.origin) {
     return normalizeBaseUrl(window.location.origin) as string;
   }
 
-  return "http://localhost:8000";
+  return process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000";
 };
 
 const baseURL = `${getBaseUrl()}/api`;

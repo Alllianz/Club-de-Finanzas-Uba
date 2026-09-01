@@ -47,18 +47,21 @@ export function CedearsTable() {
   }, [updatedAt]);
 
   return (
-    <section className="space-y-6 rounded-[28px] border border-[var(--color-line)] bg-white p-5 shadow-[0_20px_40px_rgba(18,35,63,0.08)] md:p-7">
-      <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_220px]">
-        <input
-          value={search}
-          onChange={(event) => setSearch(event.target.value)}
-          placeholder="Buscar por compañía o ticker BYMA..."
-          className="h-11 rounded-xl border border-[var(--color-line)] px-3 text-sm text-[var(--color-ink)] outline-none transition focus:border-[var(--color-blue)]"
-        />
+    <section className="space-y-6 rounded-2xl border border-[#e2e8f0] bg-[#ffffff] p-6 shadow-sm md:p-8">
+      {/* Controles de Búsqueda y Filtro */}
+      <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_240px]">
+        <div className="relative">
+          <input
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Buscar por compañía (ej. Apple, Microsoft) o ticker (ej. AAPL)..."
+            className="h-11 w-full rounded-xl border border-[#e2e8f0] bg-[#ffffff] px-4 text-sm text-[#0e2246] outline-none transition placeholder:text-[#94a3b8] focus:border-[#0062ff] focus:ring-2 focus:ring-[#0062ff]/10"
+          />
+        </div>
         <select
           value={market}
           onChange={(event) => setMarket(event.target.value)}
-          className="h-11 rounded-xl border border-[var(--color-line)] bg-white px-3 text-sm text-[var(--color-ink)] outline-none transition focus:border-[var(--color-blue)]"
+          className="h-11 rounded-xl border border-[#e2e8f0] bg-[#ffffff] px-4 text-sm font-semibold text-[#0e2246] outline-none transition focus:border-[#0062ff] focus:ring-2 focus:ring-[#0062ff]/10"
         >
           <option value="">Todos los mercados</option>
           {markets.map((marketOption) => (
@@ -69,42 +72,51 @@ export function CedearsTable() {
         </select>
       </div>
 
-      <div className="flex items-center justify-between text-sm text-[var(--color-muted)]">
-        <p>{loading ? "Cargando..." : `${items.length} resultados`}</p>
-        <p>Actualizado: {formattedUpdatedAt}</p>
+      {/* Metadatos y contador */}
+      <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-semibold text-[#64748b]">
+        <div className="flex items-center gap-2">
+          <span className="inline-flex h-2 w-2 rounded-full bg-[#0062ff]" />
+          <p>{loading ? "Consultando dataset..." : `${items.length} activos encontrados`}</p>
+        </div>
+        <p className="font-mono">Actualizado: {formattedUpdatedAt}</p>
       </div>
 
       {error ? (
-        <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error}</div>
+        <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">{error}</div>
       ) : null}
 
-      <div className="overflow-hidden rounded-2xl border border-[var(--color-line)]">
-        <div className="max-h-[70vh] overflow-auto">
-          <table className="w-full min-w-[760px] border-collapse text-sm">
-            <thead className="sticky top-0 z-10 bg-[var(--color-bg-soft)] text-left">
+      {/* Tabla con Estilo del Reporte (Cabecera Navy, Tickers Mono y Zebra) */}
+      <div className="overflow-hidden rounded-xl border border-[#e2e8f0] shadow-sm">
+        <div className="max-h-[65vh] overflow-auto">
+          <table className="w-full min-w-[720px] border-collapse text-sm">
+            <thead className="sticky top-0 z-10 bg-[#091a36] text-left text-white shadow-sm">
               <tr>
-                <th className="px-4 py-3 font-semibold text-[var(--color-ink)]">Compañía</th>
-                <th className="px-4 py-3 font-semibold text-[var(--color-ink)]">Ticker BYMA</th>
-                <th className="px-4 py-3 font-semibold text-[var(--color-ink)]">Mercado</th>
-                <th className="px-4 py-3 font-semibold text-[var(--color-ink)]">Ratio</th>
+                <th className="px-5 py-3.5 text-xs font-extrabold uppercase tracking-wider">Compañía Subyacente</th>
+                <th className="px-5 py-3.5 text-xs font-extrabold uppercase tracking-wider">Ticker BYMA</th>
+                <th className="px-5 py-3.5 text-xs font-extrabold uppercase tracking-wider">Mercado Origen</th>
+                <th className="px-5 py-3.5 text-xs font-extrabold uppercase tracking-wider">Ratio Conversión</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-[#f1f5f9]">
               {items.map((item, index) => (
                 <tr
                   key={`${item.bymaCode}-${item.companyName}-${item.listedMarket}-${item.ratio}-${index}`}
-                  className="border-t border-[var(--color-line)]"
+                  className="transition hover:bg-[#f0f6ff]/70 odd:bg-[#ffffff] even:bg-[#f8fafc]"
                 >
-                  <td className="px-4 py-3 text-[var(--color-ink)]">{item.companyName}</td>
-                  <td className="px-4 py-3 font-semibold text-[var(--color-blue)]">{item.bymaCode}</td>
-                  <td className="px-4 py-3 text-[var(--color-muted)]">{item.listedMarket}</td>
-                  <td className="px-4 py-3 text-[var(--color-ink)]">{item.ratio}</td>
+                  <td className="px-5 py-3 font-semibold text-[#0e2246]">{item.companyName}</td>
+                  <td className="px-5 py-3 font-mono font-bold text-[#0062ff]">{item.bymaCode}</td>
+                  <td className="px-5 py-3 text-xs font-medium text-[#64748b]">
+                    <span className="rounded-md border border-[#e2e8f0] bg-[#ffffff] px-2 py-0.5">
+                      {item.listedMarket}
+                    </span>
+                  </td>
+                  <td className="px-5 py-3 font-mono font-bold text-[#091a36]">{item.ratio}</td>
                 </tr>
               ))}
               {!loading && items.length === 0 ? (
                 <tr>
-                  <td className="px-4 py-6 text-center text-[var(--color-muted)]" colSpan={4}>
-                    No hay resultados para los filtros seleccionados.
+                  <td className="px-5 py-8 text-center text-sm text-[#64748b]" colSpan={4}>
+                    No se encontraron CEDEARs para los filtros ingresados.
                   </td>
                 </tr>
               ) : null}

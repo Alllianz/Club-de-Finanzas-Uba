@@ -1,25 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
-import { API_BASE_URL } from "../../../lib/config";
+import { getLetrasCurveData } from "@/lib/services/letras-service";
 
-export async function GET(request: NextRequest) {
+export async function GET(req: NextRequest) {
   try {
-    const upstreamUrl = new URL(`${API_BASE_URL}/market/letras`);
-    const refresh = request.nextUrl.searchParams.get("refresh");
-    if (refresh) upstreamUrl.searchParams.set("refresh", refresh);
+    const searchParams = req.nextUrl.searchParams;
+    const refresh = searchParams.get("refresh") === "true";
 
-    const response = await fetch(upstreamUrl.toString(), {
-      method: "GET",
-      cache: "no-store",
-    });
-
-    const raw = await response.text();
-    const payload = raw ? (JSON.parse(raw) as unknown) : { error: "Respuesta vacia del backend" };
-    return NextResponse.json(payload, { status: response.status });
+    const data = await getLetrasCurveData({ refresh });
+    return NextResponse.json(data);
   } catch (error) {
-    console.error("[front] Error en /api/market/letras", error);
+    console.error("[API] Error en /api/market/letras:", error);
     return NextResponse.json(
-      { error: "No se pudo conectar con el backend para obtener letras" },
-      { status: 502 },
+      { error: "No se pudieron obtener los datos de la curva de letras" },
+      { status: 500 },
     );
   }
 }

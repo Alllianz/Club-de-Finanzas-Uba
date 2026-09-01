@@ -1,6 +1,7 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import { useAuth } from "../context/AuthContext";
@@ -29,70 +30,105 @@ export function BackofficeShell({ title, subtitle, children }: BackofficeShellPr
 
   if (loading) {
     return (
-      <main className="mx-auto min-h-screen w-[min(1100px,92vw)] py-14 text-[var(--color-ink)]">
-        <p className="text-sm uppercase tracking-[0.2em] text-[var(--color-muted)]">Backoffice</p>
-        <h1 className="mt-3 text-4xl font-semibold">Validando sesion...</h1>
+      <main className="mx-auto flex min-h-screen w-[min(1100px,92vw)] items-center justify-center py-14 text-[#0e2246]">
+        <div className="text-center">
+          <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[#0062ff]">Club de Finanzas UBA</p>
+          <h1 className="mt-2 font-serif text-3xl font-bold">Validando sesión...</h1>
+        </div>
       </main>
     );
   }
 
   return (
-    <main className="mx-auto min-h-screen w-[min(1100px,92vw)] py-10 text-[var(--color-ink)]">
-      <header className="rounded-[28px] border border-[var(--color-line)] bg-white p-5 md:p-6">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <p className="text-xs uppercase tracking-[0.26em] text-[var(--color-muted)]">Backoffice · Club de Finanzas</p>
-            <h1 className="mt-3 text-3xl font-semibold md:text-4xl">{title}</h1>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-[var(--color-muted)]">{subtitle}</p>
+    <div className="min-h-screen bg-[#f8fafc] text-[#334155]">
+      {/* Barra superior de administración */}
+      <header className="border-b border-[#e2e8f0] bg-[#ffffff]">
+        <div className="mx-auto flex w-[min(1240px,94vw)] flex-wrap items-center justify-between gap-4 py-3.5">
+          <div className="flex items-center gap-3">
+            <Link href="/" className="flex items-center">
+              <div className="flex h-10 w-[180px] items-center justify-start overflow-hidden">
+                <Image
+                  src="/clubdefinanzasubalogohorizontal.png"
+                  alt="Club de Finanzas UBA"
+                  width={480}
+                  height={110}
+                  className="h-full w-full object-contain object-left"
+                />
+              </div>
+            </Link>
+            <div className="h-5 w-[1.5px] bg-[#cbd5e1]" />
+            <span className="rounded-md border border-[#d8e5f8] bg-[#f0f6ff] px-2 py-0.5 text-[11px] font-extrabold uppercase tracking-wider text-[#0062ff]">
+              Panel Backoffice
+            </span>
           </div>
 
-          <div className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-bg-soft)] px-4 py-3 text-sm">
-            <p className="text-[var(--color-muted)]">Sesion activa</p>
-            <p className="font-semibold text-[var(--color-ink)]">{user?.fullName || user?.email || "Usuario"}</p>
-            <p className="text-[var(--color-muted)]">{user?.role || "-"}</p>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 rounded-full border border-[#e2e8f0] bg-[#f8fafc] px-3.5 py-1 text-xs">
+              <span className="h-2 w-2 rounded-full bg-emerald-500" />
+              <span className="font-semibold text-[#0e2246]">{user?.fullName || user?.email || "Usuario"}</span>
+              <span className="rounded bg-[#091a36] px-1.5 py-0.2 text-[10px] font-bold uppercase text-white">
+                {user?.role || "STAFF"}
+              </span>
+            </div>
+
+            <Link
+              href="/"
+              className="rounded-full border border-[#e2e8f0] bg-white px-3 py-1 text-xs font-semibold text-[#475569] transition hover:border-[#0062ff] hover:text-[#0062ff]"
+            >
+              Ver Web Pública
+            </Link>
+
+            <button
+              onClick={async () => {
+                await logout();
+                router.push("/");
+              }}
+              className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-bold text-red-600 transition hover:bg-red-100"
+            >
+              Salir
+            </button>
           </div>
-        </div>
-
-        <div className="mt-6 flex flex-wrap items-center gap-2">
-          {navItems
-            .filter((item) => (user ? item.roles.includes(user.role) : false))
-            .map((item) => {
-              const active = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`rounded-full px-4 py-2 text-sm transition ${
-                    active
-                      ? "border border-[var(--color-blue)] bg-[var(--color-blue)] text-[#ffffff]"
-                      : "border border-[var(--color-line)] text-[var(--color-muted)] hover:border-[var(--color-blue)] hover:text-[var(--color-blue)]"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-
-          <Link
-            href="/"
-            className="rounded-full border border-[var(--color-line)] px-4 py-2 text-sm text-[var(--color-muted)] transition hover:border-[var(--color-blue)] hover:text-[var(--color-blue)]"
-          >
-            Ver sitio publico
-          </Link>
-
-          <button
-            onClick={async () => {
-              await logout();
-              router.push("/");
-            }}
-            className="rounded-full border border-red-300/40 px-4 py-2 text-sm text-red-200 transition hover:border-red-200 hover:text-red-100"
-          >
-            Cerrar sesion
-          </button>
         </div>
       </header>
 
-      <section className="mt-7">{children}</section>
-    </main>
+      {/* Contenido Principal */}
+      <main className="mx-auto w-[min(1240px,94vw)] py-8">
+        {/* Encabezado de la página */}
+        <section className="rounded-2xl border border-[#e2e8f0] bg-[#ffffff] p-6 shadow-sm md:p-8">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#0062ff]">Gestión de Contenidos</p>
+              <h1 className="mt-1 font-serif text-3xl font-bold text-[#0e2246] md:text-4xl">{title}</h1>
+              <p className="mt-2 text-sm text-[#64748b]">{subtitle}</p>
+            </div>
+          </div>
+
+          {/* Navegación del Panel */}
+          <div className="mt-6 flex flex-wrap items-center gap-2 border-t border-[#f1f5f9] pt-5">
+            {navItems
+              .filter((item) => (user ? item.roles.includes(user.role) : false))
+              .map((item) => {
+                const active = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider transition ${
+                      active
+                        ? "bg-[#091a36] text-white shadow-sm"
+                        : "border border-[#e2e8f0] bg-white text-[#475569] hover:border-[#0062ff] hover:text-[#0062ff]"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+          </div>
+        </section>
+
+        {/* Sección Hija */}
+        <div className="mt-8">{children}</div>
+      </main>
+    </div>
   );
 }

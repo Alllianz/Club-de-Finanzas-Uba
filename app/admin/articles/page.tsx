@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { BackofficeShell } from "../../components/backoffice-shell";
@@ -35,10 +35,10 @@ const PAGE_SIZE = 6;
 const SECTION_ORDER: ArticleSection[] = ["HOME", "PORTFOLIO", "RESEARCH", "NEWS"];
 
 const SECTION_META: Record<ArticleSection, { label: string; eyebrow: string }> = {
-  HOME: { label: "Inicio", eyebrow: "Portada principal" },
-  PORTFOLIO: { label: "Portfolio", eyebrow: "Publicaciones del area" },
-  RESEARCH: { label: "Research", eyebrow: "Biblioteca de analisis" },
-  NEWS: { label: "Noticias", eyebrow: "Novedades institucionales y agenda" },
+  HOME: { label: "Inicio", eyebrow: "Portada Principal" },
+  PORTFOLIO: { label: "Portfolio", eyebrow: "Publicaciones de Cartera" },
+  RESEARCH: { label: "Research", eyebrow: "Biblioteca de Investigación" },
+  NEWS: { label: "Noticias", eyebrow: "Actualidad y Actividades" },
 };
 
 function normalizeFeaturedBySection(source: AdminArticle[]) {
@@ -59,6 +59,7 @@ function normalizeFeaturedBySection(source: AdminArticle[]) {
     isFeatured: winnerBySection.get(item.section) === item.id,
   }));
 }
+
 export default function AdminArticlesPage() {
   const { user } = useAuth();
 
@@ -92,7 +93,7 @@ export default function AdminArticlesPage() {
       const response = await fetch(`${API_BASE_URL}/admin/articles`, {
         credentials: "include",
       });
-      if (!response.ok) throw new Error("No se pudieron cargar articulos");
+      if (!response.ok) throw new Error("No se pudieron cargar artículos");
       const data = (await response.json()) as ListResponse;
       setItems(normalizeFeaturedBySection(data.items));
     } catch (err) {
@@ -175,7 +176,7 @@ export default function AdminArticlesPage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
-        if (!response.ok) throw new Error("No se pudo actualizar articulo");
+        if (!response.ok) throw new Error("No se pudo actualizar artículo");
         await loadArticles();
       } catch (err) {
         setError(err instanceof Error ? err.message : "Error");
@@ -195,7 +196,7 @@ export default function AdminArticlesPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(createForm),
       });
-      if (!response.ok) throw new Error("No se pudo crear articulo");
+      if (!response.ok) throw new Error("No se pudo crear artículo");
 
       setCreateForm(INITIAL_ARTICLE_FORM);
       setCreateOpen(false);
@@ -233,7 +234,7 @@ export default function AdminArticlesPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(editForm),
       });
-      if (!response.ok) throw new Error("No se pudo editar articulo");
+      if (!response.ok) throw new Error("No se pudo editar artículo");
 
       const editor = user?.fullName || user?.email || "Usuario";
       setEditedByMap((prev) => ({ ...prev, [editingArticle.id]: editor }));
@@ -265,9 +266,9 @@ export default function AdminArticlesPage() {
     const sectionName = SECTION_META[target.section].label;
     setSectionFeaturedLocally(target);
     if (target.status === "DRAFT") {
-      setNotice(`Se reemplazo la destacada en ${sectionName}. "${target.title}" estaba en borrador y se publico automaticamente.`);
+      setNotice(`Se reemplazó la destacada en ${sectionName}. "${target.title}" estaba en borrador y se publicó automáticamente.`);
     } else {
-      setNotice(`Se reemplazo la destacada en ${sectionName}. Ahora esta destacada: "${target.title}".`);
+      setNotice(`Se reemplazó la destacada en ${sectionName}. Ahora está destacada: "${target.title}".`);
     }
     void patchArticle(target.id, { isFeatured: true, status: "PUBLISHED" });
   };
@@ -275,7 +276,7 @@ export default function AdminArticlesPage() {
   const handleToggleFeatured = (target: AdminArticle) => {
     if (target.isFeatured) {
       clearFeaturedLocally(target);
-      setNotice("Se quito la destacada de esta nota en su seccion.");
+      setNotice("Se quitó la destacada de esta nota en su sección.");
       void patchArticle(target.id, { isFeatured: false });
       return;
     }
@@ -296,9 +297,9 @@ export default function AdminArticlesPage() {
 
     setSectionFeaturedLocally(target);
     if (target.status === "DRAFT") {
-      setNotice("La nota estaba en borrador. Se publico automaticamente y quedo como destacada.");
+      setNotice("La nota estaba en borrador. Se publicó automáticamente y quedó como destacada.");
     } else {
-      setNotice("La nota seleccionada ahora es la destacada de su seccion.");
+      setNotice("La nota seleccionada ahora es la destacada de su sección.");
     }
     void patchArticle(target.id, { isFeatured: true, status: "PUBLISHED" });
   };
@@ -320,57 +321,57 @@ export default function AdminArticlesPage() {
 
   return (
     <BackofficeShell
-      title="Gestion de articulos"
-      subtitle="Panel por pestañas con buscador y paginacion para escalar contenido por seccion."
+      title="Gestión de Artículos (Legacy)"
+      subtitle="Panel por pestañas con buscador y paginación para artículos editoriales."
     >
       <div className="grid gap-4 md:grid-cols-3">
-        <Card className="border-white/12 bg-white/[0.04] text-white">
-          <CardContent className="pt-5">
-            <p className="text-xs uppercase tracking-[0.2em] text-white/50">Estado global</p>
+        <Card className="rounded-2xl border border-[#e2e8f0] bg-[#ffffff] p-5 shadow-sm">
+          <CardContent className="p-0">
+            <p className="text-xs font-bold uppercase tracking-wider text-[#64748b]">Estado Global</p>
             <div className="mt-3 flex flex-wrap gap-2">
-              <Badge variant="outline" className="border-white/25 text-white">Total: {stats.total}</Badge>
-              <Badge variant="outline" className="border-emerald-300/50 text-emerald-200">Publicados: {stats.published}</Badge>
-              <Badge variant="outline" className="border-amber-300/50 text-amber-200">Borradores: {stats.draft}</Badge>
+              <span className="rounded-full border border-[#e2e8f0] bg-[#f8fafc] px-3 py-0.5 text-xs font-bold text-[#0e2246]">Total: {stats.total}</span>
+              <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-0.5 text-xs font-bold text-emerald-700">Publicados: {stats.published}</span>
+              <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-0.5 text-xs font-bold text-amber-700">Borradores: {stats.draft}</span>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-white/12 bg-white/[0.04] text-white">
-          <CardContent className="pt-5">
-            <p className="text-xs uppercase tracking-[0.2em] text-white/50">Secciones</p>
+        <Card className="rounded-2xl border border-[#e2e8f0] bg-[#ffffff] p-5 shadow-sm">
+          <CardContent className="p-0">
+            <p className="text-xs font-bold uppercase tracking-wider text-[#64748b]">Secciones</p>
             <div className="mt-3 flex flex-wrap gap-2 text-xs">
-              <Badge variant="outline" className="border-white/25 text-white">Inicio: {stats.homeCount}</Badge>
-              <Badge variant="outline" className="border-white/25 text-white">Portfolio: {stats.portfolioCount}</Badge>
-              <Badge variant="outline" className="border-white/25 text-white">Research: {stats.researchCount}</Badge>
-              <Badge variant="outline" className="border-white/25 text-white">Noticias: {stats.newsCount}</Badge>
+              <span className="rounded-full border border-[#e2e8f0] bg-[#f8fafc] px-2.5 py-0.5 font-semibold text-[#0e2246]">Inicio: {stats.homeCount}</span>
+              <span className="rounded-full border border-[#e2e8f0] bg-[#f8fafc] px-2.5 py-0.5 font-semibold text-[#0e2246]">Portfolio: {stats.portfolioCount}</span>
+              <span className="rounded-full border border-[#e2e8f0] bg-[#f8fafc] px-2.5 py-0.5 font-semibold text-[#0e2246]">Research: {stats.researchCount}</span>
+              <span className="rounded-full border border-[#e2e8f0] bg-[#f8fafc] px-2.5 py-0.5 font-semibold text-[#0e2246]">Noticias: {stats.newsCount}</span>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-amber-300/40 bg-amber-300/10 text-white">
-          <CardContent className="pt-5">
-            <p className="text-xs uppercase tracking-[0.2em] text-amber-100">Regla de destacadas</p>
-            <p className="mt-2 text-sm text-amber-50">
-              Solo puede haber 1 destacada por seccion. Al marcar una nueva, se reemplaza automaticamente la anterior.
+        <Card className="rounded-2xl border border-[#d8e5f8] bg-[#f0f6ff] p-5">
+          <CardContent className="p-0">
+            <p className="text-xs font-bold uppercase tracking-wider text-[#0062ff]">Regla de Destacadas</p>
+            <p className="mt-2 text-xs leading-relaxed text-[#475569]">
+              Solo puede haber 1 nota destacada por sección. Al marcar una nueva, se reemplaza automáticamente la anterior.
             </p>
           </CardContent>
         </Card>
       </div>
 
-      <Card className="mt-5 border-white/12 bg-white/[0.04] text-white">
-        <CardHeader>
+      <Card className="mt-6 rounded-2xl border border-[#e2e8f0] bg-[#ffffff] p-6 shadow-sm">
+        <CardHeader className="p-0 pb-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <CardTitle>Listado editorial</CardTitle>
+            <CardTitle className="font-serif text-2xl font-bold text-[#0e2246]">Listado Editorial</CardTitle>
 
             <Dialog open={createOpen} onOpenChange={setCreateOpen}>
-              <DialogTrigger className="inline-flex h-8 items-center rounded-lg bg-white px-3 text-sm font-medium text-slate-900 hover:bg-white/90">
-                + Nuevo articulo
+              <DialogTrigger className="inline-flex h-9 items-center rounded-full bg-[#0062ff] px-4 text-xs font-bold uppercase tracking-wider text-white shadow-sm hover:bg-[#091a36]">
+                + Nuevo Artículo
               </DialogTrigger>
-              <DialogContent className="max-h-[90vh] overflow-y-auto border-white/20 bg-[#090d1f] text-white sm:max-w-[760px]">
+              <DialogContent className="max-h-[90vh] overflow-y-auto rounded-2xl border border-[#e2e8f0] bg-[#ffffff] p-6 text-[#334155] sm:max-w-[760px]">
                 <DialogHeader>
-                  <DialogTitle>Crear articulo</DialogTitle>
-                  <DialogDescription className="text-white/70">
-                    Completa los campos y publica o deja como borrador.
+                  <DialogTitle className="font-serif text-2xl font-bold text-[#0e2246]">Crear Artículo</DialogTitle>
+                  <DialogDescription className="text-xs text-[#64748b]">
+                    Completá los campos y publicá o guardá como borrador.
                   </DialogDescription>
                 </DialogHeader>
 
@@ -379,13 +380,13 @@ export default function AdminArticlesPage() {
                   setForm={(updater) => setCreateForm((prev) => updater(prev))}
                   onSubmit={createArticle}
                   onCancel={() => setCreateOpen(false)}
-                  submitLabel="Guardar articulo"
+                  submitLabel="Guardar Artículo"
                 />
               </DialogContent>
             </Dialog>
           </div>
 
-          <div className="mt-3 flex flex-wrap gap-2">
+          <div className="mt-4 flex flex-wrap gap-2">
             {SECTION_ORDER.map((section) => {
               const count = items.filter((item) => item.section === section).length;
               const active = section === activeSection;
@@ -395,10 +396,10 @@ export default function AdminArticlesPage() {
                   key={section}
                   type="button"
                   onClick={() => setActiveSection(section)}
-                  className={`rounded-full px-4 py-2 text-sm transition ${
+                  className={`rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-wider transition ${
                     active
-                      ? "bg-white text-slate-900"
-                      : "border border-white/20 bg-transparent text-white/80 hover:border-white/35 hover:text-white"
+                      ? "bg-[#091a36] text-white shadow-sm"
+                      : "border border-[#e2e8f0] bg-white text-[#475569] hover:border-[#0062ff] hover:text-[#0062ff]"
                   }`}
                 >
                   {SECTION_META[section].label} ({count})
@@ -411,15 +412,15 @@ export default function AdminArticlesPage() {
             <Input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={`Buscar en ${SECTION_META[activeSection].label} por titulo, categoria o autor...`}
-              className="bg-black/35 text-white placeholder:text-white/35"
+              placeholder={`Buscar en ${SECTION_META[activeSection].label}...`}
+              className="rounded-xl border-[#e2e8f0] text-xs text-[#0e2246]"
             />
 
             <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as "ALL" | ArticleStatus)}>
-              <SelectTrigger className="border-white/20 bg-slate-950 text-white">
+              <SelectTrigger className="rounded-xl border-[#e2e8f0] text-xs text-[#0e2246]">
                 <SelectValue placeholder="Estado" />
               </SelectTrigger>
-              <SelectContent className="border-white/20 bg-slate-950 text-white">
+              <SelectContent>
                 <SelectItem value="ALL">Todos los estados</SelectItem>
                 <SelectItem value="PUBLISHED">Publicado</SelectItem>
                 <SelectItem value="DRAFT">Borrador</SelectItem>
@@ -429,11 +430,11 @@ export default function AdminArticlesPage() {
         </CardHeader>
 
         <Dialog open={editOpen} onOpenChange={setEditOpen}>
-          <DialogContent className="max-h-[90vh] overflow-y-auto border-white/20 bg-[#090d1f] text-white sm:max-w-[760px]">
+          <DialogContent className="max-h-[90vh] overflow-y-auto rounded-2xl border border-[#e2e8f0] bg-[#ffffff] p-6 text-[#334155] sm:max-w-[760px]">
             <DialogHeader>
-              <DialogTitle>Editar articulo</DialogTitle>
-              <DialogDescription className="text-white/70">
-                Actualiza el contenido y guarda los cambios.
+              <DialogTitle className="font-serif text-2xl font-bold text-[#0e2246]">Editar Artículo</DialogTitle>
+              <DialogDescription className="text-xs text-[#64748b]">
+                Actualizá el contenido y guardá los cambios.
               </DialogDescription>
             </DialogHeader>
 
@@ -445,83 +446,83 @@ export default function AdminArticlesPage() {
                 setEditOpen(false);
                 setEditingArticle(null);
               }}
-              submitLabel="Guardar cambios"
+              submitLabel="Guardar Cambios"
             />
           </DialogContent>
         </Dialog>
 
         <Dialog open={confirmFeaturedOpen} onOpenChange={setConfirmFeaturedOpen}>
-          <DialogContent className="border-white/20 bg-[#090d1f] text-white sm:max-w-[620px]">
+          <DialogContent className="rounded-2xl border border-[#e2e8f0] bg-[#ffffff] p-6 text-[#334155] sm:max-w-[620px]">
             <DialogHeader>
-              <DialogTitle>Reemplazar destacada</DialogTitle>
-              <DialogDescription className="text-white/70">
-                Esta accion desmarca la destacada actual y deja una sola destacada por seccion.
+              <DialogTitle className="font-serif text-2xl font-bold text-[#0e2246]">Reemplazar Nota Destacada</DialogTitle>
+              <DialogDescription className="text-xs text-[#64748b]">
+                Esta acción desmarca la destacada actual y deja una sola destacada por sección.
               </DialogDescription>
             </DialogHeader>
 
-            <div className="space-y-2 rounded-lg border border-white/12 bg-black/30 p-3 text-sm text-white/80">
+            <div className="space-y-2 rounded-xl border border-[#d8e5f8] bg-[#f0f6ff] p-4 text-xs text-[#475569]">
               <p>
-                Actual: <span className="font-semibold text-white">{pendingFeaturedPrevious?.title ?? "-"}</span>
+                Actual: <span className="font-bold text-[#091a36]">{pendingFeaturedPrevious?.title ?? "-"}</span>
               </p>
               <p>
-                Nueva: <span className="font-semibold text-white">{pendingFeaturedTarget?.title ?? "-"}</span>
+                Nueva: <span className="font-bold text-[#0062ff]">{pendingFeaturedTarget?.title ?? "-"}</span>
               </p>
             </div>
 
-            <div className="mt-2 flex justify-end gap-2">
+            <div className="mt-4 flex justify-end gap-2">
               <Button
                 type="button"
                 variant="outline"
-                className="border-white/20 bg-transparent text-white hover:bg-white/10"
+                className="rounded-full border-[#e2e8f0] text-xs font-semibold text-[#64748b]"
                 onClick={cancelFeaturedReplacement}
               >
                 Cancelar
               </Button>
               <Button
                 type="button"
-                className="bg-white text-slate-900 hover:bg-white/90"
+                className="rounded-full bg-[#0062ff] text-xs font-bold uppercase text-white hover:bg-[#091a36]"
                 onClick={confirmFeaturedReplacement}
               >
-                Confirmar cambio
+                Confirmar Cambio
               </Button>
             </div>
           </DialogContent>
         </Dialog>
 
-        <CardContent>
+        <CardContent className="p-0 pt-3">
           {notice ? (
-            <Alert className="mb-4 border-amber-300/50 bg-amber-500/10 text-amber-100">
+            <Alert className="mb-4 rounded-xl border-blue-200 bg-blue-50 text-xs text-blue-800">
               <AlertDescription>{notice}</AlertDescription>
             </Alert>
           ) : null}
 
           {error ? (
-            <Alert variant="destructive" className="mb-4 border-red-400/55 bg-red-500/12 text-red-100">
+            <Alert variant="destructive" className="mb-4 rounded-xl border-red-200 bg-red-50 text-xs text-red-700">
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           ) : null}
 
           {loading ? (
-            <p className="text-white/65">Cargando articulos...</p>
+            <p className="text-xs text-[#64748b]">Cargando artículos...</p>
           ) : (
-            <section className="rounded-2xl border border-white/10 bg-black/15 p-4 md:p-5">
-              <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+            <section className="space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#f1f5f9] pb-3">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.22em] text-white/45">{SECTION_META[activeSection].eyebrow}</p>
-                  <h3 className="mt-1 text-xl font-semibold text-white">{SECTION_META[activeSection].label}</h3>
+                  <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#0062ff]">{SECTION_META[activeSection].eyebrow}</p>
+                  <h3 className="font-serif text-xl font-bold text-[#0e2246]">{SECTION_META[activeSection].label}</h3>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  <Badge variant="outline" className="border-white/25 text-white">
+                  <span className="rounded-full border border-[#e2e8f0] bg-[#f8fafc] px-3 py-0.5 text-xs font-semibold text-[#64748b]">
                     Resultados: {searchedItems.length}
-                  </Badge>
-                  <Badge className="border border-amber-300/50 bg-amber-300/15 text-amber-100">
+                  </span>
+                  <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-0.5 text-xs font-bold text-amber-700">
                     Destacada: {featuredTitle}
-                  </Badge>
+                  </span>
                 </div>
               </div>
 
               {searchedItems.length === 0 ? (
-                <p className="text-sm text-white/60">No hay articulos para esa busqueda en esta seccion.</p>
+                <p className="text-xs text-[#64748b]">No hay artículos para esa búsqueda en esta sección.</p>
               ) : (
                 <>
                   <div className="space-y-3">
@@ -541,14 +542,14 @@ export default function AdminArticlesPage() {
                     ))}
                   </div>
 
-                  <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-white/10 bg-black/25 px-3 py-2">
-                    <p className="text-xs text-white/60">
-                      Pagina {safeCurrentPage} de {totalPages} · Mostrando {paginatedItems.length} de {searchedItems.length}
+                  <div className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[#e2e8f0] bg-[#f8fafc] px-4 py-3">
+                    <p className="text-xs font-semibold text-[#64748b]">
+                      Página {safeCurrentPage} de {totalPages} · Mostrando {paginatedItems.length} de {searchedItems.length}
                     </p>
                     <div className="flex items-center gap-2">
                       <button
                         type="button"
-                        className="rounded-md border border-white/20 px-3 py-1 text-sm text-white/80 disabled:cursor-not-allowed disabled:opacity-40"
+                        className="rounded-full border border-[#e2e8f0] bg-white px-4 py-1 text-xs font-semibold text-[#0e2246] disabled:cursor-not-allowed disabled:opacity-40"
                         disabled={safeCurrentPage <= 1}
                         onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
                       >
@@ -556,7 +557,7 @@ export default function AdminArticlesPage() {
                       </button>
                       <button
                         type="button"
-                        className="rounded-md border border-white/20 px-3 py-1 text-sm text-white/80 disabled:cursor-not-allowed disabled:opacity-40"
+                        className="rounded-full border border-[#e2e8f0] bg-white px-4 py-1 text-xs font-semibold text-[#0e2246] disabled:cursor-not-allowed disabled:opacity-40"
                         disabled={safeCurrentPage >= totalPages}
                         onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
                       >
@@ -573,7 +574,3 @@ export default function AdminArticlesPage() {
     </BackofficeShell>
   );
 }
-
-
-
-

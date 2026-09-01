@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { BackofficeShell } from "../../components/backoffice-shell";
@@ -14,7 +14,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 type AdminUser = {
@@ -104,104 +103,115 @@ export default function AdminUsersPage() {
 
   return (
     <BackofficeShell
-      title="Gestion de usuarios"
-      subtitle="Alta de usuarios preaprobados, asignacion de rol y control de estado activo/inactivo."
+      title="Usuarios y Permisos"
+      subtitle="Alta de usuarios preaprobados, asignación de roles (ADMIN / EDITOR) y control de acceso."
     >
-      <div className="grid gap-6 lg:grid-cols-[1fr_1.2fr]">
-        <Card className="border-white/12 bg-white/[0.04] text-white">
-          <CardHeader>
-            <CardTitle>Nuevo usuario</CardTitle>
+      <div className="grid gap-6 lg:grid-cols-[1fr_1.3fr]">
+        {/* Formulario de Alta */}
+        <Card className="rounded-2xl border border-[#e2e8f0] bg-[#ffffff] p-6 shadow-sm">
+          <CardHeader className="p-0 pb-4">
+            <CardTitle className="font-serif text-2xl font-bold text-[#0e2246]">Nuevo Usuario</CardTitle>
           </CardHeader>
-          <CardContent>
-            <form onSubmit={createUser} className="space-y-3">
-              <Input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                type="email"
-                required
-                placeholder="Email"
-                className="bg-black/35 text-white placeholder:text-white/35"
-              />
-              <Input
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                placeholder="Nombre completo"
-                className="bg-black/35 text-white placeholder:text-white/35"
-              />
-              <Select value={role} onValueChange={(v) => setRole(v as Role)}>
-                <SelectTrigger className="bg-black/35 text-white">
-                  <SelectValue placeholder="Rol" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="EDITOR">EDITOR</SelectItem>
-                  <SelectItem value="ADMIN">ADMIN</SelectItem>
-                </SelectContent>
-              </Select>
-              <Button type="submit" className="w-full bg-white text-slate-900 hover:bg-white/90">
-                Crear usuario preaprobado
+          <CardContent className="p-0">
+            <form onSubmit={createUser} className="space-y-3.5">
+              <div className="space-y-1">
+                <label className="text-xs font-bold uppercase tracking-wider text-[#0e2246]">Email de Acceso</label>
+                <Input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  type="email"
+                  required
+                  placeholder="usuario@clubdefinanzasuba.com"
+                  className="rounded-xl border-[#e2e8f0] text-sm text-[#0e2246]"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-bold uppercase tracking-wider text-[#0e2246]">Nombre Completo</label>
+                <Input
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  placeholder="Nombre y Apellido"
+                  className="rounded-xl border-[#e2e8f0] text-sm text-[#0e2246]"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-bold uppercase tracking-wider text-[#0e2246]">Rol Asignado</label>
+                <Select value={role} onValueChange={(v) => setRole(v as Role)}>
+                  <SelectTrigger className="rounded-xl border-[#e2e8f0] text-sm text-[#0e2246]">
+                    <SelectValue placeholder="Rol" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="EDITOR">EDITOR (Publicar y editar)</SelectItem>
+                    <SelectItem value="ADMIN">ADMIN (Control total)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <Button type="submit" className="w-full rounded-full bg-[#0062ff] py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-sm hover:bg-[#091a36]">
+                Crear Usuario Preaprobado
               </Button>
             </form>
-            <p className="mt-4 text-xs text-white/60">Tip: se crea activo y puede pedir OTP de inmediato.</p>
           </CardContent>
         </Card>
 
-        <Card className="border-white/12 bg-white/[0.04] text-white">
-          <CardHeader>
-            <CardTitle>Usuarios cargados</CardTitle>
-            <Input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Buscar por email, nombre o rol"
-              className="bg-black/35 text-white placeholder:text-white/35"
-            />
+        {/* Listado de Usuarios */}
+        <Card className="rounded-2xl border border-[#e2e8f0] bg-[#ffffff] p-6 shadow-sm">
+          <CardHeader className="p-0 pb-4">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <CardTitle className="font-serif text-2xl font-bold text-[#0e2246]">Usuarios ({users.length})</CardTitle>
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Buscar usuario..."
+                className="h-9 w-48 rounded-xl border-[#e2e8f0] text-xs"
+              />
+            </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-0 pt-2">
             {error ? (
-              <Alert variant="destructive" className="mb-4 border-red-400/55 bg-red-500/12 text-red-100">
+              <Alert variant="destructive" className="mb-4 rounded-xl border-red-200 bg-red-50 p-3 text-xs text-red-700">
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             ) : null}
 
             {loading ? (
-              <p className="text-white/65">Cargando usuarios...</p>
+              <p className="text-xs text-[#64748b]">Cargando usuarios...</p>
             ) : filteredUsers.length === 0 ? (
-              <p className="text-white/65">No hay usuarios para mostrar.</p>
+              <p className="text-xs text-[#64748b]">No se encontraron usuarios.</p>
             ) : (
               <div className="space-y-3">
                 {filteredUsers.map((user) => (
-                  <article key={user.id} className="rounded-2xl border border-white/10 bg-black/20 p-4">
+                  <article key={user.id} className="rounded-xl border border-[#e2e8f0] bg-[#ffffff] p-4 transition hover:border-[#0062ff]">
                     <div className="flex flex-wrap items-center justify-between gap-3">
                       <div>
-                        <p className="font-semibold">{user.email}</p>
-                        <p className="text-sm text-white/65">{user.fullName || "Sin nombre"}</p>
+                        <p className="font-serif font-bold text-[#0e2246]">{user.fullName || "Sin nombre"}</p>
+                        <p className="text-xs text-[#64748b]">{user.email}</p>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Badge className={user.role === "ADMIN" ? "bg-[#3d4ca8]" : "bg-white/20 text-white"}>
+                        <span className="rounded-full border border-[#d8e5f8] bg-[#f0f6ff] px-2.5 py-0.5 text-[10px] font-extrabold uppercase text-[#0062ff]">
                           {user.role}
-                        </Badge>
-                        <Badge variant="outline" className={user.isActive ? "border-emerald-300/50 text-emerald-200" : "border-rose-300/50 text-rose-200"}>
+                        </span>
+                        <span className={`rounded-full px-2.5 py-0.5 text-[10px] font-extrabold uppercase ${user.isActive ? "bg-emerald-50 text-emerald-700 border border-emerald-200" : "bg-red-50 text-red-600 border border-red-200"}`}>
                           {user.isActive ? "ACTIVO" : "INACTIVO"}
-                        </Badge>
+                        </span>
                       </div>
                     </div>
 
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="border-white/20 bg-transparent text-white hover:bg-white/10"
+                    <div className="mt-3 flex flex-wrap gap-2 border-t border-[#f1f5f9] pt-3">
+                      <button
+                        className="rounded-full border border-[#e2e8f0] bg-white px-3 py-1 text-xs font-semibold text-[#0e2246] transition hover:bg-[#f8fafc]"
                         onClick={() => void patchUser(user.id, { isActive: !user.isActive })}
                       >
                         {user.isActive ? "Desactivar" : "Activar"}
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="border-white/20 bg-transparent text-white hover:bg-white/10"
+                      </button>
+                      <button
+                        className="rounded-full border border-[#e2e8f0] bg-white px-3 py-1 text-xs font-semibold text-[#0e2246] transition hover:bg-[#f8fafc]"
                         onClick={() => void patchUser(user.id, { role: user.role === "ADMIN" ? "EDITOR" : "ADMIN" })}
                       >
                         Pasar a {user.role === "ADMIN" ? "EDITOR" : "ADMIN"}
-                      </Button>
+                      </button>
                     </div>
                   </article>
                 ))}

@@ -1,22 +1,15 @@
 import { NextResponse } from "next/server";
-import { API_BASE_URL } from "../../../lib/config";
+import { getGlobalMarketData } from "@/lib/services/market-service";
 
 export async function GET() {
   try {
-    const response = await fetch(`${API_BASE_URL}/market/global`, {
-      method: "GET",
-      cache: "no-store",
-    });
-
-    const raw = await response.text();
-    const payload = raw ? (JSON.parse(raw) as unknown) : { error: "Respuesta vacia del backend" };
-
-    return NextResponse.json(payload, { status: response.status });
+    const data = await getGlobalMarketData();
+    return NextResponse.json(data);
   } catch (error) {
-    console.error("[front] Error en /api/market/global", error);
+    console.error("[API] Error en /api/market/global:", error);
     return NextResponse.json(
-      { error: "No se pudo conectar con el backend para obtener Monitor Global" },
-      { status: 502 },
+      { error: "No se pudieron obtener los datos de mercado global" },
+      { status: 500 },
     );
   }
 }

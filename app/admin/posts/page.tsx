@@ -201,35 +201,89 @@ export default function AdminPostsPage() {
   }
 
   return (
-    <BackofficeShell title="Gestión de publicaciones" subtitle="Modelo unificado: informes, newsletter y eventos.">
-      <section className="space-y-6 rounded-3xl border border-[var(--color-line)] bg-white p-6">
-        <h2 className="text-2xl font-semibold">{editingId ? "Editar post" : "Nuevo post"}</h2>
-        <div className="grid gap-3 md:grid-cols-2">
-          <input className="rounded-xl border p-3" placeholder="Título" value={form.title} onChange={(event) => setForm({ ...form, title: event.target.value })} />
-          <input className="rounded-xl border p-3" placeholder="Resumen" value={form.summary} onChange={(event) => setForm({ ...form, summary: event.target.value })} />
-          <select className="rounded-xl border p-3" value={form.type} onChange={(event) => setForm({ ...form, type: event.target.value as PostType })}>
-            <option value="REPORT">Informe</option>
-            <option value="NEWSLETTER">Newsletter</option>
-            <option value="EVENT">Evento</option>
-          </select>
-          <select className="rounded-xl border p-3" value={form.section} onChange={(event) => setForm({ ...form, section: event.target.value as PostSection })}>
-            <option value="HOME">Home</option>
-            <option value="NEWSLETTER">Newsletter</option>
-            <option value="RESEARCH">Research</option>
-            <option value="PORTFOLIO">Portfolio</option>
-            <option value="INSTITUTIONAL">Institutional</option>
-          </select>
+    <BackofficeShell title="Gestión de Publicaciones" subtitle="Editor y repositorio de informes de Portfolio, Research, Newsletter y Eventos.">
+      {/* Formulario de Creación / Edición */}
+      <section className="space-y-6 rounded-2xl border border-[#e2e8f0] bg-[#ffffff] p-6 shadow-sm md:p-8">
+        <div className="flex items-center justify-between border-b border-[#f1f5f9] pb-3">
+          <h2 className="font-serif text-2xl font-bold text-[#0e2246]">{editingId ? "Editar Publicación" : "Nueva Publicación"}</h2>
+          {editingId && (
+            <span className="rounded-full border border-[#d8e5f8] bg-[#f0f6ff] px-3 py-1 text-xs font-bold text-[#0062ff]">
+              Modo Edición
+            </span>
+          )}
         </div>
-        <textarea className="min-h-[100px] w-full rounded-xl border p-3" placeholder="Cuerpo" value={form.body} onChange={(event) => setForm({ ...form, body: event.target.value })} />
-        <div className="rounded-xl border p-4">
-          <p className="text-sm font-medium">Assets</p>
-          <p className="mt-1 text-xs text-[var(--color-muted)]">
-            {form.type === "REPORT" ? "Subí PDF." : form.type === "EVENT" ? "Subí flyer/imagen del evento." : "Subí imágenes para newsletter."}
+
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="space-y-1">
+            <label className="text-xs font-bold uppercase tracking-wider text-[#0e2246]">Título</label>
+            <input
+              className="w-full rounded-xl border border-[#e2e8f0] bg-[#ffffff] px-4 py-2.5 text-sm text-[#0e2246] outline-none transition focus:border-[#0062ff] focus:ring-2 focus:ring-[#0062ff]/10"
+              placeholder="Ej. Portfolio Renta Variable Agosto 2026"
+              value={form.title}
+              onChange={(event) => setForm({ ...form, title: event.target.value })}
+            />
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-xs font-bold uppercase tracking-wider text-[#0e2246]">Resumen / Bajada</label>
+            <input
+              className="w-full rounded-xl border border-[#e2e8f0] bg-[#ffffff] px-4 py-2.5 text-sm text-[#0e2246] outline-none transition focus:border-[#0062ff] focus:ring-2 focus:ring-[#0062ff]/10"
+              placeholder="Ej. Análisis de 6 compañías del sector energía..."
+              value={form.summary}
+              onChange={(event) => setForm({ ...form, summary: event.target.value })}
+            />
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-xs font-bold uppercase tracking-wider text-[#0e2246]">Tipo de Post</label>
+            <select
+              className="w-full rounded-xl border border-[#e2e8f0] bg-[#ffffff] px-4 py-2.5 text-sm text-[#0e2246] outline-none transition focus:border-[#0062ff]"
+              value={form.type}
+              onChange={(event) => setForm({ ...form, type: event.target.value as PostType })}
+            >
+              <option value="REPORT">Informe (PDF)</option>
+              <option value="NEWSLETTER">Newsletter (Imágenes/Texto)</option>
+              <option value="EVENT">Evento (Flyer/Inscripción)</option>
+            </select>
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-xs font-bold uppercase tracking-wider text-[#0e2246]">Sección Destino</label>
+            <select
+              className="w-full rounded-xl border border-[#e2e8f0] bg-[#ffffff] px-4 py-2.5 text-sm text-[#0e2246] outline-none transition focus:border-[#0062ff]"
+              value={form.section}
+              onChange={(event) => setForm({ ...form, section: event.target.value as PostSection })}
+            >
+              <option value="HOME">Home</option>
+              <option value="PORTFOLIO">Portfolio</option>
+              <option value="RESEARCH">Research</option>
+              <option value="NEWSLETTER">Newsletter</option>
+              <option value="INSTITUTIONAL">Institucional</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="space-y-1">
+          <label className="text-xs font-bold uppercase tracking-wider text-[#0e2246]">Cuerpo Completo (Opcional si es PDF)</label>
+          <textarea
+            className="min-h-[120px] w-full rounded-xl border border-[#e2e8f0] bg-[#ffffff] p-4 text-sm text-[#0e2246] outline-none transition focus:border-[#0062ff] focus:ring-2 focus:ring-[#0062ff]/10"
+            placeholder="Texto completo del informe o artículo..."
+            value={form.body}
+            onChange={(event) => setForm({ ...form, body: event.target.value })}
+          />
+        </div>
+
+        {/* Carga de Assets R2 */}
+        <div className="rounded-xl border border-[#d8e5f8] bg-[#f0f6ff] p-5">
+          <p className="text-xs font-extrabold uppercase tracking-wider text-[#091a36]">Archivos Adjuntos (R2 / S3)</p>
+          <p className="mt-1 text-xs text-[#64748b]">
+            {form.type === "REPORT" ? "Subí el archivo PDF del informe para visualizador embebido." : form.type === "EVENT" ? "Subí el flyer del evento." : "Subí imágenes para la galería del newsletter."}
           </p>
+
           <input
             type="file"
             accept={form.type === "REPORT" ? "application/pdf" : "image/*"}
-            className="mt-3 block w-full text-sm"
+            className="mt-3 block w-full text-xs file:mr-4 file:rounded-full file:border-0 file:bg-[#091a36] file:px-4 file:py-2 file:text-xs file:font-bold file:text-white hover:file:bg-[#0062ff]"
             onChange={(event) => {
               const file = event.target.files?.[0];
               if (file) void uploadFile(file);
@@ -237,16 +291,17 @@ export default function AdminPostsPage() {
             }}
             disabled={uploading}
           />
-          {uploading ? <p className="mt-2 text-xs text-[var(--color-muted)]">Subiendo...</p> : null}
-          <div className="mt-3 space-y-2">
+          {uploading ? <p className="mt-2 text-xs font-bold text-[#0062ff]">Subiendo archivo a almacenamiento seguro...</p> : null}
+
+          <div className="mt-4 space-y-2">
             {form.assets.map((asset, index) => (
-              <div key={`${asset.url}-${index}`} className="flex items-center justify-between gap-3 rounded-lg border p-2 text-xs">
-                <a href={asset.url} target="_blank" rel="noopener noreferrer" className="truncate text-[var(--color-blue)] underline">
+              <div key={`${asset.url}-${index}`} className="flex items-center justify-between gap-3 rounded-lg border border-[#e2e8f0] bg-[#ffffff] p-3 text-xs">
+                <a href={asset.url} target="_blank" rel="noopener noreferrer" className="truncate font-semibold text-[#0062ff] hover:underline">
                   {asset.url}
                 </a>
                 <button
                   type="button"
-                  className="rounded border px-2 py-1"
+                  className="rounded-full border border-red-200 bg-red-50 px-3 py-1 font-bold text-red-600 transition hover:bg-red-100"
                   onClick={() => void removeAsset(index)}
                 >
                   Quitar
@@ -255,44 +310,100 @@ export default function AdminPostsPage() {
             ))}
           </div>
         </div>
-        <textarea className="min-h-[80px] w-full rounded-xl border p-3" placeholder="Autores (TeamMember ID por línea)" value={form.authorsText} onChange={(event) => setForm({ ...form, authorsText: event.target.value })} />
-        {form.type === "EVENT" ? (
-          <div className="grid gap-3 md:grid-cols-2">
-            <input type="datetime-local" className="rounded-xl border p-3" value={form.eventDate} onChange={(event) => setForm({ ...form, eventDate: event.target.value })} />
-            <input className="rounded-xl border p-3" placeholder="Link inscripción" value={form.registrationUrl} onChange={(event) => setForm({ ...form, registrationUrl: event.target.value })} />
+
+        {form.type === "EVENT" && (
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="space-y-1">
+              <label className="text-xs font-bold uppercase tracking-wider text-[#0e2246]">Fecha del Evento</label>
+              <input
+                type="datetime-local"
+                className="w-full rounded-xl border border-[#e2e8f0] bg-[#ffffff] px-4 py-2.5 text-sm text-[#0e2246] outline-none"
+                value={form.eventDate}
+                onChange={(event) => setForm({ ...form, eventDate: event.target.value })}
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-xs font-bold uppercase tracking-wider text-[#0e2246]">Link de Inscripción (Forms/Luma)</label>
+              <input
+                className="w-full rounded-xl border border-[#e2e8f0] bg-[#ffffff] px-4 py-2.5 text-sm text-[#0e2246] outline-none"
+                placeholder="https://forms.gle/..."
+                value={form.registrationUrl}
+                onChange={(event) => setForm({ ...form, registrationUrl: event.target.value })}
+              />
+            </div>
           </div>
-        ) : null}
-        <label className="inline-flex items-center gap-2 text-sm">
-          <input type="checkbox" checked={form.isFeatured} onChange={(event) => setForm({ ...form, isFeatured: event.target.checked })} />
-          Destacado
-        </label>
-        <div className="flex flex-wrap gap-2">
-          <button onClick={createPost} className="rounded-full bg-[var(--color-blue)] px-5 py-2 text-white">
-            {editingId ? "Guardar cambios" : "Crear post"}
+        )}
+
+        <div className="flex items-center gap-2">
+          <input
+            id="featured"
+            type="checkbox"
+            checked={form.isFeatured}
+            onChange={(event) => setForm({ ...form, isFeatured: event.target.checked })}
+            className="h-4 w-4 rounded border-gray-300 text-[#0062ff] focus:ring-[#0062ff]"
+          />
+          <label htmlFor="featured" className="text-xs font-bold uppercase tracking-wider text-[#0e2246]">
+            Marcar como Destacado en Portada
+          </label>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-3 pt-2">
+          <button
+            onClick={createPost}
+            className="inline-flex items-center rounded-full bg-[#0062ff] px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-sm transition hover:bg-[#091a36]"
+          >
+            {editingId ? "Guardar Cambios" : "Crear Publicación"}
           </button>
           {editingId ? (
-            <button type="button" onClick={cancelEdit} className="rounded-full border px-5 py-2">
-              Cancelar edición
+            <button
+              type="button"
+              onClick={cancelEdit}
+              className="inline-flex items-center rounded-full border border-[#e2e8f0] bg-white px-5 py-2.5 text-xs font-bold text-[#64748b] transition hover:bg-[#f8fafc]"
+            >
+              Cancelar Edición
             </button>
           ) : null}
         </div>
-        {notice ? <p className="text-sm text-[var(--color-muted)]">{notice}</p> : null}
+
+        {notice ? <p className="text-xs font-bold text-[#0062ff]">{notice}</p> : null}
       </section>
 
-      <section className="mt-6 rounded-3xl border border-[var(--color-line)] bg-white p-6">
-        <h2 className="text-2xl font-semibold">Publicaciones ({items.length})</h2>
-        {loading ? <p className="mt-3 text-sm">Cargando...</p> : null}
-        <div className="mt-4 space-y-3">
+      {/* Listado de Publicaciones */}
+      <section className="mt-8 rounded-2xl border border-[#e2e8f0] bg-[#ffffff] p-6 shadow-sm md:p-8">
+        <h2 className="font-serif text-2xl font-bold text-[#0e2246]">Publicaciones Cargadas ({items.length})</h2>
+        {loading ? <p className="mt-3 text-xs text-[#64748b]">Cargando listado...</p> : null}
+
+        <div className="mt-5 space-y-3">
           {items.map((item) => (
-            <article key={item.id} className="rounded-2xl border border-[var(--color-line)] p-4">
-              <p className="text-xs uppercase tracking-[0.2em] text-[var(--color-blue)]">{item.type} · {item.section}</p>
-              <h3 className="mt-2 text-xl font-semibold">{item.title}</h3>
-              <p className="text-sm text-[var(--color-muted)]">{item.summary}</p>
-              <div className="mt-3 flex gap-2">
-                <button type="button" onClick={() => startEdit(item)} className="rounded border px-3 py-1 text-xs">
+            <article key={item.id} className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-[#e2e8f0] bg-[#ffffff] p-4 transition hover:border-[#0062ff]">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="rounded-full border border-[#d8e5f8] bg-[#f0f6ff] px-2.5 py-0.5 text-[10px] font-extrabold uppercase text-[#0062ff]">
+                    {item.type} · {item.section}
+                  </span>
+                  {item.isFeatured && (
+                    <span className="rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-bold text-amber-700">
+                      ★ Destacado
+                    </span>
+                  )}
+                </div>
+                <h3 className="mt-2 font-serif text-lg font-bold text-[#0e2246]">{item.title}</h3>
+                <p className="mt-0.5 text-xs text-[#64748b] line-clamp-1">{item.summary}</p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => startEdit(item)}
+                  className="rounded-full border border-[#e2e8f0] bg-white px-3.5 py-1.5 text-xs font-semibold text-[#0e2246] transition hover:border-[#0062ff] hover:text-[#0062ff]"
+                >
                   Editar
                 </button>
-                <button type="button" onClick={() => void deletePost(item.id)} className="rounded border px-3 py-1 text-xs text-red-700">
+                <button
+                  type="button"
+                  onClick={() => void deletePost(item.id)}
+                  className="rounded-full border border-red-200 bg-red-50 px-3.5 py-1.5 text-xs font-bold text-red-600 transition hover:bg-red-100"
+                >
                   Eliminar
                 </button>
               </div>

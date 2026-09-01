@@ -1,27 +1,27 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Sora, Geist } from "next/font/google";
+import { Montserrat, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
-
-const displayFont = Sora({
-  variable: "--font-display",
+const montserrat = Montserrat({
+  variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["400", "600", "700", "800"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  display: "swap",
 });
 
-const bodyFont = Space_Grotesk({
-  variable: "--font-body",
+const monoFont = JetBrains_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Club de Finanzas UBA",
+  title: "Club de Finanzas UBA | Análisis Cuantitativo, Portafolio y Research",
   description:
-    "Sitio editorial del Club de Finanzas UBA con home tipo feed, secciones por área y página institucional.",
+    "Organización académica y profesional de estudiantes de la UBA. Portafolios de inversión cuantitativos, investigación macroeconómica, educación y comunidad financiera.",
 };
 
 export default function RootLayout({
@@ -32,9 +32,13 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={cn("dark", displayFont.variable, bodyFont.variable, "font-sans", geist.variable)}
+      className={cn(
+        montserrat.variable,
+        monoFont.variable,
+        "font-sans scroll-smooth",
+      )}
     >
-      <body className="bg-[var(--color-bg)] text-[var(--color-text)] antialiased [font-family:var(--font-body),sans-serif]">
+      <body className="min-h-screen bg-[#ffffff] font-sans text-[#334155] antialiased selection:bg-[#0062ff]/15 selection:text-[#091a36]">
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -1,21 +1,15 @@
 import { NextResponse } from "next/server";
-import { API_BASE_URL } from "../../../../lib/config";
+import { getCountryRiskLatestData } from "@/lib/services/market-service";
 
 export async function GET() {
   try {
-    const response = await fetch(`${API_BASE_URL}/market/riesgo-pais/ultimo`, {
-      method: "GET",
-      cache: "no-store",
-    });
-
-    const raw = await response.text();
-    const payload = raw ? (JSON.parse(raw) as unknown) : { error: "Respuesta vacia del backend" };
-    return NextResponse.json(payload, { status: response.status });
+    const data = await getCountryRiskLatestData();
+    return NextResponse.json(data);
   } catch (error) {
-    console.error("[front] Error en /api/market/riesgo-pais/ultimo", error);
+    console.error("[API] Error en /api/market/riesgo-pais/ultimo:", error);
     return NextResponse.json(
-      { error: "No se pudo conectar con el backend para obtener ultimo riesgo pais" },
-      { status: 502 },
+      { error: "No se pudo obtener el último dato de riesgo país" },
+      { status: 500 },
     );
   }
 }

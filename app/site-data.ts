@@ -27,9 +27,8 @@ export const navigation: NavigationItem[] = [
   { href: "/", label: "Inicio" },
   { href: "/newsletter", label: "Newsletter" },
   { href: "/research", label: "Research" },
-  { href: "/portfolio", label: "Portfolio" },
-  { href: "/monitor-global", label: "Datos Fin." },
-  { href: "/sobre-nosotros", label: "Sobre Nos" },
+  { href: "/portfolio", label: "Portafolio" },
+  { href: "/sobre-nosotros", label: "Sobre Nosotros" },
   { href: "/unite", label: "Unite" },
 ];
 
@@ -115,7 +114,7 @@ export const homeFeed: FeedEntry[] = [
 ];
 
 export const portfolioIntro =
-  "Área enfocada en construcción y seguimiento de carteras, asset allocation y lectura táctica de mercado. El feed prioriza piezas accionables, consistentes y fáciles de recorrer.";
+  "Área enfocada en construcción y seguimiento de carteras, asset allocation y modelos cuantitativos de renta fija y variable. Presentamos tesis de inversión fundamental y análisis de activos.";
 
 export const portfolioFeed: FeedEntry[] = [
   {
@@ -157,7 +156,7 @@ export const portfolioFeed: FeedEntry[] = [
 ];
 
 export const researchIntro =
-  "Research concentra informes, marcos conceptuales y piezas de lectura profunda. La idea es que el usuario encuentre un feed limpio y una descripción clara del área antes de bajar a los contenidos.";
+  "Research concentra informes, marcos conceptuales y estudios macroeconómicos. Formación de alto nivel en valuación de activos y coyuntura financiera.";
 
 export const researchFeed: FeedEntry[] = [
   {
@@ -199,7 +198,7 @@ export const researchFeed: FeedEntry[] = [
 ];
 
 export const newsIntro =
-  "Noticias reúne novedades institucionales, agenda del club y cobertura de actividades para mantener a la comunidad informada con un formato claro y actualizado.";
+  "Noticias y novedades institucionales del Club de Finanzas UBA: agenda de conferencias, charlas con referentes del mercado y convocatorias.";
 
 export const newsFeed: FeedEntry[] = [
   {
@@ -207,16 +206,16 @@ export const newsFeed: FeedEntry[] = [
     date: "Marzo 2026",
     title: "Agenda del club: actividades confirmadas para abril",
     excerpt:
-      "Resumen de fechas, charlas y encuentros planificados para el proximo mes con links de seguimiento.",
+      "Resumen de fechas, charlas y encuentros planificados para el próximo mes con links de seguimiento.",
     href: "https://www.linkedin.com/company/club-de-finanzas-uba/",
     cta: "Ver agenda",
   },
   {
     category: "Eventos",
     date: "Marzo 2026",
-    title: "Cobertura: encuentro de analisis macro con invitados del sector",
+    title: "Cobertura: encuentro de análisis macro con invitados del sector",
     excerpt:
-      "Sintesis de los temas tratados, conclusiones clave y material complementario para la comunidad.",
+      "Síntesis de los temas tratados, conclusiones clave y material complementario para la comunidad.",
     href: "https://www.linkedin.com/company/club-de-finanzas-uba/",
     cta: "Leer cobertura",
   },
@@ -225,7 +224,7 @@ export const newsFeed: FeedEntry[] = [
     date: "Febrero 2026",
     title: "Convocatoria abierta para sumar voluntarios al equipo editorial",
     excerpt:
-      "Buscamos perfiles para redaccion, diseno y coordinacion de contenido institucional.",
+      "Buscamos perfiles para redacción, diseño y coordinación de contenido institucional.",
     href: "https://www.linkedin.com/company/club-de-finanzas-uba/",
     cta: "Postularme",
   },
@@ -243,48 +242,48 @@ export const newsFeed: FeedEntry[] = [
 export const storyBlocks = [
   {
     title: "Trayectoria",
-    text: "El club surge desde la UBA para transformar interés en finanzas en producción real: informes, publicaciones, charlas y comunidad.",
+    text: "El club surge desde la UBA para transformar interés en finanzas en producción real: informes cuantitativos, publicaciones, conferencias y comunidad activa.",
   },
   {
     title: "Objetivo",
-    text: "Construir una plataforma estudiantil con nivel editorial y técnico, capaz de dialogar con alumnos, graduados, speakers y aliados.",
+    text: "Construir una plataforma estudiantil con nivel editorial y técnico de excelencia, conectando a estudiantes con las principales firmas del mercado de capitales.",
   },
   {
     title: "Forma de trabajo",
-    text: "Cada área produce contenido con identidad propia, pero dentro de una marca común que prioriza claridad, criterio y continuidad.",
+    text: "Equipos especializados en Portfolio, Research y Relaciones Institucionales, aplicando metodologías analíticas rigurosas.",
   },
 ];
 
 export const objectives = [
-  "Acercar finanzas a estudiantes con lenguaje claro y exigencia técnica.",
-  "Publicar piezas que sirvan tanto para aprender como para mostrar trabajo serio.",
-  "Generar una comunidad activa alrededor de informes, eventos y oportunidades.",
-  "Consolidar una marca universitaria atractiva para partners, speakers y sponsors.",
+  "Formar estudiantes en finanzas aplicadas, análisis fundamental, renta fija y asset allocation.",
+  "Publicar reportes y modelos de valuación con calidad profesional y rigor metodológico.",
+  "Construir una red activa de networking con profesionales, docentes y referentes de la industria.",
+  "Consolidar una organización académica de referencia para toda la comunidad universitaria.",
 ];
 
 export const leadership: Person[] = [
   {
     name: "Julian Robin",
     role: "Co-founder",
-    bio: "Impulsa la dirección general del club y la construcción de alianzas, eventos y narrativa institucional.",
+    bio: "Impulsa la dirección general del club, el desarrollo institucional y las alianzas estratégicas.",
     initials: "JR",
   },
   {
     name: "Ale",
-    role: "Contenido y noticias",
-    bio: "Aporta lectura de coyuntura y una voz más ágil para bajar mercado a formatos rápidos y consistentes.",
+    role: "Contenido y Noticias",
+    bio: "Lidera la cobertura de coyuntura macroeconómica y la comunicación ágil con la comunidad.",
     initials: "AL",
   },
   {
     name: "Equipo Research",
-    role: "Análisis e informes",
-    bio: "Desarrolla piezas técnicas, marcos conceptuales y publicaciones de educación financiera.",
+    role: "Análisis Cuantitativo",
+    bio: "Desarrolla modelos de valuación, análisis de renta fija y notas de investigación.",
     initials: "RE",
   },
   {
     name: "Equipo Portfolio",
-    role: "Seguimiento de cartera",
-    bio: "Trabaja estrategias, asset allocation y seguimiento metodológico de ideas de inversión.",
+    role: "Estrategia de Inversión",
+    bio: "Gestiona carteras modelo, asignación táctica y métricas de riesgo y retorno.",
     initials: "PF",
   },
 ];

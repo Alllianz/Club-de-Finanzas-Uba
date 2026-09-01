@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Pencil } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -28,39 +28,39 @@ export function ArticleCard({ item, editedBy, onToggleStatus, onToggleFeatured, 
 
   return (
     <article
-      className={`rounded-2xl border bg-black/20 p-4 ${
+      className={`rounded-xl border p-4 transition ${
         item.isFeatured
-          ? "border-amber-300/55 shadow-[0_0_0_1px_rgba(252,211,77,0.18)]"
-          : "border-white/10"
+          ? "border-amber-400 bg-amber-50/20 shadow-sm"
+          : "border-[#e2e8f0] bg-[#ffffff] hover:border-[#0062ff]"
       }`}
     >
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-white/45">
-            {SECTION_LABEL[item.section]} - {item.category}
-          </p>
-          <h3 className="mt-1 text-xl font-semibold">{item.title}</h3>
-          <p className="mt-2 text-sm text-white/68">{item.excerpt}</p>
+          <span className="rounded-full border border-[#d8e5f8] bg-[#f0f6ff] px-2.5 py-0.5 text-[10px] font-extrabold uppercase text-[#0062ff]">
+            {SECTION_LABEL[item.section]} · {item.category}
+          </span>
+          <h3 className="mt-2 font-serif text-lg font-bold text-[#0e2246]">{item.title}</h3>
+          <p className="mt-1 text-xs text-[#64748b] line-clamp-2">{item.excerpt}</p>
         </div>
-        <div className="flex flex-col items-end gap-1">
+        <div className="flex flex-col items-end gap-1.5">
           <Badge
             variant="outline"
             className={
               item.status === "PUBLISHED"
-                ? "border-emerald-300/50 text-emerald-200"
-                : "border-amber-300/50 text-amber-200"
+                ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                : "border-amber-200 bg-amber-50 text-amber-700"
             }
           >
             {STATUS_LABEL[item.status]}
           </Badge>
           {item.isFeatured ? (
-            <Badge className="border border-amber-300/60 bg-amber-300/20 text-amber-100">DESTACADA</Badge>
+            <Badge className="border border-amber-300 bg-amber-100 text-amber-800">DESTACADA</Badge>
           ) : null}
         </div>
       </div>
 
-      <div className="mt-3 flex items-center gap-2 text-xs text-white/65">
-        <Pencil className="h-3.5 w-3.5" />
+      <div className="mt-3 flex items-center gap-2 text-xs text-[#64748b]">
+        <Pencil className="h-3.5 w-3.5 text-[#0062ff]" />
         <span>
           {edited ? `Editado por ${editorLabel} (${editedAtLabel})` : `Sin ediciones. Creado por ${editorLabel}`}
         </span>
@@ -68,11 +68,11 @@ export function ArticleCard({ item, editedBy, onToggleStatus, onToggleFeatured, 
 
       <LinkPreview url={item.ctaUrl} />
 
-      <div className="mt-3 flex flex-wrap gap-2">
+      <div className="mt-3 flex flex-wrap gap-2 border-t border-[#f1f5f9] pt-3">
         <Button
           size="sm"
           variant="outline"
-          className="border-white/20 bg-transparent text-white hover:bg-white/10"
+          className="rounded-full border-[#e2e8f0] text-xs font-semibold text-[#0e2246] hover:bg-[#f8fafc]"
           onClick={() => onToggleStatus(item.id, item.status)}
         >
           {item.status === "PUBLISHED" ? "Pasar a borrador" : "Publicar"}
@@ -80,7 +80,7 @@ export function ArticleCard({ item, editedBy, onToggleStatus, onToggleFeatured, 
         <Button
           size="sm"
           variant="outline"
-          className="border-white/20 bg-transparent text-white hover:bg-white/10"
+          className="rounded-full border-[#e2e8f0] text-xs font-semibold text-[#0e2246] hover:bg-[#f8fafc]"
           onClick={() => onToggleFeatured(item)}
         >
           {item.isFeatured ? "Quitar destacada" : "Marcar destacada"}
@@ -88,15 +88,13 @@ export function ArticleCard({ item, editedBy, onToggleStatus, onToggleFeatured, 
         <Button
           size="sm"
           variant="outline"
-          className="border-white/20 bg-transparent text-white hover:bg-white/10"
+          className="rounded-full border-[#e2e8f0] text-xs font-semibold text-[#0062ff] hover:bg-[#f0f6ff]"
           onClick={() => onEdit(item)}
         >
-          <Pencil className="mr-1 h-3.5 w-3.5" />
+          <Pencil className="mr-1 h-3 w-3" />
           Editar
         </Button>
       </div>
     </article>
   );
 }
-
-

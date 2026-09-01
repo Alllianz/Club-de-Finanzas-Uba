@@ -41,14 +41,14 @@ function PostImage({ src, alt, variant }: PostImageProps) {
 
   const wrapperClass =
     variant === "featured"
-      ? "mt-6 overflow-hidden rounded-3xl border border-[var(--color-line)] bg-[#0b1122]"
-      : "-mx-6 -mt-6 mb-5 overflow-hidden rounded-t-[28px] border-b border-[var(--color-line)] bg-[#0b1122]";
+      ? "mt-6 overflow-hidden rounded-2xl border border-[#e2e8f0] bg-[#f8fafc]"
+      : "-mx-6 -mt-6 mb-5 overflow-hidden rounded-t-[14px] border-b border-[#e2e8f0] bg-[#f8fafc]";
 
-  const frameClass = variant === "featured" ? "h-[320px] md:h-[460px]" : "h-44";
+  const frameClass = variant === "featured" ? "h-[300px] md:h-[440px]" : "h-48";
 
   return (
     <div className={wrapperClass}>
-      <div className={`w-full ${frameClass} ${isPortrait ? "flex items-center justify-center p-2" : ""}`}>
+      <div className={`w-full ${frameClass} ${isPortrait ? "flex items-center justify-center p-3" : ""}`}>
         <img
           src={src}
           alt={alt}
@@ -77,159 +77,129 @@ export function SiteHeader({ currentPath }: NavProps) {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--nav-border)] bg-[var(--nav-bg)]">
-      <div className="mx-auto w-[min(1280px,96vw)] py-3">
-        <div className="hidden flex-col items-center gap-3 md:flex">
-          <Link href="/" className="flex items-center text-[var(--nav-text)]">
-            <div className="flex h-36 w-[700px] items-center justify-center overflow-hidden">
-              <Image
-                src="/clubdefinanzasubalogohorizontal.png"
-                alt="Club de Finanzas UBA"
-                width={500}
-                height={114}
-                className="h-full w-full object-contain"
-                priority
-              />
-            </div>
-          </Link>
-
-          <nav className="w-full border border-[var(--nav-border)] bg-[var(--nav-bg)]">
-            <ul className="flex w-full items-stretch">
-              {navigation.map((item) => {
-                const active = isNavItemActive(currentPath, item.href);
-                const classes = active
-                  ? "active bg-[var(--nav-active)] text-[var(--nav-active-text)]"
-                  : "bg-[var(--nav-bg)] text-[var(--nav-text)] hover:bg-[#f3f3f3]";
-
-                const content = (
-                  <span
-                    className={`flex h-full min-h-[50px] w-full items-center justify-center px-2 text-center text-[clamp(14px,1.25vw,27px)] font-medium ${classes}`}
-                    style={{ fontFamily: "var(--nav-sub-font)" }}
-                  >
-                    {item.label}
-                  </span>
-                );
-
-                return (
-                  <li
-                    key={item.label}
-                    className="flex-1 border-r border-[var(--nav-border)] last:border-r-0"
-                  >
-                    {item.href.startsWith("http") ? (
-                      <a href={item.href} target="_blank" rel="noopener noreferrer">
-                        {content}
-                      </a>
-                    ) : (
-                      <Link href={item.href}>{content}</Link>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-        </div>
-
-        <div className="md:hidden">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center text-[var(--nav-text)]">
-              <div className="flex h-16 w-[250px] items-center justify-start overflow-hidden">
-                <Image
-                  src="/clubdefinanzasubalogohorizontal.png"
-                  alt="Club de Finanzas UBA"
-                  width={500}
-                  height={114}
-                  className="h-full w-full object-contain object-left"
-                  priority
-                />
-              </div>
-            </Link>
-            <button
-              type="button"
-              className="flex h-11 w-11 items-center justify-center border border-[var(--nav-border)] bg-[var(--nav-bg)] text-[var(--nav-text)]"
-              aria-expanded={open}
-              aria-label="Abrir menú"
-              onClick={() => setOpen((prev) => !prev)}
-            >
-              <span className="flex flex-col gap-1">
-                <span className="h-[2px] w-5 bg-current" />
-                <span className="h-[2px] w-5 bg-current" />
-                <span className="h-[2px] w-5 bg-current" />
-              </span>
-            </button>
+    <header className="sticky top-0 z-50 border-b border-[#e2e8f0] bg-[#ffffff]/98 backdrop-blur-md transition-all">
+      <div className="mx-auto flex w-[min(1380px,94vw)] items-center justify-between py-1.5 md:py-2">
+        {/* Logo al doble de tamaño visual manteniendo la altura compacta del header */}
+        <Link href="/" className="flex items-center">
+          <div className="relative flex items-center justify-start overflow-visible">
+            <img
+              src="/clubdefinanzasubalogohorizontal.png"
+              alt="Club de Finanzas UBA"
+              className="h-16 w-auto sm:h-20 md:h-24 lg:h-28 max-w-[360px] sm:max-w-[480px] md:max-w-[620px] lg:max-w-[720px] object-contain object-left -my-4 md:-my-6 transition-transform hover:scale-[1.02]"
+            />
           </div>
+        </Link>
 
-          <nav className={`mt-3 border border-[var(--nav-border)] ${open ? "open block" : "hidden"}`}>
-            <ul className="flex flex-col">
-              {navigation.map((item) => {
-                const active = isNavItemActive(currentPath, item.href);
-                const classes = active
-                  ? "active bg-[var(--nav-active)] text-[var(--nav-active-text)]"
-                  : "bg-[var(--nav-bg)] text-[var(--nav-text)]";
-                const commonClass = `flex min-h-[52px] items-center border-b border-[var(--nav-border)] px-4 text-[18px] last:border-b-0 ${classes}`;
+        {/* Navegación Desktop */}
+        <nav className="hidden items-center gap-1.5 lg:flex">
+          {navigation.map((item) => {
+            const active = isNavItemActive(currentPath, item.href);
+            const isUnite = item.href === "/unite";
 
-                return (
-                  <li key={item.label}>
-                    {item.href.startsWith("http") ? (
-                      <a href={item.href} target="_blank" rel="noopener noreferrer" className={commonClass}>
-                        {item.label}
-                      </a>
-                    ) : (
-                      <Link href={item.href} className={commonClass} onClick={() => setOpen(false)}>
-                        {item.label}
-                      </Link>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
+            if (isUnite) {
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className={`ml-3 inline-flex items-center rounded-full px-5 py-2 text-xs font-extrabold uppercase tracking-[0.08em] shadow-sm transition ${
+                    active
+                      ? "bg-[#091a36] text-white"
+                      : "bg-[#0062ff] text-white hover:bg-[#091a36]"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            }
+
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`inline-flex items-center rounded-lg px-3.5 py-2 text-xs font-extrabold uppercase tracking-[0.08em] transition ${
+                  active
+                    ? "bg-[#091a36] text-white shadow-sm"
+                    : "text-[#334155] hover:bg-[#f0f6ff] hover:text-[#0062ff]"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Botón menú móvil */}
+        <div className="flex items-center gap-2 lg:hidden">
+          <Link
+            href="/unite"
+            className="rounded-full bg-[#0062ff] px-3.5 py-1.5 text-xs font-bold text-white shadow-sm"
+          >
+            Unite
+          </Link>
+          <button
+            type="button"
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#e2e8f0] bg-[#ffffff] text-[#091a36] transition hover:bg-[#f8fafc]"
+            aria-expanded={open}
+            aria-label="Abrir menú"
+            onClick={() => setOpen((prev) => !prev)}
+          >
+            <span className="flex flex-col gap-1">
+              <span className={`h-[2px] w-4 bg-current transition-all ${open ? "translate-y-1.5 rotate-45" : ""}`} />
+              <span className={`h-[2px] w-4 bg-current transition-all ${open ? "opacity-0" : ""}`} />
+              <span className={`h-[2px] w-4 bg-current transition-all ${open ? "-translate-y-1.5 -rotate-45" : ""}`} />
+            </span>
+          </button>
         </div>
       </div>
+
+      {/* Menú desplegable Mobile */}
+      {open && (
+        <nav className="border-t border-[#e2e8f0] bg-[#ffffff] px-6 py-4 shadow-lg lg:hidden">
+          <ul className="flex flex-col gap-1.5">
+            {navigation.map((item) => {
+              const active = isNavItemActive(currentPath, item.href);
+              const isUnite = item.href === "/unite";
+
+              return (
+                <li key={item.label}>
+                  <Link
+                    href={item.href}
+                    className={`flex items-center justify-between rounded-xl px-4 py-2.5 text-sm font-bold uppercase tracking-wider transition ${
+                      isUnite
+                        ? "bg-[#0062ff] text-white"
+                        : active
+                        ? "bg-[#091a36] text-white"
+                        : "text-[#334155] hover:bg-[#f0f6ff] hover:text-[#0062ff]"
+                    }`}
+                    onClick={() => setOpen(false)}
+                  >
+                    <span>{item.label}</span>
+                    <span>→</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      )}
     </header>
   );
 }
 
 export function PageHero({ eyebrow, title, description, aside }: HeroProps) {
   return (
-    <section className="relative overflow-hidden border-b border-[var(--color-line)] bg-[radial-gradient(circle_at_top_left,rgba(30,78,162,0.14),transparent_35%),linear-gradient(180deg,#f8f6ef_0%,#f2ede1_100%)]">
-      <div className="mx-auto grid w-[min(1240px,92vw)] gap-8 py-14 md:grid-cols-[minmax(0,1.2fr)_340px] md:py-20">
-        <div className="relative animate-fade-up">
-          <p className="text-xs font-semibold uppercase tracking-[0.34em] text-[var(--color-blue)]">
+    <section className="relative overflow-hidden border-b border-[#e2e8f0] bg-gradient-to-b from-[#f0f6ff]/80 via-[#ffffff] to-[#ffffff] py-12 md:py-16">
+      <div className="mx-auto w-[min(1280px,92vw)]">
+        <div className="max-w-4xl animate-fade-up">
+          <span className="inline-flex items-center gap-2 rounded-full border border-[#d8e5f8] bg-[#f0f6ff] px-3.5 py-1 text-xs font-bold uppercase tracking-[0.2em] text-[#0062ff]">
             {eyebrow}
-          </p>
-          <h1 className="mt-5 max-w-4xl font-[family:var(--font-display)] text-5xl leading-[0.9] text-[var(--color-ink)] sm:text-6xl md:text-7xl">
+          </span>
+          <h1 className="mt-4 text-3xl font-extrabold leading-[1.12] tracking-tight text-[#0e2246] sm:text-4xl md:text-5xl lg:text-6xl">
             {title}
           </h1>
-          <p className="mt-6 max-w-3xl text-lg leading-8 text-[var(--color-muted)] md:text-xl">
+          <p className="mt-4 max-w-3xl text-base leading-relaxed text-[#475569] sm:text-lg md:text-xl">
             {description}
           </p>
-        </div>
-
-        <div className="relative animate-fade-up-delayed rounded-[32px] border border-[var(--color-line)] bg-white p-6 text-[var(--color-muted)] shadow-[0_20px_60px_rgba(18,35,63,0.12)]">
-          {aside ?? (
-            <>
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--color-blue)]">
-                Explorá el Club
-              </p>
-              <p className="mt-4 text-2xl leading-tight text-[var(--color-ink)]">
-                Conocé quiénes somos y sumate a la comunidad.
-              </p>
-              <div className="mt-6 grid gap-3">
-                <Link
-                  href="/sobre-nosotros"
-                  className="inline-flex items-center justify-center rounded-2xl border border-[var(--color-line)] bg-[var(--color-bg-soft)] px-4 py-3 text-sm font-semibold text-[var(--color-ink)] transition hover:border-[var(--color-blue)] hover:text-[var(--color-blue)]"
-                >
-                  Ver Sobre Nosotros
-                </Link>
-                <Link
-                  href="/unite"
-                  className="inline-flex items-center justify-center rounded-2xl bg-[var(--color-blue)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[var(--color-blue-strong)]"
-                >
-                  Ir a Unite
-                </Link>
-              </div>
-            </>
-          )}
         </div>
       </div>
     </section>
@@ -239,82 +209,102 @@ export function PageHero({ eyebrow, title, description, aside }: HeroProps) {
 export function FeaturedStory({ story }: FeaturedStoryProps) {
   const isExternal = story.href.startsWith("http");
   return (
-    <article className="relative overflow-hidden rounded-[36px] border border-[var(--color-line)] bg-[linear-gradient(135deg,#ffffff,#f5f8ff)] p-8 shadow-[0_20px_70px_rgba(18,35,63,0.12)] md:p-10">
-      <div className="absolute inset-y-0 right-0 hidden w-1/3 bg-[linear-gradient(90deg,rgba(18,63,137,0),rgba(18,63,137,0.12))] md:block" />
-      <p className="text-xs font-semibold uppercase tracking-[0.32em] text-[var(--color-blue)]">
-        {story.category}
-      </p>
-      <p className="mt-4 text-sm uppercase tracking-[0.18em] text-[var(--color-muted)]">
-        {story.date}
-      </p>
-      <h2 className="mt-4 max-w-4xl font-[family:var(--font-display)] text-4xl leading-tight text-[var(--color-ink)] md:text-6xl">
+    <article className="relative overflow-hidden rounded-2xl border border-[#e2e8f0] bg-[#ffffff] p-7 md:p-10 shadow-[0_4px_24px_rgba(9,26,54,0.06)]">
+      <div className="flex flex-wrap items-center gap-3">
+        <span className="rounded-full border border-[#d8e5f8] bg-[#f0f6ff] px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[#0062ff]">
+          {story.category}
+        </span>
+        {story.date && (
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#64748b]">
+            {story.date}
+          </span>
+        )}
+      </div>
+
+      <h2 className="mt-4 text-2xl font-extrabold leading-tight text-[#0e2246] sm:text-3xl md:text-4xl lg:text-5xl">
         {story.title}
       </h2>
+
       {story.imageUrl ? <PostImage src={story.imageUrl} alt={story.title} variant="featured" /> : null}
-      <p className="mt-6 max-w-3xl text-lg leading-8 text-[var(--color-muted)]">
+
+      <p className="mt-5 max-w-4xl text-base leading-relaxed text-[#475569] md:text-lg">
         {story.excerpt}
       </p>
-      {isExternal ? (
-        <a
-          href={story.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-8 inline-flex rounded-full bg-[var(--color-blue)] px-6 py-3 text-sm font-semibold text-[#ffffff] transition hover:bg-[var(--color-blue-strong)]"
-        >
-          {story.cta}
-        </a>
-      ) : (
-        <Link
-          href={story.href}
-          className="mt-8 inline-flex rounded-full bg-[var(--color-blue)] px-6 py-3 text-sm font-semibold text-[#ffffff] transition hover:bg-[var(--color-blue-strong)]"
-        >
-          {story.cta}
-        </Link>
-      )}
+
+      <div className="mt-7">
+        {isExternal ? (
+          <a
+            href={story.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full bg-[#091a36] px-6 py-3 text-xs font-bold uppercase tracking-wider text-white shadow-sm transition hover:bg-[#0062ff]"
+          >
+            <span>{story.cta}</span>
+            <span>→</span>
+          </a>
+        ) : (
+          <Link
+            href={story.href}
+            className="inline-flex items-center gap-2 rounded-full bg-[#091a36] px-6 py-3 text-xs font-bold uppercase tracking-wider text-white shadow-sm transition hover:bg-[#0062ff]"
+          >
+            <span>{story.cta}</span>
+            <span>→</span>
+          </Link>
+        )}
+      </div>
     </article>
   );
 }
 
 export function FeedGrid({ items }: FeedGridProps) {
   return (
-    <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+    <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
       {items.map((item) => (
         <article
           key={`${item.category}-${item.title}`}
-          className="group flex min-h-[320px] flex-col rounded-[28px] border border-[var(--color-line)] bg-white p-6 transition hover:-translate-y-1 hover:border-[var(--color-blue)]"
+          className="group flex flex-col justify-between rounded-2xl border border-[#e2e8f0] bg-[#ffffff] p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-[#0062ff] hover:shadow-[0_8px_24px_rgba(0,98,255,0.08)]"
         >
-          {item.imageUrl ? <PostImage src={item.imageUrl} alt={item.title} variant="card" /> : null}
-          <div className="flex items-start justify-between gap-4">
-            <span className="rounded-full border border-[rgba(18,63,137,0.2)] bg-[rgba(18,63,137,0.08)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-blue)]">
-              {item.category}
-            </span>
-            <span className="text-xs uppercase tracking-[0.18em] text-[var(--color-muted)]">
-              {item.date}
-            </span>
+          <div>
+            {item.imageUrl ? <PostImage src={item.imageUrl} alt={item.title} variant="card" /> : null}
+            <div className="flex items-center justify-between gap-3">
+              <span className="rounded-full border border-[#d8e5f8] bg-[#f0f6ff] px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-[#0062ff]">
+                {item.category}
+              </span>
+              {item.date && (
+                <span className="text-[11px] font-semibold text-[#64748b]">
+                  {item.date}
+                </span>
+              )}
+            </div>
+            <h3 className="mt-4 text-lg font-bold leading-snug text-[#0e2246] transition group-hover:text-[#0062ff]">
+              {item.title}
+            </h3>
+            <p className="mt-3 text-sm leading-relaxed text-[#475569] line-clamp-3">
+              {item.excerpt}
+            </p>
           </div>
-          <h3 className="mt-6 text-3xl leading-tight font-semibold text-[var(--color-ink)]">
-            {item.title}
-          </h3>
-          <p className="mt-4 flex-1 text-base leading-7 text-[var(--color-muted)]">
-            {item.excerpt}
-          </p>
-          {item.href.startsWith("http") ? (
-            <a
-              href={item.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 inline-flex w-fit rounded-full border border-[var(--color-line)] px-4 py-2 text-sm font-medium text-[var(--color-blue)] transition group-hover:border-[var(--color-blue)] group-hover:bg-[rgba(18,63,137,0.06)]"
-            >
-              {item.cta}
-            </a>
-          ) : (
-            <Link
-              href={item.href}
-              className="mt-6 inline-flex w-fit rounded-full border border-[var(--color-line)] px-4 py-2 text-sm font-medium text-[var(--color-blue)] transition group-hover:border-[var(--color-blue)] group-hover:bg-[rgba(18,63,137,0.06)]"
-            >
-              {item.cta}
-            </Link>
-          )}
+
+          <div className="mt-6 pt-4 border-t border-[#f1f5f9]">
+            {item.href.startsWith("http") ? (
+              <a
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#0062ff] transition group-hover:underline"
+              >
+                <span>{item.cta}</span>
+                <span>→</span>
+              </a>
+            ) : (
+              <Link
+                href={item.href}
+                className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#0062ff] transition group-hover:underline"
+              >
+                <span>{item.cta}</span>
+                <span>→</span>
+              </Link>
+            )}
+          </div>
         </article>
       ))}
     </div>
@@ -331,55 +321,63 @@ export function SectionLabel({
   description: string;
 }) {
   return (
-    <div className="max-w-4xl">
-      <p className="text-xs font-semibold uppercase tracking-[0.34em] text-[var(--color-blue)]">
+    <div className="max-w-3xl">
+      <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#0062ff]">
         {eyebrow}
       </p>
-      <h2 className="mt-4 font-[family:var(--font-display)] text-4xl leading-tight text-[var(--color-ink)] md:text-5xl">
+      <h2 className="mt-2 text-2xl font-bold text-[#0e2246] sm:text-3xl md:text-4xl">
         {title}
       </h2>
-      <p className="mt-5 text-lg leading-8 text-[var(--color-muted)]">{description}</p>
+      <p className="mt-3 text-sm leading-relaxed text-[#64748b] sm:text-base">{description}</p>
     </div>
   );
 }
 
 export function PeopleGrid({ people }: PeopleGridProps) {
   return (
-    <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+    <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
       {people.map((person) => (
-        <article key={person.name} className="rounded-[28px] border border-[var(--color-line)] bg-white p-5">
-          <div className="flex items-start gap-4">
-            <div className="relative h-20 w-20 overflow-hidden rounded-full border border-[var(--color-line)] bg-[var(--color-bg-soft)]">
+        <article
+          key={person.name}
+          className="flex flex-col rounded-2xl border border-[#e2e8f0] bg-[#ffffff] p-6 shadow-sm transition hover:border-[#0062ff]"
+        >
+          <div className="flex items-center gap-4">
+            <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-full border-2 border-[#d8e5f8] bg-[#091a36]">
               {person.imageUrl ? (
                 <Image
                   src={person.imageUrl}
                   alt={person.name}
                   fill
                   className="object-cover"
-                  sizes="80px"
+                  sizes="56px"
                 />
               ) : (
-                <div className="grid h-full w-full place-items-center text-2xl font-semibold text-[var(--color-blue)]">
+                <div className="grid h-full w-full place-items-center text-base font-bold text-white">
                   {person.initials}
                 </div>
               )}
             </div>
             <div className="min-w-0">
-              <h3 className="text-2xl font-semibold text-[var(--color-ink)]">{person.name}</h3>
-              <p className="text-sm uppercase tracking-[0.18em] text-[var(--color-blue)]">{person.role}</p>
-              {person.profileUrl ? (
-                <a
-                  href={person.profileUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-2 inline-flex text-sm text-[var(--color-muted)] underline underline-offset-4 hover:text-[var(--color-blue)]"
-                >
-                  LinkedIn / Web
-                </a>
-              ) : null}
+              <h3 className="text-lg font-bold text-[#0e2246]">{person.name}</h3>
+              <p className="text-xs font-bold uppercase tracking-wider text-[#0062ff]">{person.role}</p>
             </div>
           </div>
-          {person.bio ? <p className="mt-5 text-base leading-7 text-[var(--color-muted)]">{person.bio}</p> : null}
+          {person.bio ? (
+            <p className="mt-4 text-sm leading-relaxed text-[#475569]">{person.bio}</p>
+          ) : null}
+          {person.profileUrl ? (
+            <div className="mt-4 pt-3 border-t border-[#f1f5f9]">
+              <a
+                href={person.profileUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-xs font-bold text-[#0062ff] hover:underline"
+              >
+                <span>Perfil LinkedIn</span>
+                <span>↗</span>
+              </a>
+            </div>
+          ) : null}
         </article>
       ))}
     </div>
@@ -388,75 +386,72 @@ export function PeopleGrid({ people }: PeopleGridProps) {
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-[var(--color-line)] bg-[linear-gradient(180deg,#f7f4ec,#efe8d8)]">
-      <div className="mx-auto grid w-[min(1240px,92vw)] gap-8 py-10 md:grid-cols-[1.2fr_0.8fr_0.9fr]">
+    <footer className="relative border-t border-[#e2e8f0] bg-[#ffffff] pt-12 pb-6">
+      <div className="mx-auto grid w-[min(1280px,92vw)] gap-10 md:grid-cols-[1.3fr_0.8fr_0.9fr]">
         <div>
-          <div className="flex items-center gap-4">
-            <div className="flex h-16 w-[300px] items-center justify-start overflow-hidden">
-              <Image
-                src="/clubdefinanzasubalogohorizontal.png"
-                alt="Club de Finanzas UBA"
-                width={500}
-                height={114}
-                className="h-full w-full object-contain object-left"
-              />
-            </div>
+          <div className="flex h-16 w-[320px] items-center justify-start overflow-hidden">
+            <Image
+              src="/clubdefinanzasubalogohorizontal.png"
+              alt="Club de Finanzas UBA"
+              width={800}
+              height={200}
+              className="h-full w-full object-contain object-left"
+            />
           </div>
-          <p className="mt-3 max-w-xl text-sm leading-7 text-[var(--color-muted)]">
-            Plataforma editorial y académica con foco en Portfolio, Research, noticias y comunidad.
+          <p className="mt-4 max-w-sm text-sm leading-relaxed text-[#475569]">
+            Organización académica y profesional de estudiantes de la Facultad de Ciencias Económicas de la Universidad de Buenos Aires.
           </p>
-          <p className="mt-6 text-xs uppercase tracking-[0.22em] text-[var(--color-blue)]">
-            Ubicación
-          </p>
-          <p className="mt-2 text-sm text-[var(--color-muted)]">Ciudad Autónoma de Buenos Aires, Argentina.</p>
+          <div className="mt-5 flex items-center gap-2">
+            <span className="flex h-2 w-2 rounded-full bg-[#0062ff]" />
+            <p className="text-xs font-bold uppercase tracking-wider text-[#091a36]">
+              Buenos Aires, Argentina
+            </p>
+          </div>
         </div>
 
         <div>
-          <p className="text-xs uppercase tracking-[0.22em] text-[var(--color-blue)]">
-            Contacto
+          <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#091a36]">
+            Canales y Redes
           </p>
-          <div className="mt-4 space-y-3">
+          <div className="mt-4 space-y-2.5">
             {contactLinks.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
                 target={item.href.startsWith("http") ? "_blank" : undefined}
                 rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="block text-sm text-[var(--color-muted)] transition hover:text-[var(--color-blue)]"
+                className="flex items-center justify-between text-sm text-[#475569] transition hover:text-[#0062ff]"
               >
-                <span className="font-semibold text-[var(--color-ink)]">{item.label}</span>
-                {" · "}
-                {item.value}
+                <span className="font-semibold text-[#0e2246]">{item.label}</span>
+                <span className="text-xs text-[#64748b]">{item.value}</span>
               </a>
             ))}
           </div>
         </div>
 
         <div>
-          <p className="text-xs uppercase tracking-[0.22em] text-[var(--color-blue)]">
-            Información
+          <div className="flex items-center gap-2">
+            <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#091a36] text-[11px] font-bold text-white">
+              i
+            </div>
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#091a36]">
+              Descargo de Responsabilidad
+            </p>
+          </div>
+          <p className="mt-3 text-xs leading-relaxed text-[#64748b]">
+            El contenido publicado en este sitio web tiene propósitos estrictamente educativos e informativos. No constituye asesoramiento financiero ni recomendación de inversión.
           </p>
-          <p className="mt-4 text-sm leading-7 text-[var(--color-muted)]">
-            Descargo de responsabilidad: el contenido publicado tiene fines educativos e informativos. No constituye recomendación de inversión ni asesoramiento financiero personalizado.
-          </p>
-          <p className="mt-6 text-sm text-[var(--color-muted)]">
-            Sitio desarrollado por{" "}
-            <a
-              href="https://roxiumlabs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold text-[var(--color-ink)] transition hover:text-[var(--color-blue)]"
-            >
-              Roxium
-            </a>
-          </p>
-          <p className="mt-6 text-[10px] tracking-[0.22em] text-[var(--color-muted)]/70">
-            <Link href="/admin" className="transition hover:text-[var(--color-blue)]">
-              autogestión
+          <div className="mt-6 flex items-center justify-between border-t border-[#f1f5f9] pt-4 text-xs text-[#64748b]">
+            <span>© {new Date().getFullYear()} Club de Finanzas UBA</span>
+            <Link href="/admin" className="font-semibold text-[#091a36] hover:text-[#0062ff]">
+              Acceso Staff
             </Link>
-          </p>
+          </div>
         </div>
       </div>
+
+      {/* Línea inferior distintiva azul marino */}
+      <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-[#091a36]" />
     </footer>
   );
 }
