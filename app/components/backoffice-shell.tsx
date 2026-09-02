@@ -15,6 +15,7 @@ type BackofficeShellProps = {
 
 const navItems = [
   { href: "/admin", label: "Resumen", roles: ["ADMIN", "EDITOR"] as Role[] },
+  { href: "/admin/members", label: "Miembros", roles: ["ADMIN", "EDITOR"] as Role[] },
   { href: "/admin/posts", label: "Publicaciones", roles: ["ADMIN", "EDITOR"] as Role[] },
   { href: "/admin/team", label: "Integrantes", roles: ["ADMIN", "EDITOR"] as Role[] },
   { href: "/admin/links", label: "Links", roles: ["ADMIN", "EDITOR"] as Role[] },

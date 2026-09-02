@@ -116,3 +116,13 @@ export type Resource = Prisma.ResourceModel
  * 
  */
 export type ContactLink = Prisma.ContactLinkModel
+/**
+ * Model Member
+ * 
+ */
+export type Member = Prisma.MemberModel
+/**
+ * Model MemberOtp
+ * 
+ */
+export type MemberOtp = Prisma.MemberOtpModel

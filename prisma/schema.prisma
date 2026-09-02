@@ -282,3 +282,33 @@ model ContactLink {
 
   @@index([isActive, sortOrder])
 }
+
+model Member {
+  id          String      @id @default(uuid())
+  email       String      @unique
+  fullName    String
+  phone       String
+  isActive    Boolean     @default(true)
+  lastLoginAt DateTime?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  otps        MemberOtp[]
+
+  @@index([email])
+}
+
+model MemberOtp {
+  id         String    @id @default(uuid())
+  email      String
+  code       String
+  expiresAt  DateTime
+  consumedAt DateTime?
+  createdAt  DateTime  @default(now())
+  memberId   String
+  member     Member    @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  @@index([email])
+  @@index([expiresAt])
+}
+

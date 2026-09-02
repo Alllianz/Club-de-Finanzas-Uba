@@ -65,7 +65,9 @@ export const ModelName = {
   EventMeta: 'EventMeta',
   Sponsor: 'Sponsor',
   Resource: 'Resource',
-  ContactLink: 'ContactLink'
+  ContactLink: 'ContactLink',
+  Member: 'Member',
+  MemberOtp: 'MemberOtp'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -297,6 +299,33 @@ export const ContactLinkScalarFieldEnum = {
 } as const
 
 export type ContactLinkScalarFieldEnum = (typeof ContactLinkScalarFieldEnum)[keyof typeof ContactLinkScalarFieldEnum]
+
+
+export const MemberScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  fullName: 'fullName',
+  phone: 'phone',
+  isActive: 'isActive',
+  lastLoginAt: 'lastLoginAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MemberScalarFieldEnum = (typeof MemberScalarFieldEnum)[keyof typeof MemberScalarFieldEnum]
+
+
+export const MemberOtpScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  code: 'code',
+  expiresAt: 'expiresAt',
+  consumedAt: 'consumedAt',
+  createdAt: 'createdAt',
+  memberId: 'memberId'
+} as const
+
+export type MemberOtpScalarFieldEnum = (typeof MemberOtpScalarFieldEnum)[keyof typeof MemberOtpScalarFieldEnum]
 
 
 export const SortOrder = {

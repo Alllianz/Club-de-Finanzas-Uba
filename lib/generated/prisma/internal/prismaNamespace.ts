@@ -411,7 +411,9 @@ export const ModelName = {
   EventMeta: 'EventMeta',
   Sponsor: 'Sponsor',
   Resource: 'Resource',
-  ContactLink: 'ContactLink'
+  ContactLink: 'ContactLink',
+  Member: 'Member',
+  MemberOtp: 'MemberOtp'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -427,7 +429,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "otp" | "article" | "letrasSnapshot" | "letrasInstrumentPoint" | "countryRiskSnapshot" | "countryRiskPointDb" | "teamMember" | "post" | "postAsset" | "postAuthor" | "eventMeta" | "sponsor" | "resource" | "contactLink"
+    modelProps: "user" | "otp" | "article" | "letrasSnapshot" | "letrasInstrumentPoint" | "countryRiskSnapshot" | "countryRiskPointDb" | "teamMember" | "post" | "postAsset" | "postAuthor" | "eventMeta" | "sponsor" | "resource" | "contactLink" | "member" | "memberOtp"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1541,6 +1543,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Member: {
+      payload: Prisma.$MemberPayload<ExtArgs>
+      fields: Prisma.MemberFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MemberFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MemberFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberPayload>
+        }
+        findFirst: {
+          args: Prisma.MemberFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MemberFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberPayload>
+        }
+        findMany: {
+          args: Prisma.MemberFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberPayload>[]
+        }
+        create: {
+          args: Prisma.MemberCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberPayload>
+        }
+        createMany: {
+          args: Prisma.MemberCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MemberCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberPayload>[]
+        }
+        delete: {
+          args: Prisma.MemberDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberPayload>
+        }
+        update: {
+          args: Prisma.MemberUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberPayload>
+        }
+        deleteMany: {
+          args: Prisma.MemberDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MemberUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MemberUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberPayload>[]
+        }
+        upsert: {
+          args: Prisma.MemberUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberPayload>
+        }
+        aggregate: {
+          args: Prisma.MemberAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMember>
+        }
+        groupBy: {
+          args: Prisma.MemberGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MemberGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MemberCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MemberCountAggregateOutputType> | number
+        }
+      }
+    }
+    MemberOtp: {
+      payload: Prisma.$MemberOtpPayload<ExtArgs>
+      fields: Prisma.MemberOtpFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MemberOtpFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberOtpPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MemberOtpFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberOtpPayload>
+        }
+        findFirst: {
+          args: Prisma.MemberOtpFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberOtpPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MemberOtpFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberOtpPayload>
+        }
+        findMany: {
+          args: Prisma.MemberOtpFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberOtpPayload>[]
+        }
+        create: {
+          args: Prisma.MemberOtpCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberOtpPayload>
+        }
+        createMany: {
+          args: Prisma.MemberOtpCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MemberOtpCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberOtpPayload>[]
+        }
+        delete: {
+          args: Prisma.MemberOtpDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberOtpPayload>
+        }
+        update: {
+          args: Prisma.MemberOtpUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberOtpPayload>
+        }
+        deleteMany: {
+          args: Prisma.MemberOtpDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MemberOtpUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MemberOtpUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberOtpPayload>[]
+        }
+        upsert: {
+          args: Prisma.MemberOtpUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberOtpPayload>
+        }
+        aggregate: {
+          args: Prisma.MemberOtpAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMemberOtp>
+        }
+        groupBy: {
+          args: Prisma.MemberOtpGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MemberOtpGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MemberOtpCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MemberOtpCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1793,6 +1943,33 @@ export const ContactLinkScalarFieldEnum = {
 } as const
 
 export type ContactLinkScalarFieldEnum = (typeof ContactLinkScalarFieldEnum)[keyof typeof ContactLinkScalarFieldEnum]
+
+
+export const MemberScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  fullName: 'fullName',
+  phone: 'phone',
+  isActive: 'isActive',
+  lastLoginAt: 'lastLoginAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MemberScalarFieldEnum = (typeof MemberScalarFieldEnum)[keyof typeof MemberScalarFieldEnum]
+
+
+export const MemberOtpScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  code: 'code',
+  expiresAt: 'expiresAt',
+  consumedAt: 'consumedAt',
+  createdAt: 'createdAt',
+  memberId: 'memberId'
+} as const
+
+export type MemberOtpScalarFieldEnum = (typeof MemberOtpScalarFieldEnum)[keyof typeof MemberOtpScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2179,6 +2356,8 @@ export type GlobalOmitConfig = {
   sponsor?: Prisma.SponsorOmit
   resource?: Prisma.ResourceOmit
   contactLink?: Prisma.ContactLinkOmit
+  member?: Prisma.MemberOmit
+  memberOtp?: Prisma.MemberOtpOmit
 }
 
 /* Types for Logging */

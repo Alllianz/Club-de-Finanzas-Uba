@@ -29,6 +29,7 @@ export const navigation: NavigationItem[] = [
   { href: "/research", label: "Research" },
   { href: "/portfolio", label: "Portafolio" },
   { href: "/sobre-nosotros", label: "Sobre Nosotros" },
+  { href: "/miembros", label: "Miembros" },
   { href: "/unite", label: "Unite" },
 ];
 
@@ -263,27 +264,33 @@ export const objectives = [
 
 export const leadership: Person[] = [
   {
-    name: "Julian Robin",
-    role: "Co-founder",
-    bio: "Impulsa la dirección general del club, el desarrollo institucional y las alianzas estratégicas.",
-    initials: "JR",
+    name: "Fausto Crivelli",
+    role: "Presidente de Portafolio",
+    bio: "Lidera la estrategia cuantitativa, modelos de optimización de media-varianza de Markowitz y selección de activos de renta variable.",
+    initials: "FC",
   },
   {
-    name: "Ale",
-    role: "Contenido y Noticias",
-    bio: "Lidera la cobertura de coyuntura macroeconómica y la comunicación ágil con la comunidad.",
-    initials: "AL",
+    name: "Cicero Ignacio",
+    role: "Líder de Research",
+    bio: "Coordina los informes de valuación fundamental, modelos de flujos descontados (DCF), simulaciones de Monte Carlo y análisis macro.",
+    initials: "CI",
+  },
+  {
+    name: "Luciano Mora",
+    role: "Analista Sr Portfolio",
+    bio: "Especialista en análisis de covarianzas, pruebas fuera de muestra y asignación de activos en infraestructura y energía.",
+    initials: "LM",
+  },
+  {
+    name: "Florencia Beluzzo",
+    role: "Analista Sr Portfolio",
+    bio: "Análisis de ratios de liquidez, dividend yields, cobertura de deuda y sensibilidad beta sectorial.",
+    initials: "FB",
   },
   {
     name: "Equipo Research",
-    role: "Análisis Cuantitativo",
-    bio: "Desarrolla modelos de valuación, análisis de renta fija y notas de investigación.",
+    role: "Analistas de Renta Variable",
+    bio: "Integrado por Ivo Dubilet, Facundo Godoy, Faustina Failo, Vicente Deiros y Facundo Rojas en valuación de activos y estados financieros.",
     initials: "RE",
-  },
-  {
-    name: "Equipo Portfolio",
-    role: "Estrategia de Inversión",
-    bio: "Gestiona carteras modelo, asignación táctica y métricas de riesgo y retorno.",
-    initials: "PF",
   },
 ];
